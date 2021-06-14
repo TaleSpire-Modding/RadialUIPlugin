@@ -13,8 +13,8 @@ namespace RadialUI
     public class RadialUIPlugin : BaseUnityPlugin
     {
         // constants
-        private const string Guid = "org.hollofox.plugins.RadialUIPlugin";
-        private const string Version = "1.0.0.0";
+        public const string Guid = "org.hollofox.plugins.RadialUIPlugin";
+        private const string Version = "1.0.1.0";
 
         /// <summary>
         /// Awake plugin
@@ -30,31 +30,31 @@ namespace RadialUI
 
 
         // Character Related
-        private readonly Dictionary<string, (MapMenu.ItemArgs, Func<NGuid,NGuid, bool>)> _onCharacterCallback = new Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)>();
-        private readonly Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)> _onCanAttack = new Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)>();
-        private readonly Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)> _onCantAttack = new Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)>();
-        
+        private static readonly Dictionary<string, (MapMenu.ItemArgs, Func<NGuid,NGuid, bool>)> _onCharacterCallback = new Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)>();
+        private static readonly Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)> _onCanAttack = new Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)>();
+        private static readonly Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)> _onCantAttack = new Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)>();
+
         // Hide Volumes
-        private readonly Dictionary<string, (MapMenu.ItemArgs, Func<HideVolumeItem,bool>)> _onHideVolumeCallback = new Dictionary<string, (MapMenu.ItemArgs, Func<HideVolumeItem,bool>)>();
+        private static readonly Dictionary<string, (MapMenu.ItemArgs, Func<HideVolumeItem,bool>)> _onHideVolumeCallback = new Dictionary<string, (MapMenu.ItemArgs, Func<HideVolumeItem,bool>)>();
 
         // Add On Character
-        public void AddOnCharacter(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onCharacterCallback.Add(key,(value, externalCheck));
-        public void AddOnCanAttack(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onCanAttack.Add(key,(value, externalCheck));
-        public void AddOnCantAttack(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onCantAttack.Add(key,(value, externalCheck));
-        
+        public static void AddOnCharacter(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onCharacterCallback.Add(key,(value, externalCheck));
+        public static void AddOnCanAttack(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onCanAttack.Add(key,(value, externalCheck));
+        public static void AddOnCantAttack(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onCantAttack.Add(key,(value, externalCheck));
+
         // Add On HideVolume
-        public void AddOnHideVolume(string key, MapMenu.ItemArgs value, Func<HideVolumeItem,bool> externalCheck = null) => _onHideVolumeCallback.Add(key, (value, externalCheck));
-        
+        public static void AddOnHideVolume(string key, MapMenu.ItemArgs value, Func<HideVolumeItem,bool> externalCheck = null) => _onHideVolumeCallback.Add(key, (value, externalCheck));
+
         // Remove On Character
-        public bool RemoveOnCharacter(string key) => _onCharacterCallback.Remove(key);
-        public bool RemoveOnCanAttack(string key) => _onCanAttack.Remove(key);
-        public bool RemoveOnCantAttack(string key) => _onCantAttack.Remove(key);
+        public static bool RemoveOnCharacter(string key) => _onCharacterCallback.Remove(key);
+        public static bool RemoveOnCanAttack(string key) => _onCanAttack.Remove(key);
+        public static bool RemoveOnCantAttack(string key) => _onCantAttack.Remove(key);
 
         // Remove On HideVolume
-        public bool RemoveOnHideVolume(string key) => _onHideVolumeCallback.Remove(key);
+        public static bool RemoveOnHideVolume(string key) => _onHideVolumeCallback.Remove(key);
 
         // Check to see if map menu is new
-        private bool last = false;
+        private static bool last = false;
         
         /// <summary>
         /// Looping method run by plugin
