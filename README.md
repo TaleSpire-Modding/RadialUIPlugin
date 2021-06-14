@@ -81,3 +81,8 @@ You will need to add references to:
 Build the project.
 
 Browse to the newly created ```bin/Debug``` or ```bin/Release``` folders and copy the ```RadialUIPlugin.dll``` to ```Steam\steamapps\common\TaleSpire\BepInEx\plugins```
+
+## Shoutouts
+Shoutout to my Patreons on https://www.patreon.com/HolloFox recognising your
+mighty contribution to my caffeine addiciton:
+- John Fuller
