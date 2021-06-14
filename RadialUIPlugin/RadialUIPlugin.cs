@@ -14,7 +14,7 @@ namespace RadialUI
     {
         // constants
         public const string Guid = "org.hollofox.plugins.RadialUIPlugin";
-        private const string Version = "1.0.1.0";
+        private const string Version = "1.0.2.0";
 
         /// <summary>
         /// Awake plugin
@@ -61,8 +61,7 @@ namespace RadialUI
         /// </summary>
         void Update()
         {
-            
-            if (MapMenuManager.Instance != null && MapMenuManager.IsOpen)
+            if (MapMenuManager.HasInstance && MapMenuManager.IsOpen)
             {
                 if (!last)
                 {
