@@ -45,9 +45,9 @@ Developers should reference the DLL for their own projects. This does not provid
             }, Check2);
         }
 
-        private Boolean Check(NGuid args, NGuid args2)
+        private Boolean Check(NGuid selectedCreature, NGuid creatureTargetedFromRadial)
         {
-            Debug.Log($"{args},{args2}");
+            Debug.Log($"{selectedCreature},{creatureTargetedFromRadial}");
             return true;
         }
 
@@ -59,6 +59,15 @@ Developers should reference the DLL for their own projects. This does not provid
 
         private void Action(MapMenuItem args, object args2) => Debug.Log($"{args},{args2}");
 
+```
+
+## Loading a Sprite
+Dimensions for sprites should be 32 by 32, Below is an example script supplied by LordAshes loading in 
+an image to be used as an icon for the new Radial Component.
+```csharp
+Texture2D tex = new Texture2D(32, 32);
+tex.LoadImage(System.IO.File.ReadAllBytes(dir + "Images/Icons/KO.Png"));
+Sprite icon = Sprite.Create(tex, new Rect(0, 0, 32, 32), new Vector2(0.5f, 0.5f));
 ```
 
 
