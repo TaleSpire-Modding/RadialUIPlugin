@@ -388,7 +388,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="RadialUIPlugin.cs" />
-    <Compile Include="ModdingUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
