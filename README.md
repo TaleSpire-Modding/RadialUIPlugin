@@ -91,6 +91,11 @@ Build the project.
 
 Browse to the newly created ```bin/Debug``` or ```bin/Release``` folders and copy the ```RadialUIPlugin.dll``` to ```Steam\steamapps\common\TaleSpire\BepInEx\plugins```
 
+## Changelog
+1.1.0: Removed Modding Utils and display on main menu
+1.0.2: Fixed Issue on radial breaking upon leaving board
+1.0.0: Initial release
+
 ## Shoutouts
 Shoutout to my Patreons on https://www.patreon.com/HolloFox recognising your
 mighty contribution to my caffeine addiciton:
