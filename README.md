@@ -65,9 +65,36 @@ Developers should reference the DLL for their own projects. This does not provid
 Dimensions for sprites should be 32 by 32, Below is an example script supplied by LordAshes loading in 
 an image to be used as an icon for the new Radial Component.
 ```csharp
+string dir = "path to directory";
 Texture2D tex = new Texture2D(32, 32);
 tex.LoadImage(System.IO.File.ReadAllBytes(dir + "Images/Icons/KO.Png"));
 Sprite icon = Sprite.Create(tex, new Rect(0, 0, 32, 32), new Vector2(0.5f, 0.5f));
+```
+
+## Submenus
+
+```csharp
+	void Awake()
+        {
+		// Register Group Menus
+            	RadialUIPlugin.AddOnHideVolume(
+                    Guid + "Grouping",
+                    new MapMenu.ItemArgs
+                    {
+                        Title = "Grouping",
+                        Action = ShowGroupingSubmenu, // method to open submenu
+                    }, Check
+            	);
+	}
+
+	private static void ShowGroupingSubmenu(MapMenuItem item, object obj)
+        {
+	    // Creates a branch mapmenu and opens it.
+            MapMenu mapMenu = MapMenuManager.OpenMenu(item, MapMenu.MenuType.BRANCH); // MenuType can be configured
+            
+	    // Append your new menu items
+	    mapMenu.AddItem(new MapMenu.ItemArgs { /* ... */});
+        }
 ```
 
 
@@ -92,6 +119,7 @@ Build the project.
 Browse to the newly created ```bin/Debug``` or ```bin/Release``` folders and copy the ```RadialUIPlugin.dll``` to ```Steam\steamapps\common\TaleSpire\BepInEx\plugins```
 
 ## Changelog
+1.1.1: Add Docs on how to implement submenus
 1.1.0: Removed Modding Utils and display on main menu
 1.0.2: Fixed Issue on radial breaking upon leaving board
 1.0.0: Initial release
