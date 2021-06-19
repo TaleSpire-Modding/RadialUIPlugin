@@ -71,32 +71,6 @@ tex.LoadImage(System.IO.File.ReadAllBytes(dir + "Images/Icons/KO.Png"));
 Sprite icon = Sprite.Create(tex, new Rect(0, 0, 32, 32), new Vector2(0.5f, 0.5f));
 ```
 
-## Submenus
-
-```csharp
-	void Awake()
-        {
-		// Register Group Menus
-            	RadialUIPlugin.AddOnHideVolume(
-                    Guid + "Grouping",
-                    new MapMenu.ItemArgs
-                    {
-                        Title = "Grouping",
-                        Action = ShowGroupingSubmenu, // method to open submenu
-                    }, Check
-            	);
-	}
-
-	private static void ShowGroupingSubmenu(MapMenuItem item, object obj)
-        {
-	    // Creates a branch mapmenu and opens it.
-            MapMenu mapMenu = MapMenuManager.OpenMenu(item, MapMenu.MenuType.BRANCH); // MenuType can be configured
-            
-	    // Append your new menu items
-	    mapMenu.AddItem(new MapMenu.ItemArgs { /* ... */});
-        }
-```
-
 
 ## How to Compile / Modify
 
@@ -119,6 +93,7 @@ Build the project.
 Browse to the newly created ```bin/Debug``` or ```bin/Release``` folders and copy the ```RadialUIPlugin.dll``` to ```Steam\steamapps\common\TaleSpire\BepInEx\plugins```
 
 ## Changelog
+1.2.0: Add hooks to character submenus, Added code to manage submenus.
 1.1.1: Add Docs on how to implement submenus
 1.1.0: Removed Modding Utils and display on main menu
 1.0.2: Fixed Issue on radial breaking upon leaving board
@@ -128,3 +103,5 @@ Browse to the newly created ```bin/Debug``` or ```bin/Release``` folders and cop
 Shoutout to my Patreons on https://www.patreon.com/HolloFox recognising your
 mighty contribution to my caffeine addiciton:
 - John Fuller
+
+Lord Ashes providing dependent code unify snippet controlling submenus.
