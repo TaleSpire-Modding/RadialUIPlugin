@@ -389,6 +389,7 @@
   <ItemGroup>
     <Compile Include="RadialUIPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RadialSubmenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
