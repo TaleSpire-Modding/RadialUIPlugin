@@ -15,7 +15,7 @@ namespace RadialUI
     {
         // constants
         public const string Guid = "org.hollofox.plugins.RadialUIPlugin";
-        private const string Version = "1.2.1.0";
+        private const string Version = "1.2.2.0";
 
         /// <summary>
         /// Awake plugin
@@ -36,6 +36,7 @@ namespace RadialUI
         private static readonly Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)> _onSubmenuKill = new Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)>();
         private static readonly Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)> _onSubmenuGm = new Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)>();
         private static readonly Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)> _onSubmenuAttacks = new Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)>();
+        private static readonly Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)> _onSubmenuSize = new Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)>();
 
         // Hide Volumes
         private static readonly Dictionary<string, (MapMenu.ItemArgs, Func<HideVolumeItem,bool>)> _onHideVolumeCallback = new Dictionary<string, (MapMenu.ItemArgs, Func<HideVolumeItem,bool>)>();
@@ -48,6 +49,7 @@ namespace RadialUI
         public static void AddOnSubmenuKill(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onSubmenuKill.Add(key,(value, externalCheck));
         public static void AddOnSubmenuGm(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onSubmenuGm.Add(key,(value, externalCheck));
         public static void AddOnSubmenuAttacks(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onSubmenuAttacks.Add(key,(value, externalCheck));
+        public static void AddOnSubmenuSize(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onSubmenuSize.Add(key,(value, externalCheck));
 
         // Add On HideVolume
         public static void AddOnHideVolume(string key, MapMenu.ItemArgs value, Func<HideVolumeItem,bool> externalCheck = null) => _onHideVolumeCallback.Add(key, (value, externalCheck));
@@ -60,6 +62,7 @@ namespace RadialUI
         public static bool RemoveOnSubmenuKill(string key) => _onSubmenuKill.Remove(key);
         public static bool RemoveOnSubmenuGm(string key) => _onSubmenuGm.Remove(key);
         public static bool RemoveOnSubmenuAttacks(string key) => _onSubmenuAttacks.Remove(key);
+        public static bool RemoveOnSubmenuSize(string key) => _onSubmenuSize.Remove(key);
 
         // Remove On HideVolume
         public static bool RemoveOnHideVolume(string key) => _onHideVolumeCallback.Remove(key);
@@ -148,6 +151,8 @@ namespace RadialUI
 
                 var id = LocalClient.SelectedCreatureId.Value;
 
+                Debug.Log(title);
+
                 // Minis Related
                 if (IsMini(title)) AddCreatureEvent(_onCharacterCallback,id,map);
                 if (CanAttack(title)) AddCreatureEvent(_onCanAttack, id, map);
@@ -158,6 +163,7 @@ namespace RadialUI
                 if (IsKill(title)) AddCreatureEvent(_onSubmenuKill, id, map);
                 if (IsGmMenu(title)) AddCreatureEvent(_onSubmenuGm, id, map);
                 if (IsAttacksMenu(title)) AddCreatureEvent(_onSubmenuAttacks, id, map);
+                if (IsSizeMenu(title)) AddCreatureEvent(_onSubmenuSize, id, map);
 
                 // Hide Volumes
                 if (IsHideVolume(title)) AddHideVolumeEvent(_onHideVolumeCallback, map);
@@ -226,6 +232,7 @@ namespace RadialUI
         private bool IsKill(string title) => title == "Kill Creature";
         private bool IsGmMenu(string title) => title == "Player Permission";
         private bool IsAttacksMenu(string title) => title == "Attack";
+        private bool IsSizeMenu(string title) => title == "4x4";
 
         // Current ShortHand to see if HideVolume
         private bool IsHideVolume(string title) => title == "Toggle Visibility";
