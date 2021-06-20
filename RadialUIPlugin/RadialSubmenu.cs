@@ -96,7 +96,7 @@ namespace RadialUI
         /// <param name="title">Text associated with the sub-menu item</param>
         /// <param name="icon">Icon associated with the sub-menu item</param>
         /// <param name="callback">Callback that is called when the sub-menu item is selected</param>
-        public static void CreateSubMenuItem(string mainGuid, string title, Sprite icon, Action<CreatureGuid, string, MapMenuItem> callback)
+        public static void CreateSubMenuItem(string mainGuid, string title, Sprite icon, Action<CreatureGuid, string, MapMenuItem> callback, bool closeMenu = true)
         {
             // Check if the main menu Guid exists
             if (!subMenuEntries.ContainsKey(mainGuid))
@@ -111,7 +111,7 @@ namespace RadialUI
                 Action = (mmi, obj) => { callback(radialAsset, mainGuid, mmi); },
                 Icon = icon,
                 Title = title,
-                CloseMenuOnActivate = true
+                CloseMenuOnActivate = closeMenu
             });
         }
 
@@ -122,7 +122,7 @@ namespace RadialUI
         /// <param name="title">Text associated with the sub-menu item</param>
         /// <param name="icon">Icon associated with the sub-menu item</param>
         /// <param name="callback">Callback that is called when the sub-menu item is selected</param>
-        public static void CreateSubMenuItem(string mainGuid, string title, Sprite icon, Action<HideVolumeItem, string, MapMenuItem> callback)
+        public static void CreateSubMenuItem(string mainGuid, string title, Sprite icon, Action<HideVolumeItem, string, MapMenuItem> callback, bool closeMenu = true)
         {
             // Check if the main menu Guid exists
             if (!subMenuEntries.ContainsKey(mainGuid))
@@ -137,7 +137,7 @@ namespace RadialUI
                 Action = (mmi, obj) => { callback(radialHideVolume, mainGuid, mmi); },
                 Icon = icon,
                 Title = title,
-                CloseMenuOnActivate = true
+                CloseMenuOnActivate = closeMenu
             });
         }
 
