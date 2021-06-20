@@ -232,7 +232,7 @@ namespace RadialUI
         private bool IsKill(string title) => title == "Kill Creature";
         private bool IsGmMenu(string title) => title == "Player Permission";
         private bool IsAttacksMenu(string title) => title == "Attack";
-        private bool IsSizeMenu(string title) => title == "4x4";
+        private bool IsSizeMenu(string title) => title == "0.5x0.5";
 
         // Current ShortHand to see if HideVolume
         private bool IsHideVolume(string title) => title == "Toggle Visibility";
