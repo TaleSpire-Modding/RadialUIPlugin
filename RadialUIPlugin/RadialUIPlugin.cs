@@ -1,10 +1,10 @@
-﻿using System;
-using System.Reflection;
+﻿using BepInEx;
+using Bounce.Unmanaged;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
-using BepInEx;
-using Bounce.Unmanaged;
 using Object = System.Object;
 
 namespace RadialUI
@@ -68,6 +68,9 @@ namespace RadialUI
         private static int last = 0;
         private static string lastTitle = "";
         private static bool lastSuccess = true;
+        private static DateTime Execute;
+
+        private (Action<MapMenuItem, Object>, MapMenuItem, Object) pending = (null,null,null);
 
         /// <summary>
         /// Looping method run by plugin
@@ -115,6 +118,13 @@ namespace RadialUI
                 lastTitle = "";
                 lastSuccess = true;
             }
+
+            if (pending.Item1 != null && Execute != DateTime.MinValue && DateTime.Now > Execute)
+            {
+                pending.Item1(pending.Item2, pending.Item3);
+                pending = (null, null, null);
+                Execute = DateTime.MinValue;
+            }
         }
 
         private const BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
@@ -160,7 +170,24 @@ namespace RadialUI
             foreach (var handlers
                 in dic.Values
                     .Where(handlers => handlers.Item2 == null
-                                       || handlers.Item2(myCreature, target))) map.AddItem(handlers.Item1);
+                                       || handlers.Item2(myCreature, target))) map.AddItem(
+                new MapMenu.ItemArgs
+                {
+                    Title = handlers.Item1.Title,
+                    Icon = handlers.Item1.Icon,
+                    Action = (mmi, obj) =>
+                    {
+                        pending = (handlers.Item1.Action,mmi,obj);
+                        Execute = DateTime.Now.AddMilliseconds(200);
+                    },
+                    CloseMenuOnActivate = handlers.Item1.CloseMenuOnActivate,
+                    ValueText = handlers.Item1.ValueText,
+                    SubValueText = handlers.Item1.SubValueText,
+                    FadeName = handlers.Item1.FadeName,
+                    Obj = handlers.Item1.Obj,
+                }
+                
+                );
         }
 
         public static NGuid GetRadialTargetCreature()
