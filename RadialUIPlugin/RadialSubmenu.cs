@@ -30,6 +30,15 @@ namespace RadialUI
             HideVolume,
         }
 
+        /*
+        /// <inheritdoc cref="EnsureMainMenuItem(string,RadialUI.RadialSubmenu.MenuType,string,UnityEngine.Sprite,System.Func{Bounce.Unmanaged.NGuid,Bounce.Unmanaged.NGuid,bool})"/>
+        public static void EnsureMainMenuItem(string mainGuid, MenuType type, string title, Sprite icon,
+            Func<NGuid, NGuid, bool> callback) => EnsureMainMenuItem(mainGuid, type, title, icon, callback,null);
+
+        /// <inheritdoc cref="EnsureMainMenuItem(string,RadialUI.RadialSubmenu.MenuType,string,UnityEngine.Sprite,System.Func{HideVolumeItem,bool})"/>
+        public static void EnsureMainMenuItem(string mainGuid, MenuType type, string title, Sprite icon,
+            Func<HideVolumeItem, bool> callback) => EnsureMainMenuItem(mainGuid, type, title, icon, null, callback);*/
+
         /// <summary>
         /// Method that a plugin uses to ensure that the desired main (radial) menu item exits.
         /// The method creates the entry if it does not exists and ignore the requested if it already exists.
@@ -39,7 +48,9 @@ namespace RadialUI
         /// <param name="type">Determines which type of radial menu the entry is for</param>
         /// <param name="title">Text that is associated with the entry</param>
         /// <param name="icon">Icon that should be displayed</param>
-        public static void EnsureMainMenuItem(string mainGuid, MenuType type, string title, Sprite icon)
+        /// <param name="creatureCallback">callback for a creature</param>
+        /// <param name="hideVolumeCallback">callback for a hide volume</param>
+        public static void EnsureMainMenuItem(string mainGuid, MenuType type, string title, Sprite icon) // , Func<NGuid, NGuid, bool> creatureCallback = null, Func<HideVolumeItem, bool> hideVolumeCallback = null )
         {
             // Don't create the main menu entry multiple times
             if (subMenuEntries.ContainsKey(mainGuid)) { return; }
@@ -119,7 +130,7 @@ namespace RadialUI
                 CloseMenuOnActivate = closeMenu
             };
             subMenuEntries[mainGuid].Add(item);
-            if (checker != null) subMenuChecker[item] = checker;
+            if (checker != null) subMenuChecker.Add(item, checker);
         }
 
         /// <summary>
@@ -149,7 +160,7 @@ namespace RadialUI
                 CloseMenuOnActivate = closeMenu
             };
             subMenuEntries[mainGuid].Add(item);
-            if (checker != null) subMenuChecker[item] = checker;
+            if (checker != null) subMenuChecker.Add(item, checker);
         }
 
         /// <summary>
@@ -172,7 +183,7 @@ namespace RadialUI
 
             // Add the item to the sub-menu item dictionary for the main menu entry (indicated by the Guid)
             subMenuEntries[mainGuid].Add(item);
-            if (checker != null) subMenuChecker[item] = checker;
+            if (checker != null) subMenuChecker.Add(item,checker);
         }
 
         /// <summary>
@@ -232,8 +243,7 @@ namespace RadialUI
             // Populate sub-menu based on all items added by any plugins for the specific main menu entry
             foreach (MapMenu.ItemArgs item in subMenuEntries[mainGuid])
             {
-                var checker = subMenuChecker[item];
-                if (checker == null || checker()) mapMenu.AddItem(item);
+                if (!subMenuChecker.ContainsKey(item) || subMenuChecker[item]()) mapMenu.AddItem(item);
             }
         }
     }

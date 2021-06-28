@@ -73,6 +73,10 @@ namespace RadialUI
         private static bool lastSuccess = true;
         private static DateTime Execute;
 
+        // Last Creature/HideVolume
+        private static NGuid target;
+        private static HideVolumeItem lastHideVolumeItem;
+
         private (Action<MapMenuItem, Object>, MapMenuItem, Object) pending = (null,null,null);
 
         /// <summary>
@@ -170,7 +174,7 @@ namespace RadialUI
             }
         }
 
-        private static NGuid target;
+        
 
         private void AddCreatureEvent(Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)> dic, NGuid myCreature, MapMenu map)
         {
@@ -216,13 +220,22 @@ namespace RadialUI
             return target;
         }
 
+        /// <summary>
+        /// Fetches the last creature the menu has been open on (menu open or closed)
+        /// </summary>
+        /// <returns>NGuid for the last creature that the Radial Menu has been opened on.</returns>
+        public static HideVolumeItem GetLastRadialHideVolume()
+        {
+            return lastHideVolumeItem;
+        }
+
         private void AddHideVolumeEvent(Dictionary<string, (MapMenu.ItemArgs, Func<HideVolumeItem, bool>)> dic, MapMenu map)
         {
-            var target = GetSelectedHideVolumeItem();
+            lastHideVolumeItem = GetSelectedHideVolumeItem();
             foreach (var handlers
                 in dic.Values
                     .Where(handlers => handlers.Item2 == null
-                                       || handlers.Item2(target))) map.AddItem(handlers.Item1);
+                                       || handlers.Item2(lastHideVolumeItem))) map.AddItem(handlers.Item1);
         }
 
         private static HideVolumeItem GetSelectedHideVolumeItem()
