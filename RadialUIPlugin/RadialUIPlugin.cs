@@ -15,7 +15,7 @@ namespace RadialUI
     {
         // constants
         public const string Guid = "org.hollofox.plugins.RadialUIPlugin";
-        private const string Version = "1.2.4.0";
+        private const string Version = "1.2.5.0";
 
         /// <summary>
         /// Awake plugin
@@ -170,9 +170,11 @@ namespace RadialUI
             }
         }
 
+        private static NGuid target;
+
         private void AddCreatureEvent(Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)> dic, NGuid myCreature, MapMenu map)
         {
-            var target = GetRadialTargetCreature();
+            target = GetRadialTargetCreature();
             foreach (var handlers
                 in dic.Values
                     .Where(handlers => handlers.Item2 == null
@@ -196,13 +198,22 @@ namespace RadialUI
                 );
         }
 
-        public static NGuid GetRadialTargetCreature()
+        private static NGuid GetRadialTargetCreature()
         {
             var x = (CreatureMenuBoardTool)GameObject.FindObjectOfType(typeof(CreatureMenuBoardTool));
 
             FieldInfo mapField = x.GetType().GetField("_selectedCreature", bindFlags);
             var selectedCreature = (Creature)mapField.GetValue(x);
             return selectedCreature.CreatureId.Value;
+        }
+
+        /// <summary>
+        /// Fetches the last creature the menu has been open on (menu open or closed)
+        /// </summary>
+        /// <returns>NGuid for the last creature that the Radial Menu has been opened on.</returns>
+        public static NGuid GetLastRadialTargetCreature()
+        {
+            return target;
         }
 
         private void AddHideVolumeEvent(Dictionary<string, (MapMenu.ItemArgs, Func<HideVolumeItem, bool>)> dic, MapMenu map)
