@@ -15,6 +15,9 @@ namespace RadialUI
         // Hold sub-entries for main menus
         private static Dictionary<string, List<MapMenu.ItemArgs>> subMenuEntries = new Dictionary<string, List<MapMenu.ItemArgs>>();
 
+        private static Dictionary<MapMenu.ItemArgs, Func<bool>> subMenuChecker =
+            new Dictionary<MapMenu.ItemArgs, Func<bool>>();
+
         /// <summary>
         /// Enumeration for the type of menu. Hidden volumes are not currently supported since their callback is a little
         /// different but they could be added with a little bit of extra effort
@@ -97,7 +100,8 @@ namespace RadialUI
         /// <param name="icon">Icon associated with the sub-menu item</param>
         /// <param name="callback">Callback that is called when the sub-menu item is selected</param>
         /// <param name="closeMenu">Determines if the menu is closed after sub-menu item is selected</param>
-        public static void CreateSubMenuItem(string mainGuid, string title, Sprite icon, Action<CreatureGuid, string, MapMenuItem> callback, bool closeMenu = true)
+        /// <param name="checker">Optional checker used to determine whether to add button for submenu</param>
+        public static void CreateSubMenuItem(string mainGuid, string title, Sprite icon, Action<CreatureGuid, string, MapMenuItem> callback, bool closeMenu = true, Func<bool> checker = null)
         {
             // Check if the main menu Guid exists
             if (!subMenuEntries.ContainsKey(mainGuid))
@@ -106,14 +110,16 @@ namespace RadialUI
                 return;
             }
             // Add the item to the sub-menu item dictionary for the main menu entry (indicated by the Guid)
-            subMenuEntries[mainGuid].Add(new MapMenu.ItemArgs()
+            var item = new MapMenu.ItemArgs
             {
                 // Parent plugin specified callback for when the sub-menu item is selected
                 Action = (mmi, obj) => { callback(radialAsset, mainGuid, mmi); },
                 Icon = icon,
                 Title = title,
                 CloseMenuOnActivate = closeMenu
-            });
+            };
+            subMenuEntries[mainGuid].Add(item);
+            if (checker != null) subMenuChecker[item] = checker;
         }
 
         /// <summary>
@@ -124,7 +130,8 @@ namespace RadialUI
         /// <param name="icon">Icon associated with the sub-menu item</param>
         /// <param name="callback">Callback that is called when the sub-menu item is selected</param>
         /// <param name="closeMenu">Determines if the menu is closed after sub-menu item is selected</param>
-        public static void CreateSubMenuItem(string mainGuid, string title, Sprite icon, Action<HideVolumeItem, string, MapMenuItem> callback, bool closeMenu = true)
+        /// <param name="checker">Optional checker used to determine whether to add button for submenu</param>
+        public static void CreateSubMenuItem(string mainGuid, string title, Sprite icon, Action<HideVolumeItem, string, MapMenuItem> callback, bool closeMenu = true, Func<bool> checker = null)
         {
             // Check if the main menu Guid exists
             if (!subMenuEntries.ContainsKey(mainGuid))
@@ -133,14 +140,39 @@ namespace RadialUI
                 return;
             }
             // Add the item to the sub-menu item dictionary for the main menu entry (indicated by the Guid)
-            subMenuEntries[mainGuid].Add(new MapMenu.ItemArgs()
+            var item = new MapMenu.ItemArgs
             {
                 // Parent plugin specified callback for when the sub-menu item is selected
                 Action = (mmi, obj) => { callback(radialHideVolume, mainGuid, mmi); },
                 Icon = icon,
                 Title = title,
                 CloseMenuOnActivate = closeMenu
-            });
+            };
+            subMenuEntries[mainGuid].Add(item);
+            if (checker != null) subMenuChecker[item] = checker;
+        }
+
+        /// <summary>
+        /// Add sub-menu items to a maim menu entry
+        /// </summary>
+        /// <param name="mainGuid">Guid of the main menu entry</param>
+        /// <param name="item">Uses standard mapmenu item args for greater flexibility</param>
+        /// <param name="callback">Callback that is called when the sub-menu item is selected if you want 3 parameter return</param>
+        /// <param name="checker">Optional checker used to determine whether to add button for submenu</param>
+        public static void CreateSubMenuItem(string mainGuid, MapMenu.ItemArgs item , Action<HideVolumeItem, string, MapMenuItem> callback = null, Func<bool> checker = null)
+        {
+            // Check if the main menu Guid exists
+            if (!subMenuEntries.ContainsKey(mainGuid))
+            {
+                Debug.LogWarning("Main radial menu '" + mainGuid + "' does not exits. Use EnsureMainMenuItem() before adding sub-menu items.");
+                return;
+            }
+
+            if (callback != null) item.Action = (mmi, obj) => { callback(radialHideVolume, mainGuid, mmi); };
+
+            // Add the item to the sub-menu item dictionary for the main menu entry (indicated by the Guid)
+            subMenuEntries[mainGuid].Add(item);
+            if (checker != null) subMenuChecker[item] = checker;
         }
 
         /// <summary>
@@ -200,7 +232,8 @@ namespace RadialUI
             // Populate sub-menu based on all items added by any plugins for the specific main menu entry
             foreach (MapMenu.ItemArgs item in subMenuEntries[mainGuid])
             {
-                mapMenu.AddItem(item);
+                var checker = subMenuChecker[item];
+                if (checker == null || checker()) mapMenu.AddItem(item);
             }
         }
     }
