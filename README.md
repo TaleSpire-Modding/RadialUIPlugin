@@ -93,20 +93,22 @@ Build the project.
 Browse to the newly created ```bin/Debug``` or ```bin/Release``` folders and copy the ```RadialUIPlugin.dll``` to ```Steam\steamapps\common\TaleSpire\BepInEx\plugins```
 
 ## Changelog
-1.2.5: Privatized method and new method to return last creature selected from menu.
-1.2.4: Image not found does not block radial from loading
-1.2.3: bugfix
-1.2.2: Add size submenu hook
-1.2.1: Delay callback to fix forms
-1.2.0: Add hooks to character submenus, Added code to manage submenus.
-1.1.1: Add Docs on how to implement submenus
-1.1.0: Removed Modding Utils and display on main menu
-1.0.2: Fixed Issue on radial breaking upon leaving board
-1.0.0: Initial release
+- 1.3.0: Expand Submenu to allow a checker
+- 1.2.5: Privatized method and new method to return last creature selected from menu.
+- 1.2.4: Image not found does not block radial from loading
+- 1.2.3: bugfix
+- 1.2.2: Add size submenu hook
+- 1.2.1: Delay callback to fix forms
+- 1.2.0: Add hooks to character submenus, Added code to manage submenus.
+- 1.1.1: Add Docs on how to implement submenus
+- 1.1.0: Removed Modding Utils and display on main menu
+- 1.0.2: Fixed Issue on radial breaking upon leaving board
+- 1.0.0: Initial release
 
 ## Shoutouts
 Shoutout to my Patreons on https://www.patreon.com/HolloFox recognising your
 mighty contribution to my caffeine addiciton:
 - John Fuller
+- Don Cole
 
 Lord Ashes providing dependent code unify snippet controlling submenus.
