@@ -103,6 +103,20 @@ namespace RadialUI
             subMenuEntries.Add(mainGuid, new List<MapMenu.ItemArgs>());
         }
 
+        [Obsolete]
+        public static void CreateSubMenuItem(string mainGuid, string title, Sprite icon,
+            Action<CreatureGuid, string, MapMenuItem> callback, bool closeMenu)
+        {
+            CreateSubMenuItem(mainGuid,title,icon,callback,closeMenu,null);
+        }
+        
+        [Obsolete]
+        public static void CreateSubMenuItem(string mainGuid, string title, Sprite icon,
+            Action<CreatureGuid, string, MapMenuItem> callback)
+        {
+            CreateSubMenuItem(mainGuid, title, icon, callback, true, null);
+        }
+
         /// <summary>
         /// Add sub-menu items to a maim menu entry
         /// </summary>
@@ -112,7 +126,7 @@ namespace RadialUI
         /// <param name="callback">Callback that is called when the sub-menu item is selected</param>
         /// <param name="closeMenu">Determines if the menu is closed after sub-menu item is selected</param>
         /// <param name="checker">Optional checker used to determine whether to add button for submenu</param>
-        public static void CreateSubMenuItem(string mainGuid, string title, Sprite icon, Action<CreatureGuid, string, MapMenuItem> callback, bool closeMenu = true, Func<bool> checker = null)
+        public static void CreateSubMenuItem(string mainGuid, string title, Sprite icon, Action<CreatureGuid, string, MapMenuItem> callback, bool closeMenu = true, Func<bool> checker= null)
         {
             // Check if the main menu Guid exists
             if (!subMenuEntries.ContainsKey(mainGuid))
