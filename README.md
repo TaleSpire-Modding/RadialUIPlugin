@@ -110,6 +110,6 @@ Browse to the newly created ```bin/Debug``` or ```bin/Release``` folders and cop
 Shoutout to my Patreons on https://www.patreon.com/HolloFox recognising your
 mighty contribution to my caffeine addiciton:
 - John Fuller
-- Don Cole
+- [Tales Tavern](https://talestavern.com/) - MadWizard
 
 Lord Ashes providing dependent code unify snippet controlling submenus.
