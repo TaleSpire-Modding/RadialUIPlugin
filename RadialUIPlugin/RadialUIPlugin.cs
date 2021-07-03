@@ -15,7 +15,7 @@ namespace RadialUI
     {
         // constants
         public const string Guid = "org.hollofox.plugins.RadialUIPlugin";
-        private const string Version = "1.3.1.0";
+        private const string Version = "1.4.0.0";
 
         /// <summary>
         /// Awake plugin
@@ -28,7 +28,7 @@ namespace RadialUI
         }
 
 
-        // Character Related
+        // Character Related Add
         private static readonly Dictionary<string, (MapMenu.ItemArgs, Func<NGuid,NGuid, bool>)> _onCharacterCallback = new Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)>();
         private static readonly Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)> _onCanAttack = new Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)>();
         private static readonly Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)> _onCantAttack = new Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)>();
@@ -37,6 +37,17 @@ namespace RadialUI
         private static readonly Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)> _onSubmenuGm = new Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)>();
         private static readonly Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)> _onSubmenuAttacks = new Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)>();
         private static readonly Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)> _onSubmenuSize = new Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)>();
+
+        // Character Related Remove
+        private static readonly Dictionary<string, List<string>> _removeOnCharacter = new Dictionary<string, List<string>>();
+        private static readonly Dictionary<string, List<string>> _removeOnCanAttack = new Dictionary<string, List<string>>();
+        private static readonly Dictionary<string, List<string>> _removeOnCantAttack = new Dictionary<string, List<string>>();
+        private static readonly Dictionary<string, List<string>> _removeOnSubmenuEmotes = new Dictionary<string, List<string>>();
+        private static readonly Dictionary<string, List<string>> _removeOnSubmenuKill = new Dictionary<string, List<string>>();
+        private static readonly Dictionary<string, List<string>> _removeOnSubmenuGm = new Dictionary<string, List<string>>();
+        private static readonly Dictionary<string, List<string>> _removeOnSubmenuAttacks = new Dictionary<string, List<string>>();
+        private static readonly Dictionary<string, List<string>> _removeOnSubmenuSize = new Dictionary<string, List<string>>();
+        private static readonly Dictionary<string, List<string>> _removeOnHideVolume = new Dictionary<string, List<string>>();
 
         // Hide Volumes
         private static readonly Dictionary<string, (MapMenu.ItemArgs, Func<HideVolumeItem,bool>)> _onHideVolumeCallback = new Dictionary<string, (MapMenu.ItemArgs, Func<HideVolumeItem,bool>)>();
@@ -63,6 +74,39 @@ namespace RadialUI
         public static bool RemoveOnSubmenuGm(string key) => _onSubmenuGm.Remove(key);
         public static bool RemoveOnSubmenuAttacks(string key) => _onSubmenuAttacks.Remove(key);
         public static bool RemoveOnSubmenuSize(string key) => _onSubmenuSize.Remove(key);
+
+        // Add RemoveOn
+        public static void AddOnRemoveSubmenuAttacks(string key, string value) => AddRemoveOn(_removeOnSubmenuAttacks,key,value);
+        public static void AddOnRemoveCanAttack(string key, string value) => AddRemoveOn(_removeOnCanAttack,key,value);
+        public static void AddOnRemoveCantAttack(string key, string value) => AddRemoveOn(_removeOnCantAttack,key,value);
+        public static void AddOnRemoveCharacter(string key, string value) => AddRemoveOn(_removeOnCharacter,key,value);
+        public static void AddOnRemoveHideVolume(string key, string value) => AddRemoveOn(_removeOnHideVolume,key,value);
+        public static void AddOnRemoveSubmenuEmotes(string key, string value) => AddRemoveOn(_removeOnSubmenuEmotes,key,value);
+        public static void AddOnRemoveSubmenuGm(string key, string value) => AddRemoveOn(_removeOnSubmenuGm,key,value);
+        public static void AddOnRemoveSubmenuKill(string key, string value) => AddRemoveOn(_removeOnSubmenuKill,key,value);
+        public static void AddOnRemoveSubmenuSize(string key, string value) => AddRemoveOn(_removeOnSubmenuSize,key,value);
+
+        // Remove RemoveOn
+        public static void RemoveOnRemoveSubmenuAttacks(string key, string value) => RemoveRemoveOn(_removeOnSubmenuAttacks, key, value);
+        public static void RemoveOnRemoveCanAttack(string key, string value) => RemoveRemoveOn(_removeOnCanAttack, key, value);
+        public static void RemoveOnRemoveCantAttack(string key, string value) => RemoveRemoveOn(_removeOnCantAttack, key, value);
+        public static void RemoveOnRemoveCharacter(string key, string value) => RemoveRemoveOn(_removeOnCharacter, key, value);
+        public static void RemoveOnRemoveHideVolume(string key, string value) => RemoveRemoveOn(_removeOnHideVolume, key, value);
+        public static void RemoveOnRemoveSubmenuEmotes(string key, string value) => RemoveRemoveOn(_removeOnSubmenuEmotes, key, value);
+        public static void RemoveOnRemoveSubmenuGm(string key, string value) => RemoveRemoveOn(_removeOnSubmenuGm, key, value);
+        public static void RemoveOnRemoveSubmenuKill(string key, string value) => RemoveRemoveOn(_removeOnSubmenuKill, key, value);
+        public static void RemoveOnRemoveSubmenuSize(string key, string value) => RemoveRemoveOn(_removeOnSubmenuSize, key, value);
+
+        private static void AddRemoveOn(Dictionary<string, List<string>> data, string key, string value)
+        {
+            if (!data.ContainsKey(key)) data.Add(key, new List<string>());
+            data[key].Add(value);
+        }
+
+        private static bool RemoveRemoveOn(Dictionary<string, List<string>> data, string key, string value)
+        {
+            return data.ContainsKey(key) && data[key].Remove(value);
+        }
 
         // Remove On HideVolume
         public static bool RemoveOnHideVolume(string key) => _onHideVolumeCallback.Remove(key);
@@ -158,11 +202,21 @@ namespace RadialUI
                 Debug.Log(title);
 
                 // Minis Related
+                if (IsMini(title)) RemoveRadialComponent(_removeOnCharacter, map);
+                if (CanAttack(title)) RemoveRadialComponent(_removeOnCanAttack, map);
+                if (CanNotAttack(title)) RemoveRadialComponent(_removeOnCantAttack, map);
+                
                 if (IsMini(title)) AddCreatureEvent(_onCharacterCallback,id,map);
                 if (CanAttack(title)) AddCreatureEvent(_onCanAttack, id, map);
                 if (CanNotAttack(title)) AddCreatureEvent(_onCantAttack, id, map);
-                
+
                 // Minis Submenu
+                if (IsEmotes(title)) RemoveRadialComponent(_removeOnSubmenuEmotes, map);
+                if (IsKill(title)) RemoveRadialComponent(_removeOnSubmenuKill, map);
+                if (IsGmMenu(title)) RemoveRadialComponent(_removeOnSubmenuGm, map);
+                if (IsAttacksMenu(title)) RemoveRadialComponent(_removeOnSubmenuAttacks, map);
+                if (IsSizeMenu(title)) RemoveRadialComponent(_removeOnSubmenuSize, map);
+
                 if (IsEmotes(title)) AddCreatureEvent(_onSubmenuEmotes, id, map);
                 if (IsKill(title)) AddCreatureEvent(_onSubmenuKill, id, map);
                 if (IsGmMenu(title)) AddCreatureEvent(_onSubmenuGm, id, map);
@@ -170,11 +224,29 @@ namespace RadialUI
                 if (IsSizeMenu(title)) AddCreatureEvent(_onSubmenuSize, id, map);
 
                 // Hide Volumes
+                if (IsHideVolume(title)) RemoveRadialComponent(_removeOnHideVolume, map);
                 if (IsHideVolume(title)) AddHideVolumeEvent(_onHideVolumeCallback, map);
             }
         }
 
-        
+        private static void RemoveRadialComponent(Dictionary<string, List<string>> removeOnCharacter, MapMenu map)
+        {
+            var indexes = removeOnCharacter.SelectMany(i => i.Value).Distinct();
+            foreach (var index in indexes) Debug.Log(index);
+            foreach (var index in indexes)
+            {
+                var Map = map.transform.GetChild(0);
+                for (var i = 0; i < Map.childCount; i++)
+                {
+                    var mapComponent = Map.GetChild(i).GetComponent<MapMenuItem>();
+                    var mapField = mapComponent.GetType().GetField("_title", bindFlags);
+                    var title = (string)mapField.GetValue(mapComponent);
+                    if (title != index) continue;
+                    Debug.Log($"found: {index}");
+                    Map.GetChild(i).gameObject.SetActive(false);
+                }
+            }
+        }
 
         private void AddCreatureEvent(Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)> dic, NGuid myCreature, MapMenu map)
         {
@@ -198,8 +270,7 @@ namespace RadialUI
                     FadeName = handlers.Item1.FadeName,
                     Obj = handlers.Item1.Obj,
                 }
-                
-                );
+            );
         }
 
         private static NGuid GetRadialTargetCreature()
