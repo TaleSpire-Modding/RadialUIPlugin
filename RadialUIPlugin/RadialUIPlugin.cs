@@ -15,7 +15,7 @@ namespace RadialUI
     {
         // constants
         public const string Guid = "org.hollofox.plugins.RadialUIPlugin";
-        private const string Version = "1.4.1.0";
+        private const string Version = "1.4.2.0";
 
         /// <summary>
         /// Awake plugin
@@ -202,26 +202,26 @@ namespace RadialUI
                 Debug.Log(title);
 
                 // Minis Related
-                if (IsMini(title)) RemoveRadialComponent(_removeOnCharacter, map);
-                if (CanAttack(title)) RemoveRadialComponent(_removeOnCanAttack, map);
-                if (CanNotAttack(title)) RemoveRadialComponent(_removeOnCantAttack, map);
-                
                 if (IsMini(title)) AddCreatureEvent(_onCharacterCallback,id,map);
                 if (CanAttack(title)) AddCreatureEvent(_onCanAttack, id, map);
                 if (CanNotAttack(title)) AddCreatureEvent(_onCantAttack, id, map);
 
-                // Minis Submenu
-                if (IsEmotes(title)) RemoveRadialComponent(_removeOnSubmenuEmotes, map);
-                if (IsKill(title)) RemoveRadialComponent(_removeOnSubmenuKill, map);
-                if (IsGmMenu(title)) RemoveRadialComponent(_removeOnSubmenuGm, map);
-                if (IsAttacksMenu(title)) RemoveRadialComponent(_removeOnSubmenuAttacks, map);
-                if (IsSizeMenu(title)) RemoveRadialComponent(_removeOnSubmenuSize, map);
+                if (IsMini(title)) RemoveRadialComponent(_removeOnCharacter, map);
+                if (CanAttack(title)) RemoveRadialComponent(_removeOnCanAttack, map);
+                if (CanNotAttack(title)) RemoveRadialComponent(_removeOnCantAttack, map);
 
+                // Minis Submenu
                 if (IsEmotes(title)) AddCreatureEvent(_onSubmenuEmotes, id, map);
                 if (IsKill(title)) AddCreatureEvent(_onSubmenuKill, id, map);
                 if (IsGmMenu(title)) AddCreatureEvent(_onSubmenuGm, id, map);
                 if (IsAttacksMenu(title)) AddCreatureEvent(_onSubmenuAttacks, id, map);
                 if (IsSizeMenu(title)) AddCreatureEvent(_onSubmenuSize, id, map);
+
+                if (IsEmotes(title)) RemoveRadialComponent(_removeOnSubmenuEmotes, map);
+                if (IsKill(title)) RemoveRadialComponent(_removeOnSubmenuKill, map);
+                if (IsGmMenu(title)) RemoveRadialComponent(_removeOnSubmenuGm, map);
+                if (IsAttacksMenu(title)) RemoveRadialComponent(_removeOnSubmenuAttacks, map);
+                if (IsSizeMenu(title)) RemoveRadialComponent(_removeOnSubmenuSize, map);
 
                 // Hide Volumes
                 if (IsHideVolume(title)) RemoveRadialComponent(_removeOnHideVolume, map);
@@ -244,6 +244,7 @@ namespace RadialUI
                     if (title != index) continue;
                     Debug.Log($"found: {index}");
                     Map.GetChild(i).gameObject.SetActive(false);
+                    i = Map.childCount;
                 }
             }
         }
