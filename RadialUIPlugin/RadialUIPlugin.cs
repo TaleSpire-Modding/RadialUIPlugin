@@ -255,23 +255,32 @@ namespace RadialUI
             foreach (var handlers
                 in dic.Values
                     .Where(handlers => handlers.Item2 == null
-                                       || handlers.Item2(myCreature, target))) map.AddItem(
-                new MapMenu.ItemArgs
-                {
-                    Title = handlers.Item1.Title,
-                    Icon = handlers.Item1.Icon,
-                    Action = (mmi, obj) =>
-                    {
-                        pending = (handlers.Item1.Action,mmi,obj);
-                        Execute = DateTime.Now.AddMilliseconds(200);
-                    },
-                    CloseMenuOnActivate = handlers.Item1.CloseMenuOnActivate,
-                    ValueText = handlers.Item1.ValueText,
-                    SubValueText = handlers.Item1.SubValueText,
-                    FadeName = handlers.Item1.FadeName,
-                    Obj = handlers.Item1.Obj,
-                }
-            );
+                                       || handlers.Item2(myCreature, target))){
+                    map.AddItem(
+                        new MapMenu.ItemArgs
+                        {
+                            Title = handlers.Item1.Title,
+                            Icon = handlers.Item1.Icon,
+                            Action = (mmi, obj) =>
+                            {
+                                
+
+                                pending = (handlers.Item1.Action,mmi,obj);
+                                Execute = DateTime.Now.AddMilliseconds(200);
+                            },
+                            CloseMenuOnActivate = handlers.Item1.CloseMenuOnActivate,
+                            ValueText = handlers.Item1.ValueText,
+                            SubValueText = handlers.Item1.SubValueText,
+                            FadeName = handlers.Item1.FadeName,
+                            Obj = handlers.Item1.Obj,
+                        }
+                    );
+                    var count = map.transform.childCount;
+                    var last = map.transform.GetChild(count - 1);
+                    var rectTrans = last.transform.GetChild(0).GetChild(0).GetComponent<RectTransform>();
+                    rectTrans.sizeDelta = new Vector2(48f, 48f);
+                    Debug.Log("Set Size 48");
+            }
         }
 
         private static NGuid GetRadialTargetCreature()

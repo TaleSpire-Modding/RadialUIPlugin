@@ -3,6 +3,7 @@ using BepInEx;
 using Bounce.Unmanaged;
 using System.Collections.Generic;
 using System;
+using System.Reflection;
 
 namespace RadialUI
 {
@@ -29,6 +30,8 @@ namespace RadialUI
             cantAttack,
             HideVolume,
         }
+
+        private static MenuType openMenuType = MenuType.character;
 
         /*
         /// <inheritdoc cref="EnsureMainMenuItem(string,RadialUI.RadialSubmenu.MenuType,string,UnityEngine.Sprite,System.Func{Bounce.Unmanaged.NGuid,Bounce.Unmanaged.NGuid,bool})"/>
@@ -66,6 +69,7 @@ namespace RadialUI
                         Title = title,
                         CloseMenuOnActivate = false
                     }, Reporter);
+                    openMenuType = MenuType.character;
                     break;
                 case MenuType.canAttack:
                     RadialUI.RadialUIPlugin.AddOnCanAttack(mainGuid, new MapMenu.ItemArgs()
@@ -76,6 +80,7 @@ namespace RadialUI
                         Title = title,
                         CloseMenuOnActivate = false
                     }, Reporter);
+                    openMenuType = MenuType.character;
                     break;
                 case MenuType.cantAttack:
                     RadialUI.RadialUIPlugin.AddOnCantAttack(mainGuid, new MapMenu.ItemArgs()
@@ -86,6 +91,7 @@ namespace RadialUI
                         Title = title,
                         CloseMenuOnActivate = false
                     }, Reporter);
+                    openMenuType = MenuType.character;
                     break;
                 case MenuType.HideVolume:
                     RadialUI.RadialUIPlugin.AddOnHideVolume(mainGuid, new MapMenu.ItemArgs()
@@ -96,6 +102,7 @@ namespace RadialUI
                         Title = title,
                         CloseMenuOnActivate = false
                     }, Reporter);
+                    openMenuType = MenuType.HideVolume;
                     break;
             }
             // Add a list into the dictionary to hold sub-menu entries for the main menu entry
@@ -252,13 +259,44 @@ namespace RadialUI
         /// <param name="mainGuid">Guid of the main menu</param>
         private static void DisplaySubmenu(MapMenuItem mmi, object obj, string mainGuid)
         {
+            Vector3 result;
+            if (openMenuType == MenuType.character)
+                result = GetRadialTargetCreature().transform.position + Vector3.up * GetHeightDiff();
+            else result = GetRadialTargetHideVolume();
+
             // Create sub-menu
-            MapMenu mapMenu = MapMenuManager.OpenMenu(mmi, MapMenu.MenuType.BRANCH);
+            MapMenu mapMenu = MapMenuManager.OpenMenu(result,true);
             // Populate sub-menu based on all items added by any plugins for the specific main menu entry
             foreach (MapMenu.ItemArgs item in subMenuEntries[mainGuid])
             {
                 if (!subMenuChecker.ContainsKey(item) || subMenuChecker[item]()) mapMenu.AddItem(item);
             }
         }
+
+        /// Get Pos for Creature
+        private static Creature GetRadialTargetCreature()
+        {
+            var x = (CreatureMenuBoardTool)GameObject.FindObjectOfType(typeof(CreatureMenuBoardTool));
+
+            FieldInfo mapField = x.GetType().GetField("_selectedCreature", bindFlags);
+            return (Creature)mapField.GetValue(x);
+        }
+        private static float GetHeightDiff()
+        {
+            var x = (CreatureMenuBoardTool)GameObject.FindObjectOfType(typeof(CreatureMenuBoardTool));
+            FieldInfo mapField = x.GetType().GetField("_hitHeightDif", bindFlags);
+            return (float)mapField.GetValue(x);
+        }
+
+        // Get Pos for Hide Volume
+        private static Vector3 GetRadialTargetHideVolume()
+        {
+            var x = (GMHideVolumeMenuBoardTool)GameObject.FindObjectOfType(typeof(GMHideVolumeMenuBoardTool));
+            FieldInfo mapField = x.GetType().GetField("_selectedPos", bindFlags);
+            return (Vector3)mapField.GetValue(x);
+        }
+
+        private const BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
+
     }
 }
