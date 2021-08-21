@@ -15,7 +15,7 @@ namespace RadialUI
     {
         // constants
         public const string Guid = "org.hollofox.plugins.RadialUIPlugin";
-        public const string Version = "1.5.0.0";
+        public const string Version = "1.5.1.0";
 
         /// <summary>
         /// Awake plugin
@@ -202,26 +202,31 @@ namespace RadialUI
                 Debug.Log(title);
 
                 // Minis Related
-                if (IsMini(title)) AddCreatureEvent(_onCharacterCallback,id,map);
-                if (CanAttack(title)) AddCreatureEvent(_onCanAttack, id, map);
-                if (CanNotAttack(title)) AddCreatureEvent(_onCantAttack, id, map);
+                Record(map);
 
                 if (IsMini(title)) RemoveRadialComponent(_removeOnCharacter, map);
                 if (CanAttack(title)) RemoveRadialComponent(_removeOnCanAttack, map);
                 if (CanNotAttack(title)) RemoveRadialComponent(_removeOnCantAttack, map);
 
+                if (IsMini(title)) AddCreatureEvent(_onCharacterCallback,id,map);
+                if (CanAttack(title)) AddCreatureEvent(_onCanAttack, id, map);
+                if (CanNotAttack(title)) AddCreatureEvent(_onCantAttack, id, map);
+                
                 // Minis Submenu
-                if (IsEmotes(title)) AddCreatureEvent(_onSubmenuEmotes, id, map);
-                if (IsKill(title)) AddCreatureEvent(_onSubmenuKill, id, map);
-                if (IsGmMenu(title)) AddCreatureEvent(_onSubmenuGm, id, map);
-                if (IsAttacksMenu(title)) AddCreatureEvent(_onSubmenuAttacks, id, map);
-                if (IsSizeMenu(title)) AddCreatureEvent(_onSubmenuSize, id, map);
+                
 
                 if (IsEmotes(title)) RemoveRadialComponent(_removeOnSubmenuEmotes, map);
                 if (IsKill(title)) RemoveRadialComponent(_removeOnSubmenuKill, map);
                 if (IsGmMenu(title)) RemoveRadialComponent(_removeOnSubmenuGm, map);
                 if (IsAttacksMenu(title)) RemoveRadialComponent(_removeOnSubmenuAttacks, map);
                 if (IsSizeMenu(title)) RemoveRadialComponent(_removeOnSubmenuSize, map);
+
+                if (IsEmotes(title)) AddCreatureEvent(_onSubmenuEmotes, id, map);
+                if (IsKill(title)) AddCreatureEvent(_onSubmenuKill, id, map);
+                if (IsGmMenu(title)) AddCreatureEvent(_onSubmenuGm, id, map);
+                if (IsAttacksMenu(title)) AddCreatureEvent(_onSubmenuAttacks, id, map);
+                if (IsSizeMenu(title)) AddCreatureEvent(_onSubmenuSize, id, map);
+
 
                 // Hide Volumes
                 if (IsHideVolume(title)) RemoveRadialComponent(_removeOnHideVolume, map);
@@ -232,19 +237,48 @@ namespace RadialUI
         private static void RemoveRadialComponent(Dictionary<string, List<string>> removeOnCharacter, MapMenu map)
         {
             var indexes = removeOnCharacter.SelectMany(i => i.Value).Distinct();
-            foreach (var index in indexes) Debug.Log(index);
-            foreach (var index in indexes)
+            foreach (var index in indexes) Debug.Log($"Index:{index}");
+            foreach (var index in indexes.Where(i => foundTitles.Contains(i)))
             {
                 var Map = map.transform.GetChild(0);
                 for (var i = 0; i < Map.childCount; i++)
                 {
+                    try
+                    {
+                        var mapComponent = Map.GetChild(i).GetComponent<MapMenuItem>();
+                        var mapField = mapComponent.GetType().GetField("_title", bindFlags);
+                        var title = (string) mapField.GetValue(mapComponent);
+                        if (title != index) continue;
+                        Debug.Log($"found: {index}");
+                        Map.GetChild(i).gameObject.SetActive(false);
+                        i = Map.childCount;
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.Log(e);
+                    }
+                }
+            }
+        }
+
+        private static List<string> foundTitles = new List<string>();
+
+        private static void Record(MapMenu map)
+        {
+            foundTitles = new List<string>();
+            var Map = map.transform.GetChild(0);
+            for (var i = 0; i < Map.childCount; i++)
+            {
+                try
+                {
                     var mapComponent = Map.GetChild(i).GetComponent<MapMenuItem>();
                     var mapField = mapComponent.GetType().GetField("_title", bindFlags);
-                    var title = (string)mapField.GetValue(mapComponent);
-                    if (title != index) continue;
-                    Debug.Log($"found: {index}");
-                    Map.GetChild(i).gameObject.SetActive(false);
-                    i = Map.childCount;
+                    var title = (string) mapField.GetValue(mapComponent);
+                    foundTitles.Add(title);
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e);
                 }
             }
         }
