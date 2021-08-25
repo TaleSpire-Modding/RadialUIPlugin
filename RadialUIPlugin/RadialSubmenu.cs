@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using TaleSpireCore;
-using BepInEx;
 using Bounce.Unmanaged;
 using System.Collections.Generic;
 using System;

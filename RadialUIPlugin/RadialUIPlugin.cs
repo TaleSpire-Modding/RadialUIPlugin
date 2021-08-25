@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
-using TaleSpireCore;
 using Object = System.Object;
 
 namespace RadialUI
@@ -193,44 +192,118 @@ namespace RadialUI
 			menuExecutionTime = DateTime.MinValue;
 		}
 
+		static Vector3 RemoveY(Vector3 position)
+		{
+			return new Vector3(position.x, 0, position.z);
+		}
+
+		static float GetDistanceToMenuPosition(Vector3 position, CreatureBoardAsset creatureBoardAsset)
+		{
+			Vector3 flatPosition = RemoveY(position);
+			float distanceToPlacedPosition = (flatPosition - RemoveY(creatureBoardAsset.PlacedPosition)).magnitude;
+			if (creatureBoardAsset.IsFlying)
+			{
+				Vector3 flyingPosition = creatureBoardAsset.PlacedPosition - new Vector3(0, creatureBoardAsset.FlyingIndicator.ElevationAmount, 0);
+				float distanceToFlyingPosition = (RemoveY(flyingPosition) - flatPosition).magnitude;
+				return Mathf.Min(distanceToFlyingPosition, distanceToPlacedPosition);
+			}
+
+			return distanceToPlacedPosition;
+		}
+
+		/// <summary>
+		/// Gets the creature closest to the specified menu point.
+		/// </summary>
+		/// <param name="position"></param>
+		/// <param name="maxRadiusTiles"></param>
+		/// <returns></returns>
+		public static CreatureBoardAsset GetCreatureClosestTo(Vector3 position, float maxRadiusTiles = 0.5f)
+		{
+			CreatureBoardAsset closestCreature = null;
+			float shortestDistanceSoFar = float.MaxValue;
+			CreatureBoardAsset[] allCreatureAssets = CreaturePresenter.AllCreatureAssets.ToArray();
+			if (allCreatureAssets == null)
+				return null;
+			foreach (CreatureBoardAsset creatureBoardAsset in allCreatureAssets)
+			{
+				float distance = GetDistanceToMenuPosition(position, creatureBoardAsset);
+				if (distance < shortestDistanceSoFar)
+				{
+					shortestDistanceSoFar = distance;
+					closestCreature = creatureBoardAsset;
+				}
+			}
+			if (shortestDistanceSoFar > maxRadiusTiles)
+				return null;
+
+			return closestCreature;
+		}
+
+
+		Vector3 GetMenuPosition()
+		{
+			FieldInfo positionField = typeof(MapMenuManager).GetField("_position", BindingFlags.NonPublic | BindingFlags.Instance);
+			if (positionField != null)
+			{
+				return (Vector3)positionField.GetValue(MapMenuManager.Instance);
+			}
+			return Vector3.zero;
+		}
+
 		private void ModifyMenus()
 		{
 			List<MapMenu> menus = Talespire.RadialMenus.GetAllOpen();
 
-			NGuid selectedCreatureId = LocalClient.SelectedCreatureId.Value;
+			//NGuid selectedCreatureId = LocalClient.SelectedCreatureId.Value;
+
+			//Debug.LogWarning($"selectedCreatureId = {selectedCreatureId}");
+
+			Vector3 menuPosition = GetMenuPosition();
+			//DebugVector("Menu position", menuPosition);
+			CreatureAtMenu = GetCreatureClosestTo(menuPosition, 2f);
+			NGuid rightClickCreatureId = NGuid.Empty;
+			if (CreatureAtMenu != null)
+				rightClickCreatureId = CreatureAtMenu.CreatureId.Value;
 
 			for (var i = lastMenuCount; i < menus.Count; i++)
 			{
+				//Debug.LogWarning($"selectedCreatureId = {rightClickCreatureId}");
 				MapMenu mapMenu = menus[i];
+
 				string title = mapMenu.GetTitle();
 				Debug.Log(title);
 
 				// Minis Related
-				if (IsMini(title)) AddMenuItem(_onCharacterCallback, selectedCreatureId, mapMenu);
-				if (CanAttack(title)) AddMenuItem(_onCanAttack, selectedCreatureId, mapMenu);
-				if (CanNotAttack(title)) AddMenuItem(_onCantAttack, selectedCreatureId, mapMenu);
+				if (IsMini(title)) AddMenuItem(_onCharacterCallback, rightClickCreatureId, mapMenu);
+				if (CanAttack(title)) AddMenuItem(_onCanAttack, rightClickCreatureId, mapMenu);
+				if (CanNotAttack(title)) AddMenuItem(_onCantAttack, rightClickCreatureId, mapMenu);
 
-				if (IsMini(title)) RemoveMenuItem(_removeOnCharacter, selectedCreatureId, mapMenu);
-				if (CanAttack(title)) RemoveMenuItem(_removeOnCanAttack, selectedCreatureId, mapMenu);
-				if (CanNotAttack(title)) RemoveMenuItem(_removeOnCantAttack, selectedCreatureId, mapMenu);
+				if (IsMini(title)) RemoveMenuItem(_removeOnCharacter, rightClickCreatureId, mapMenu);
+				if (CanAttack(title)) RemoveMenuItem(_removeOnCanAttack, rightClickCreatureId, mapMenu);
+				if (CanNotAttack(title)) RemoveMenuItem(_removeOnCantAttack, rightClickCreatureId, mapMenu);
 
 				// Minis Submenu
-				if (IsEmotes(title)) AddMenuItem(_onSubmenuEmotes, selectedCreatureId, mapMenu);
-				if (IsKill(title)) AddMenuItem(_onSubmenuKill, selectedCreatureId, mapMenu);
-				if (IsGmMenu(title)) AddMenuItem(_onSubmenuGm, selectedCreatureId, mapMenu);
-				if (IsAttacksMenu(title)) AddMenuItem(_onSubmenuAttacks, selectedCreatureId, mapMenu);
-				if (IsSizeMenu(title)) AddMenuItem(_onSubmenuSize, selectedCreatureId, mapMenu);
+				if (IsEmotes(title)) AddMenuItem(_onSubmenuEmotes, rightClickCreatureId, mapMenu);
+				if (IsKill(title)) AddMenuItem(_onSubmenuKill, rightClickCreatureId, mapMenu);
+				if (IsGmMenu(title)) AddMenuItem(_onSubmenuGm, rightClickCreatureId, mapMenu);
+				if (IsAttacksMenu(title)) AddMenuItem(_onSubmenuAttacks, rightClickCreatureId, mapMenu);
+				if (IsSizeMenu(title)) AddMenuItem(_onSubmenuSize, rightClickCreatureId, mapMenu);
 
-				if (IsEmotes(title)) RemoveMenuItem(_removeOnSubmenuEmotes, selectedCreatureId, mapMenu);
-				if (IsKill(title)) RemoveMenuItem(_removeOnSubmenuKill, selectedCreatureId, mapMenu);
-				if (IsGmMenu(title)) RemoveMenuItem(_removeOnSubmenuGm, selectedCreatureId, mapMenu);
-				if (IsAttacksMenu(title)) RemoveMenuItem(_removeOnSubmenuAttacks, selectedCreatureId, mapMenu);
-				if (IsSizeMenu(title)) RemoveMenuItem(_removeOnSubmenuSize, selectedCreatureId, mapMenu);
+				if (IsEmotes(title)) RemoveMenuItem(_removeOnSubmenuEmotes, rightClickCreatureId, mapMenu);
+				if (IsKill(title)) RemoveMenuItem(_removeOnSubmenuKill, rightClickCreatureId, mapMenu);
+				if (IsGmMenu(title)) RemoveMenuItem(_removeOnSubmenuGm, rightClickCreatureId, mapMenu);
+				if (IsAttacksMenu(title)) RemoveMenuItem(_removeOnSubmenuAttacks, rightClickCreatureId, mapMenu);
+				if (IsSizeMenu(title)) RemoveMenuItem(_removeOnSubmenuSize, rightClickCreatureId, mapMenu);
 
 				// Hide Volumes
-				if (IsHideVolume(title)) RemoveMenuItem(_removeOnHideVolume, selectedCreatureId, mapMenu);
+				if (IsHideVolume(title)) RemoveMenuItem(_removeOnHideVolume, rightClickCreatureId, mapMenu);
 				if (IsHideVolume(title)) AddHideVolumeEvent(_onHideVolumeCallback, mapMenu);
 			}
+		}
+
+		private static void DebugVector(string label, Vector3 menuPosition)
+		{
+			Debug.LogWarning($"{label}: {menuPosition.x}, {menuPosition.y}, {menuPosition.z}");
 		}
 
 		private static void RemoveMenuItem(Dictionary<string, List<RadialCheckRemove>> removeOnCharacter, NGuid miniAtMenu, MapMenu map)
@@ -242,27 +315,72 @@ namespace RadialUI
 				Debug.Log("  " + index);
 
 			Transform Map = map.transform.GetChild(0);
-			for (int i = 0; i < Map.childCount; i++)
+			//Debug.Log($"Map.childCount = {Map.childCount}");
+			try
 			{
-				Transform transform = Map.GetChild(i);
-				MapMenuItem mapMenuItem = transform.GetComponent<MapMenuItem>();
-				string menuTitle = mapMenuItem.GetTitle();
-				Debug.Log($"Map.GetChild({i}) = \"{menuTitle}\"");
+				for (int i = Map.childCount - 1; i >= 0; i--)
+				{
+					Transform transform = Map.GetChild(i);
+					string menuTitle = GetMenuTitle(transform);
+					//Debug.Log($"Map.GetChild({i}) = \"{menuTitle}\"");
+					//Debug.Log($"removeOnCharacter.Keys.Count = {removeOnCharacter.Keys.Count}");
 
-				foreach (string key in removeOnCharacter.Keys)
-					foreach (RadialCheckRemove radialCheckRemove in removeOnCharacter[key])
-						if (radialCheckRemove.TitleToRemove == menuTitle &&
-							(radialCheckRemove.ShouldRemoveCallback == null || radialCheckRemove.ShouldRemoveCallback(menuTitle, miniAtMenu.ToString(), target.ToString())))
+					bool found = false;
+					foreach (string key in removeOnCharacter.Keys)
+					{
+						foreach (RadialCheckRemove radialCheckRemove in removeOnCharacter[key])
 						{
-							Debug.Log($"RemoveRadialComponent - : {menuTitle}");
-							transform.gameObject.SetActive(false);
-							return;
+							if (radialCheckRemove.TitleToRemove == menuTitle)
+							{
+								//Debug.LogWarning($"Found a match: ({radialCheckRemove.TitleToRemove})");
+
+								//if (radialCheckRemove.ShouldRemoveCallback == null)
+								//	Debug.LogWarning("radialCheckRemove.ShouldRemoveCallback == null");
+
+								if (radialCheckRemove.ShouldRemoveCallback == null || TriggerShouldRemoveCallback(miniAtMenu, menuTitle, radialCheckRemove))
+								{
+									//Debug.Log($"RemoveRadialComponent - (setting active to false): {menuTitle}");
+									transform.gameObject.SetActive(false);
+									found = true;
+									break;
+								}
+							}
 						}
+						if (found)
+							break;
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				Debug.LogException(ex);
 			}
 		}
 
-		List<MapMenu.ItemArgs> previouslyModded = new List<MapMenu.ItemArgs>();
+		private static bool TriggerShouldRemoveCallback(NGuid miniAtMenu, string menuTitle, RadialCheckRemove radialCheckRemove)
+		{
+			Debug.LogWarning("Calling radialCheckRemove.ShouldRemoveCallback(menuTitle, miniAtMenu.ToString(), target.ToString())...");
+			return radialCheckRemove.ShouldRemoveCallback(menuTitle, miniAtMenu.ToString(), target.ToString());
+		}
+
+		private static string GetMenuTitle(Transform transform)
+		{
+			MapMenuItem mapMenuItem = transform.GetComponent<MapMenuItem>();
+			if (mapMenuItem != null)
+				return mapMenuItem.GetTitle();
+			MapMenuStatItem mapMenuStatItem = transform.GetComponent<MapMenuStatItem>();
+			if (mapMenuStatItem != null)
+				return mapMenuStatItem.GetTitle();
+			return null;
+		}
+
+		List<string> previouslyModded = new List<string>();
 		bool needToClear;
+
+		/// <summary>
+		/// The creature at the menu (not necessarily the selected creature - that can be different!)
+		/// </summary>
+		public static CreatureBoardAsset CreatureAtMenu { get; private set; }
 
 		public void ClearPreviouslyModded()
 		{
@@ -278,9 +396,9 @@ namespace RadialUI
 			{
 				var menuMod = dic[key];
 				if (menuMod.shouldAdd == null || menuMod.shouldAdd(myCreature, target))
-					if (!previouslyModded.Contains(menuMod.mapArgs))
+					if (!previouslyModded.Contains(key))
 					{
-						previouslyModded.Add(menuMod.mapArgs);
+						previouslyModded.Add(key);
 						validMenuMods.Add(menuMod);
 					}
 			}
