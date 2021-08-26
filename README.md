@@ -93,7 +93,8 @@ Build the project.
 Browse to the newly created ```bin/Debug``` or ```bin/Release``` folders and copy the ```RadialUIPlugin.dll``` to ```Steam\steamapps\common\TaleSpire\BepInEx\plugins```
 
 ## Changelog
-- 1.3.1: fixed backwards compatability due to paramater signature.\
+- 1.4.0: Refactor and Callback for Remove menu, provided by CodeRushed.
+- 1.3.1: fixed backwards compatability due to paramater signature.
 - 1.3.0: Expand Submenu to allow a checker
 - 1.2.5: Privatized method and new method to return last creature selected from menu.
 - 1.2.4: Image not found does not block radial from loading
