@@ -1,302 +1,277 @@
 ﻿using UnityEngine;
-using BepInEx;
 using Bounce.Unmanaged;
 using System.Collections.Generic;
 using System;
-using System.Reflection;
 
 namespace RadialUI
 {
-    public class RadialSubmenu
-    {
-        // Radial menu selected asset
-        private static CreatureGuid radialAsset = CreatureGuid.Empty;
-        private static HideVolumeItem radialHideVolume;
+	public class RadialSubmenu
+	{
+		// Radial menu selected asset
+		private static CreatureGuid radialAsset = CreatureGuid.Empty;
+		private static HideVolumeItem radialHideVolume;
 
-        // Hold sub-entries for main menus
-        private static Dictionary<string, List<MapMenu.ItemArgs>> subMenuEntries = new Dictionary<string, List<MapMenu.ItemArgs>>();
+		// Hold sub-entries for main menus
+		private static Dictionary<string, List<MapMenu.ItemArgs>> subMenuEntries = new Dictionary<string, List<MapMenu.ItemArgs>>();
 
-        private static Dictionary<MapMenu.ItemArgs, Func<bool>> subMenuChecker =
-            new Dictionary<MapMenu.ItemArgs, Func<bool>>();
+		private static Dictionary<MapMenu.ItemArgs, Func<bool>> subMenuChecker =
+				new Dictionary<MapMenu.ItemArgs, Func<bool>>();
 
-        /// <summary>
-        /// Enumeration for the type of menu. Hidden volumes are not currently supported since their callback is a little
-        /// different but they could be added with a little bit of extra effort
-        /// </summary>
-        public enum MenuType
-        {
-            character = 1,
-            canAttack,
-            cantAttack,
-            HideVolume,
-        }
+		/// <summary>
+		/// Enumeration for the type of menu. Hidden volumes are not currently supported since their callback is a little
+		/// different but they could be added with a little bit of extra effort
+		/// </summary>
+		public enum MenuType
+		{
+			character = 1,
+			canAttack,
+			cantAttack,
+			HideVolume,
+		}
 
-        private static MenuType openMenuType = MenuType.character;
+		private static MenuType openMenuType = MenuType.character;
 
-        /*
-        /// <inheritdoc cref="EnsureMainMenuItem(string,RadialUI.RadialSubmenu.MenuType,string,UnityEngine.Sprite,System.Func{Bounce.Unmanaged.NGuid,Bounce.Unmanaged.NGuid,bool})"/>
-        public static void EnsureMainMenuItem(string mainGuid, MenuType type, string title, Sprite icon,
-            Func<NGuid, NGuid, bool> callback) => EnsureMainMenuItem(mainGuid, type, title, icon, callback,null);
+		/*
+		/// <inheritdoc cref="EnsureMainMenuItem(string,RadialUI.RadialSubmenu.MenuType,string,UnityEngine.Sprite,System.Func{Bounce.Unmanaged.NGuid,Bounce.Unmanaged.NGuid,bool})"/>
+		public static void EnsureMainMenuItem(string mainGuid, MenuType type, string title, Sprite icon,
+				Func<NGuid, NGuid, bool> callback) => EnsureMainMenuItem(mainGuid, type, title, icon, callback,null);
 
-        /// <inheritdoc cref="EnsureMainMenuItem(string,RadialUI.RadialSubmenu.MenuType,string,UnityEngine.Sprite,System.Func{HideVolumeItem,bool})"/>
-        public static void EnsureMainMenuItem(string mainGuid, MenuType type, string title, Sprite icon,
-            Func<HideVolumeItem, bool> callback) => EnsureMainMenuItem(mainGuid, type, title, icon, null, callback);*/
+		/// <inheritdoc cref="EnsureMainMenuItem(string,RadialUI.RadialSubmenu.MenuType,string,UnityEngine.Sprite,System.Func{HideVolumeItem,bool})"/>
+		public static void EnsureMainMenuItem(string mainGuid, MenuType type, string title, Sprite icon,
+				Func<HideVolumeItem, bool> callback) => EnsureMainMenuItem(mainGuid, type, title, icon, null, callback);*/
 
-        /// <summary>
-        /// Method that a plugin uses to ensure that the desired main (radial) menu item exits.
-        /// The method creates the entry if it does not exists and ignore the requested if it already exists.
-        /// For multiple plugins to share a main menu entry, they need to use the same guid.
-        /// </summary>
-        /// <param name="mainGuid">Guid for the main menu entry</param>
-        /// <param name="type">Determines which type of radial menu the entry is for</param>
-        /// <param name="title">Text that is associated with the entry</param>
-        /// <param name="icon">Icon that should be displayed</param>
-        /// <param name="creatureCallback">callback for a creature</param>
-        /// <param name="hideVolumeCallback">callback for a hide volume</param>
-        public static void EnsureMainMenuItem(string mainGuid, MenuType type, string title, Sprite icon) // , Func<NGuid, NGuid, bool> creatureCallback = null, Func<HideVolumeItem, bool> hideVolumeCallback = null )
-        {
-            // Don't create the main menu entry multiple times
-            if (subMenuEntries.ContainsKey(mainGuid)) { return; }
-            // Create the main menu entry based on the type of menu
-            switch (type)
-            {
-                case MenuType.character:
-                    RadialUI.RadialUIPlugin.AddOnCharacter(mainGuid, new MapMenu.ItemArgs()
-                    {
-                        // Add mainGuid into the callback so we can look up the corresponding sub-menu entries
-                        Action = (mmi, obj) => { DisplaySubmenu(mmi, obj, mainGuid); },
-                        Icon = icon,
-                        Title = title,
-                        CloseMenuOnActivate = false
-                    }, Reporter);
-                    openMenuType = MenuType.character;
-                    break;
-                case MenuType.canAttack:
-                    RadialUI.RadialUIPlugin.AddOnCanAttack(mainGuid, new MapMenu.ItemArgs()
-                    {
-                        // Add mainGuid into the callback so we can look up the corresponding sub-menu entries
-                        Action = (mmi, obj) => { DisplaySubmenu(mmi, obj, mainGuid); },
-                        Icon = icon,
-                        Title = title,
-                        CloseMenuOnActivate = false
-                    }, Reporter);
-                    openMenuType = MenuType.character;
-                    break;
-                case MenuType.cantAttack:
-                    RadialUI.RadialUIPlugin.AddOnCantAttack(mainGuid, new MapMenu.ItemArgs()
-                    {
-                        // Add mainGuid into the callback so we can look up the corresponding sub-menu entries
-                        Action = (mmi, obj) => { DisplaySubmenu(mmi, obj, mainGuid); },
-                        Icon = icon,
-                        Title = title,
-                        CloseMenuOnActivate = false
-                    }, Reporter);
-                    openMenuType = MenuType.character;
-                    break;
-                case MenuType.HideVolume:
-                    RadialUI.RadialUIPlugin.AddOnHideVolume(mainGuid, new MapMenu.ItemArgs()
-                    {
-                        // Add mainGuid into the callback so we can look up the corresponding sub-menu entries
-                        Action = (mmi, obj) => { DisplaySubmenu(mmi, obj, mainGuid); },
-                        Icon = icon,
-                        Title = title,
-                        CloseMenuOnActivate = false
-                    }, Reporter);
-                    openMenuType = MenuType.HideVolume;
-                    break;
-            }
-            // Add a list into the dictionary to hold sub-menu entries for the main menu entry
-            // (Presence of an entry in this dictionary means the main menu entry has already been created)
-            subMenuEntries.Add(mainGuid, new List<MapMenu.ItemArgs>());
-        }
+		/// <summary>
+		/// Method that a plugin uses to ensure that the desired main (radial) menu item exits.
+		/// The method creates the entry if it does not exists and ignore the requested if it already exists.
+		/// For multiple plugins to share a main menu entry, they need to use the same guid.
+		/// </summary>
+		/// <param name="mainGuid">Guid for the main menu entry</param>
+		/// <param name="type">Determines which type of radial menu the entry is for</param>
+		/// <param name="title">Text that is associated with the entry</param>
+		/// <param name="icon">Icon that should be displayed</param>
+		public static void EnsureMainMenuItem(string mainGuid, MenuType type, string title, Sprite icon)
+		{
+			// Don't create the main menu entry multiple times
+			if (subMenuEntries.ContainsKey(mainGuid)) { return; }
+			// Create the main menu entry based on the type of menu
+			switch (type)
+			{
+				case MenuType.character:
+					EnsureMainMenuOnCharacter(mainGuid, title, icon);
+					break;
+				case MenuType.canAttack:
+					EnsureMainMenuOnCanAttack(mainGuid, title, icon);
+					break;
+				case MenuType.cantAttack:
+					EnsureMainMenuOnCantAttack(mainGuid, title, icon);
+					break;
+				case MenuType.HideVolume:
+					EnsureMainMenuOnHideVolume(mainGuid, title, icon);
+					break;
+			}
+			// Add a list into the dictionary to hold sub-menu entries for the main menu entry
+			// (Presence of an entry in this dictionary means the main menu entry has already been created)
+			subMenuEntries.Add(mainGuid, new List<MapMenu.ItemArgs>());
+		}
 
-        [Obsolete]
-        public static void CreateSubMenuItem(string mainGuid, string title, Sprite icon,
-            Action<CreatureGuid, string, MapMenuItem> callback, bool closeMenu)
-        {
-            CreateSubMenuItem(mainGuid,title,icon,callback,closeMenu,null);
-        }
-        
-        [Obsolete]
-        public static void CreateSubMenuItem(string mainGuid, string title, Sprite icon,
-            Action<CreatureGuid, string, MapMenuItem> callback)
-        {
-            CreateSubMenuItem(mainGuid, title, icon, callback, true, null);
-        }
+		private static void EnsureMainMenuOnHideVolume(string mainGuid, string title, Sprite icon)
+		{
+			RadialUIPlugin.AddOnHideVolume(mainGuid, NewMainMenu(mainGuid, title, icon), Reporter);
+			openMenuType = MenuType.HideVolume;
+		}
 
-        /// <summary>
-        /// Add sub-menu items to a maim menu entry
-        /// </summary>
-        /// <param name="mainGuid">Guid of the main menu entry</param>
-        /// <param name="title">Text associated with the sub-menu item</param>
-        /// <param name="icon">Icon associated with the sub-menu item</param>
-        /// <param name="callback">Callback that is called when the sub-menu item is selected</param>
-        /// <param name="closeMenu">Determines if the menu is closed after sub-menu item is selected</param>
-        /// <param name="checker">Optional checker used to determine whether to add button for submenu</param>
-        public static void CreateSubMenuItem(string mainGuid, string title, Sprite icon, Action<CreatureGuid, string, MapMenuItem> callback, bool closeMenu = true, Func<bool> checker= null)
-        {
-            // Check if the main menu Guid exists
-            if (!subMenuEntries.ContainsKey(mainGuid))
-            {
-                Debug.LogWarning("Main radial menu '" + mainGuid + "' does not exits. Use EnsureMainMenuItem() before adding sub-menu items.");
-                return;
-            }
-            // Add the item to the sub-menu item dictionary for the main menu entry (indicated by the Guid)
-            var item = new MapMenu.ItemArgs
-            {
-                // Parent plugin specified callback for when the sub-menu item is selected
-                Action = (mmi, obj) => { callback(radialAsset, mainGuid, mmi); },
-                Icon = icon,
-                Title = title,
-                CloseMenuOnActivate = closeMenu
-            };
-            subMenuEntries[mainGuid].Add(item);
-            if (checker != null) subMenuChecker.Add(item, checker);
-        }
+		private static void EnsureMainMenuOnCantAttack(string mainGuid, string title, Sprite icon)
+		{
+			RadialUIPlugin.AddOnCantAttack(mainGuid, NewMainMenu(mainGuid, title, icon), Reporter);
+			openMenuType = MenuType.character;
+		}
 
-        /// <summary>
-        /// Add sub-menu items to a maim menu entry
-        /// </summary>
-        /// <param name="mainGuid">Guid of the main menu entry</param>
-        /// <param name="title">Text associated with the sub-menu item</param>
-        /// <param name="icon">Icon associated with the sub-menu item</param>
-        /// <param name="callback">Callback that is called when the sub-menu item is selected</param>
-        /// <param name="closeMenu">Determines if the menu is closed after sub-menu item is selected</param>
-        /// <param name="checker">Optional checker used to determine whether to add button for submenu</param>
-        public static void CreateSubMenuItem(string mainGuid, string title, Sprite icon, Action<HideVolumeItem, string, MapMenuItem> callback, bool closeMenu = true, Func<bool> checker = null)
-        {
-            // Check if the main menu Guid exists
-            if (!subMenuEntries.ContainsKey(mainGuid))
-            {
-                Debug.LogWarning("Main radial menu '" + mainGuid + "' does not exits. Use EnsureMainMenuItem() before adding sub-menu items.");
-                return;
-            }
-            // Add the item to the sub-menu item dictionary for the main menu entry (indicated by the Guid)
-            var item = new MapMenu.ItemArgs
-            {
-                // Parent plugin specified callback for when the sub-menu item is selected
-                Action = (mmi, obj) => { callback(radialHideVolume, mainGuid, mmi); },
-                Icon = icon,
-                Title = title,
-                CloseMenuOnActivate = closeMenu
-            };
-            subMenuEntries[mainGuid].Add(item);
-            if (checker != null) subMenuChecker.Add(item, checker);
-        }
+		private static void EnsureMainMenuOnCanAttack(string mainGuid, string title, Sprite icon)
+		{
+			RadialUIPlugin.AddOnCanAttack(mainGuid, NewMainMenu(mainGuid, title, icon), Reporter);
+			openMenuType = MenuType.character;
+		}
 
-        /// <summary>
-        /// Add sub-menu items to a maim menu entry
-        /// </summary>
-        /// <param name="mainGuid">Guid of the main menu entry</param>
-        /// <param name="item">Uses standard mapmenu item args for greater flexibility</param>
-        /// <param name="callback">Callback that is called when the sub-menu item is selected if you want 3 parameter return</param>
-        /// <param name="checker">Optional checker used to determine whether to add button for submenu</param>
-        public static void CreateSubMenuItem(string mainGuid, MapMenu.ItemArgs item , Action<HideVolumeItem, string, MapMenuItem> callback = null, Func<bool> checker = null)
-        {
-            // Check if the main menu Guid exists
-            if (!subMenuEntries.ContainsKey(mainGuid))
-            {
-                Debug.LogWarning("Main radial menu '" + mainGuid + "' does not exits. Use EnsureMainMenuItem() before adding sub-menu items.");
-                return;
-            }
+		private static void EnsureMainMenuOnCharacter(string mainGuid, string title, Sprite icon)
+		{
+			RadialUIPlugin.AddOnCharacter(mainGuid, NewMainMenu(mainGuid, title, icon), Reporter);
+			openMenuType = MenuType.character;
+		}
 
-            if (callback != null) item.Action = (mmi, obj) => { callback(radialHideVolume, mainGuid, mmi); };
+		public static MapMenu.ItemArgs NewMainMenu(string mainGuid, string title, Sprite icon)
+		{
+			return new MapMenu.ItemArgs()
+			{
+				// Add mainGuid into the callback so we can look up the corresponding sub-menu entries
+				Action = (mmi, obj) => { DisplaySubmenu(mmi, obj, mainGuid); },
+				Icon = icon,
+				Title = title,
+				CloseMenuOnActivate = false
+			};
+		}
 
-            // Add the item to the sub-menu item dictionary for the main menu entry (indicated by the Guid)
-            subMenuEntries[mainGuid].Add(item);
-            if (checker != null) subMenuChecker.Add(item,checker);
-        }
+		[Obsolete]
+		public static void CreateSubMenuItem(string mainGuid, string title, Sprite icon,
+						Action<CreatureGuid, string, MapMenuItem> callback, bool closeMenu)
+		{
+			CreateSubMenuItem(mainGuid, title, icon, callback, closeMenu, null);
+		}
 
-        /// <summary>
-        /// Method for loading icons (sprites) from a file.
-        /// </summary>
-        /// <param name="fileName">Drive, path and file name of the PNG or JPG file</param>
-        /// <returns>Spite holding the icon (which can be passed into the menu creation methods)</returns>
-        public static Sprite GetIconFromFile(string fileName)
-        {
-            Texture2D tex = new Texture2D(32, 32);
-            try
-            {
-                
-                tex.LoadImage(System.IO.File.ReadAllBytes(fileName));
-            }
-            catch (Exception e)
-            {
-                Debug.Log($"Error thrown getting file: {e}");
-                return null;
-            } 
-            return Sprite.Create(tex, new Rect(0, 0, 32, 32), new Vector2(0.5f, 0.5f));
-        }
+		[Obsolete]
+		public static void CreateSubMenuItem(string mainGuid, string title, Sprite icon, 
+				Action<CreatureGuid, string, MapMenuItem> callback)
+		{
+			CreateSubMenuItem(mainGuid, title, icon, callback, true, null);
+		}
 
-        /// <summary>
-        /// mMethid used internally for tracking which mini the radial menu was opened on
-        /// </summary>
-        /// <param name="selected">Selected mini</param>
-        /// <param name="radial">Radial menu mini</param>
-        /// <returns></returns>
-        private static bool Reporter(NGuid selected, NGuid radial)
-        {
-            radialAsset = new CreatureGuid(radial);
-            return true;
-        }
+		/// <summary>
+		/// Add sub-menu items to a main menu entry
+		/// </summary>
+		/// <param name="mainGuid">Guid of the main menu entry</param>
+		/// <param name="title">Text associated with the sub-menu item</param>
+		/// <param name="icon">Icon associated with the sub-menu item</param>
+		/// <param name="callback">Callback that is called when the sub-menu item is selected</param>
+		/// <param name="closeMenu">Determines if the menu is closed after sub-menu item is selected</param>
+		/// <param name="checker">Optional checker used to determine whether to add button for submenu</param>
+		public static void CreateSubMenuItem(string mainGuid, string title, Sprite icon, Action<CreatureGuid, string, MapMenuItem> callback, bool closeMenu = true, Func<bool> checker = null)
+		{
+			// Check if the main menu Guid exists
+			if (!subMenuEntries.ContainsKey(mainGuid))
+			{
+				Debug.LogWarning($"Main radial menu '{mainGuid}' does not exits. Use EnsureMainMenuItem() before adding sub-menu items.");
+				return;
+			}
+			// Add the item to the sub-menu item dictionary for the main menu entry (indicated by the Guid)
+			var item = new MapMenu.ItemArgs
+			{
+				// Parent plugin specified callback for when the sub-menu item is selected
+				Action = (mmi, obj) => { callback(radialAsset, mainGuid, mmi); },
+				Icon = icon,
+				Title = title,
+				CloseMenuOnActivate = closeMenu
+			};
+			subMenuEntries[mainGuid].Add(item);
+			if (checker != null) subMenuChecker.Add(item, checker);
+		}
 
-        /// <summary>
-        /// mMethid used internally for tracking which mini the radial menu was opened on
-        /// </summary>
-        /// <param name="item">Radial menu for Hide Volume</param>
-        /// <returns></returns>
-        private static bool Reporter(HideVolumeItem item)
-        {
-            radialHideVolume = item;
-            return true;
-        }
+		/// <summary>
+		/// Add sub-menu items to a maim menu entry
+		/// </summary>
+		/// <param name="mainGuid">Guid of the main menu entry</param>
+		/// <param name="title">Text associated with the sub-menu item</param>
+		/// <param name="icon">Icon associated with the sub-menu item</param>
+		/// <param name="callback">Callback that is called when the sub-menu item is selected</param>
+		/// <param name="closeMenu">Determines if the menu is closed after sub-menu item is selected</param>
+		/// <param name="checker">Optional checker used to determine whether to add button for submenu</param>
+		public static void CreateSubMenuItem(string mainGuid, string title, Sprite icon, Action<HideVolumeItem, string, MapMenuItem> callback, bool closeMenu = true, Func<bool> checker = null)
+		{
+			// Check if the main menu Guid exists
+			if (!subMenuEntries.ContainsKey(mainGuid))
+			{
+				Debug.LogWarning("Main radial menu '" + mainGuid + "' does not exits. Use EnsureMainMenuItem() before adding sub-menu items.");
+				return;
+			}
+			// Add the item to the sub-menu item dictionary for the main menu entry (indicated by the Guid)
+			var item = new MapMenu.ItemArgs
+			{
+				// Parent plugin specified callback for when the sub-menu item is selected
+				Action = (mmi, obj) => { callback(radialHideVolume, mainGuid, mmi); },
+				Icon = icon,
+				Title = title,
+				CloseMenuOnActivate = closeMenu
+			};
+			subMenuEntries[mainGuid].Add(item);
+			if (checker != null) subMenuChecker.Add(item, checker);
+		}
 
-        /// <summary>
-        /// Method called by the main menu to generate the corresponding sub-menu
-        /// </summary>
-        /// <param name="mmi">MapMenuItem associated with the main menu</param>
-        /// <param name="obj">Object associated with the main menu</param>
-        /// <param name="mainGuid">Guid of the main menu</param>
-        private static void DisplaySubmenu(MapMenuItem mmi, object obj, string mainGuid)
-        {
-            Vector3 result;
-            if (openMenuType == MenuType.character)
-                result = GetRadialTargetCreature().transform.position + Vector3.up * GetHeightDiff();
-            else result = GetRadialTargetHideVolume();
+		/// <summary>
+		/// Add sub-menu items to a maim menu entry
+		/// </summary>
+		/// <param name="mainGuid">Guid of the main menu entry</param>
+		/// <param name="item">Uses standard mapmenu item args for greater flexibility</param>
+		/// <param name="callback">Callback that is called when the sub-menu item is selected if you want 3 parameter return</param>
+		/// <param name="checker">Optional checker used to determine whether to add button for submenu</param>
+		public static void CreateSubMenuItem(string mainGuid, MapMenu.ItemArgs item, Action<HideVolumeItem, string, MapMenuItem> callback = null, Func<bool> checker = null)
+		{
+			// Check if the main menu Guid exists
+			if (!subMenuEntries.ContainsKey(mainGuid))
+			{
+				Debug.LogWarning("Main radial menu '" + mainGuid + "' does not exits. Use EnsureMainMenuItem() before adding sub-menu items.");
+				return;
+			}
 
-            // Create sub-menu
-            MapMenu mapMenu = MapMenuManager.OpenMenu(result,true);
-            // Populate sub-menu based on all items added by any plugins for the specific main menu entry
-            foreach (MapMenu.ItemArgs item in subMenuEntries[mainGuid])
-            {
-                if (!subMenuChecker.ContainsKey(item) || subMenuChecker[item]()) mapMenu.AddItem(item);
-            }
-        }
+			if (callback != null) item.Action = (mmi, obj) => { callback(radialHideVolume, mainGuid, mmi); };
 
-        /// Get Pos for Creature
-        private static Creature GetRadialTargetCreature()
-        {
-            var x = (CreatureMenuBoardTool)GameObject.FindObjectOfType(typeof(CreatureMenuBoardTool));
+			// Add the item to the sub-menu item dictionary for the main menu entry (indicated by the Guid)
+			subMenuEntries[mainGuid].Add(item);
+			if (checker != null) subMenuChecker.Add(item, checker);
+		}
 
-            FieldInfo mapField = x.GetType().GetField("_selectedCreature", bindFlags);
-            return (Creature)mapField.GetValue(x);
-        }
-        private static float GetHeightDiff()
-        {
-            var x = (CreatureMenuBoardTool)GameObject.FindObjectOfType(typeof(CreatureMenuBoardTool));
-            FieldInfo mapField = x.GetType().GetField("_hitHeightDif", bindFlags);
-            return (float)mapField.GetValue(x);
-        }
+		/// <summary>
+		/// Method for loading icons (sprites) from a file.
+		/// </summary>
+		/// <param name="fileName">Drive, path and file name of the PNG or JPG file</param>
+		/// <returns>Spite holding the icon (which can be passed into the menu creation methods)</returns>
+		public static Sprite GetIconFromFile(string fileName)
+		{
+			Texture2D tex = new Texture2D(32, 32);
+			try
+			{
 
-        // Get Pos for Hide Volume
-        private static Vector3 GetRadialTargetHideVolume()
-        {
-            var x = (GMHideVolumeMenuBoardTool)GameObject.FindObjectOfType(typeof(GMHideVolumeMenuBoardTool));
-            FieldInfo mapField = x.GetType().GetField("_selectedPos", bindFlags);
-            return (Vector3)mapField.GetValue(x);
-        }
+				tex.LoadImage(System.IO.File.ReadAllBytes(fileName));
+			}
+			catch (Exception e)
+			{
+				Debug.Log($"Error thrown getting file: {e}");
+				return null;
+			}
+			return Sprite.Create(tex, new Rect(0, 0, 32, 32), new Vector2(0.5f, 0.5f));
+		}
 
-        private const BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
+		/// <summary>
+		/// Method used internally for tracking which mini the radial menu was opened on
+		/// </summary>
+		/// <param name="selected">Selected mini</param>
+		/// <param name="radial">Radial menu mini</param>
+		/// <returns></returns>
+		private static bool Reporter(NGuid selected, NGuid radial)
+		{
+			radialAsset = new CreatureGuid(radial);
+			return true;
+		}
 
-    }
+		/// <summary>
+		/// Method used internally for tracking which mini the radial menu was opened on
+		/// </summary>
+		/// <param name="item">Radial menu for Hide Volume</param>
+		/// <returns></returns>
+		private static bool Reporter(HideVolumeItem item)
+		{
+			radialHideVolume = item;
+			return true;
+		}
+
+		/// <summary>
+		/// Method called by the main menu to generate the corresponding sub-menu
+		/// </summary>
+		/// <param name="mmi">MapMenuItem associated with the main menu</param>
+		/// <param name="obj">Object associated with the main menu</param>
+		/// <param name="mainGuid">Guid of the main menu</param>
+		private static void DisplaySubmenu(MapMenuItem mmi, object obj, string mainGuid)
+		{
+			Vector3 result;
+			if (openMenuType == MenuType.character)
+				result = Talespire.RadialMenus.GetTargetCreature().transform.position + Vector3.up * Talespire.RadialMenus.GetHeightDiff();
+			else 
+				result = Talespire.RadialMenus.GetRadialTargetHideVolume();
+
+			// Create sub-menu
+			MapMenu mapMenu = MapMenuManager.OpenMenu(result, true);
+
+			// Populate sub-menu based on all items added by any plugins for the specific main menu entry
+			foreach (MapMenu.ItemArgs item in subMenuEntries[mainGuid])
+				if (!subMenuChecker.ContainsKey(item) || subMenuChecker[item]())
+					mapMenu.AddItem(item);
+		}
+	}
 }
