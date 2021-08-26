@@ -1,37 +1,116 @@
-## Welcome to GitHub Pages
+# Radial UI Plugin
 
-You can use the [editor on GitHub](https://github.com/TaleSpire-Modding/RadialUIPlugin/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+This is a plugin for TaleSpire using BepInEx.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Install
 
-### Markdown
+Currently you need to either follow the build guide down below or use the R2ModMan. 
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## Usage
+This plugin is specifically for developers to easily implement extra Radial buttons based on a entity properties.
+Developers should reference the DLL for their own projects. This does not provide anything out of the box.
 
-```markdown
-Syntax highlighted code block
+## Example Usage
+```csharp
+	void Awake()
+        {
 
-# Header 1
-## Header 2
-### Header 3
+	    // Adds Callbacks to append new mapmenu item
+            AddOnCharacter(Guid, new MapMenu.ItemArgs
+            {
+                Action = Action,
+                Title = "On Character",
+                CloseMenuOnActivate = true
+            }); // Callback comparator is optional
 
-- Bulleted
-- List
+            AddOnCanAttack(Guid, new MapMenu.ItemArgs
+            {
+                Action = Action,
+                Title = "On Can Attack",
+                CloseMenuOnActivate = true
+            }, Check);
 
-1. Numbered
-2. List
+            AddOnCantAttack(Guid, new MapMenu.ItemArgs
+            {
+                Action = Action,
+                Title = "On Cant Attack",
+                CloseMenuOnActivate = true
+            }, Check);
 
-**Bold** and _Italic_ and `Code` text
+            AddOnHideVolume(Guid, new MapMenu.ItemArgs
+            {
+                Action = Action,
+                Title = "On HideVolume",
+                CloseMenuOnActivate = true
+            }, Check2);
+        }
 
-[Link](url) and ![Image](src)
+        private Boolean Check(NGuid selectedCreature, NGuid creatureTargetedFromRadial)
+        {
+            Debug.Log($"{selectedCreature},{creatureTargetedFromRadial}");
+            return true;
+        }
+
+        private Boolean Check2(HideVolumeItem args2)
+        {
+            Debug.Log($"{args2}");
+            return true;
+        }
+
+        private void Action(MapMenuItem args, object args2) => Debug.Log($"{args},{args2}");
+
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+## Loading a Sprite
+Dimensions for sprites should be 32 by 32, Below is an example script supplied by LordAshes loading in 
+an image to be used as an icon for the new Radial Component.
+```csharp
+string dir = "path to directory";
+Texture2D tex = new Texture2D(32, 32);
+tex.LoadImage(System.IO.File.ReadAllBytes(dir + "Images/Icons/KO.Png"));
+Sprite icon = Sprite.Create(tex, new Rect(0, 0, 32, 32), new Vector2(0.5f, 0.5f));
+```
 
-### Jekyll Themes
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/TaleSpire-Modding/RadialUIPlugin/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+## How to Compile / Modify
 
-### Support or Contact
+Open ```RadialUIPlugin.sln``` in Visual Studio.
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+You will need to add references to:
+
+```
+* BepInEx.dll  (Download from the BepInEx project.)
+* Bouncyrock.TaleSpire.Runtime (found in Steam\steamapps\common\TaleSpire\TaleSpire_Data\Managed)
+* UnityEngine.dll
+* UnityEngine.CoreModule.dll
+* UnityEngine.InputLegacyModule.dll 
+* UnityEngine.UI
+* Unity.TextMeshPro
+```
+
+Build the project.
+
+Browse to the newly created ```bin/Debug``` or ```bin/Release``` folders and copy the ```RadialUIPlugin.dll``` to ```Steam\steamapps\common\TaleSpire\BepInEx\plugins```
+
+## Changelog
+- 1.4.0: Refactor and Callback for Remove menu, provided by CodeRushed.
+- 1.3.1: fixed backwards compatability due to paramater signature.
+- 1.3.0: Expand Submenu to allow a checker
+- 1.2.5: Privatized method and new method to return last creature selected from menu.
+- 1.2.4: Image not found does not block radial from loading
+- 1.2.3: bugfix
+- 1.2.2: Add size submenu hook
+- 1.2.1: Delay callback to fix forms
+- 1.2.0: Add hooks to character submenus, Added code to manage submenus.
+- 1.1.1: Add Docs on how to implement submenus
+- 1.1.0: Removed Modding Utils and display on main menu
+- 1.0.2: Fixed Issue on radial breaking upon leaving board
+- 1.0.0: Initial release
+
+## Shoutouts
+Shoutout to my Patreons on https://www.patreon.com/HolloFox recognising your
+mighty contribution to my caffeine addiciton:
+- John Fuller
+- [Tales Tavern](https://talestavern.com/) - MadWizard
+
+Lord Ashes providing dependent code unify snippet controlling submenus.
