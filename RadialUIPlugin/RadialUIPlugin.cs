@@ -54,29 +54,227 @@ namespace RadialUI
 		private static readonly Dictionary<string, (MapMenu.ItemArgs, Func<HideVolumeItem, bool>)> _onHideVolumeCallback = new Dictionary<string, (MapMenu.ItemArgs, Func<HideVolumeItem, bool>)>();
 
 		// Add On Character
+		[Obsolete("Use RegisterAddCharacter instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public static void AddOnCharacter(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onCharacterCallback.Add(key, (value, externalCheck));
+		[Obsolete("Use RegisterAddCanAttack instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public static void AddOnCanAttack(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onCanAttack.Add(key, (value, externalCheck));
+		[Obsolete("Use RegisterAddCantAttack instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public static void AddOnCantAttack(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onCantAttack.Add(key, (value, externalCheck));
+		[Obsolete("Use RegisterAddSubmenuEmotes instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public static void AddOnSubmenuEmotes(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onSubmenuEmotes.Add(key, (value, externalCheck));
+		[Obsolete("Use RegisterAddSubmenuKill instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public static void AddOnSubmenuKill(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onSubmenuKill.Add(key, (value, externalCheck));
+		[Obsolete("Use RegisterAddSubmenuGm instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public static void AddOnSubmenuGm(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onSubmenuGm.Add(key, (value, externalCheck));
+		[Obsolete("Use RegisterAddSubmenuAttacks instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public static void AddOnSubmenuAttacks(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onSubmenuAttacks.Add(key, (value, externalCheck));
+		[Obsolete("Use RegisterAddSubmenuSize instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public static void AddOnSubmenuSize(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onSubmenuSize.Add(key, (value, externalCheck));
-
-		// Add On HideVolume
+		[Obsolete("Use RegisterAddHideVolume instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public static void AddOnHideVolume(string key, MapMenu.ItemArgs value, Func<HideVolumeItem, bool> externalCheck = null) => _onHideVolumeCallback.Add(key, (value, externalCheck));
 
 		// Remove On Character
+		[Obsolete("Use UnregisterAddCharacter instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public static bool RemoveOnCharacter(string key) => _onCharacterCallback.Remove(key);
+		[Obsolete("Use UnregisterAddCanAttack instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public static bool RemoveOnCanAttack(string key) => _onCanAttack.Remove(key);
+		[Obsolete("Use UnregisterAddCantAttack instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public static bool RemoveOnCantAttack(string key) => _onCantAttack.Remove(key);
+		[Obsolete("Use UnregisterAddSubmenuEmotes instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public static bool RemoveOnSubmenuEmotes(string key) => _onSubmenuEmotes.Remove(key);
+		[Obsolete("Use UnregisterAddSubmenuKill instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public static bool RemoveOnSubmenuKill(string key) => _onSubmenuKill.Remove(key);
+		[Obsolete("Use UnregisterAddSubmenuGm instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public static bool RemoveOnSubmenuGm(string key) => _onSubmenuGm.Remove(key);
+		[Obsolete("Use UnregisterAddSubmenuAttacks instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public static bool RemoveOnSubmenuAttacks(string key) => _onSubmenuAttacks.Remove(key);
+		[Obsolete("Use UnregisterAddSubmenuSize instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public static bool RemoveOnSubmenuSize(string key) => _onSubmenuSize.Remove(key);
 
-		
+		/// <summary>
+		/// Registers a new menu item to add to the Character menu.
+		/// </summary>
+		/// <param name="itemArgs">The MapMenu.ItemArgs of the menu to add (includes a callback for when this new menu item is selected).</param>
+		/// <param name="externalCheck">An optional callback to dynamically determine when you want to add the menu.</param>
+		/// <returns>Returns the commandId for this menu item add command. Useful if you later want to unregister this command.</returns>
+		public static string RegisterAddCharacter(MapMenu.ItemArgs itemArgs, Func<NGuid, NGuid, bool> externalCheck = null)
+		{
+			string commandId = System.Guid.NewGuid().ToString();
+			_onCharacterCallback.Add(commandId, (itemArgs, externalCheck));
+			return commandId;
+		}
+
+		/// <summary>
+		/// Registers a new menu item to add to the CanAttack menu.
+		/// </summary>
+		/// <param name="itemArgs">The MapMenu.ItemArgs of the menu to add (includes a callback for when this new menu item is selected).</param>
+		/// <param name="externalCheck">An optional callback to dynamically determine when you want to add the menu.</param>
+		/// <returns>Returns the commandId for this menu item add command. Useful if you later want to unregister this command.</returns>
+		public static string RegisterAddCanAttack(MapMenu.ItemArgs itemArgs, Func<NGuid, NGuid, bool> externalCheck = null)
+		{
+			string commandId = System.Guid.NewGuid().ToString();
+			_onCanAttack.Add(commandId, (itemArgs, externalCheck));
+			return commandId;
+		}
+
+		/// <summary>
+		/// Registers a new menu item to add to the CantAttack menu.
+		/// </summary>
+		/// <param name="itemArgs">The MapMenu.ItemArgs of the menu to add (includes a callback for when this new menu item is selected).</param>
+		/// <param name="externalCheck">An optional callback to dynamically determine when you want to add the menu.</param>
+		/// <returns>Returns the commandId for this menu item add command. Useful if you later want to unregister this command.</returns>
+		public static string RegisterAddCantAttack(MapMenu.ItemArgs itemArgs, Func<NGuid, NGuid, bool> externalCheck = null)
+		{
+			string commandId = System.Guid.NewGuid().ToString();
+			_onCantAttack.Add(commandId, (itemArgs, externalCheck));
+			return commandId;
+		}
+
+		/// <summary>
+		/// Registers a new menu item to add to the Emotes submenu.
+		/// </summary>
+		/// <param name="itemArgs">The MapMenu.ItemArgs of the menu to add (includes a callback for when this new menu item is selected).</param>
+		/// <param name="externalCheck">An optional callback to dynamically determine when you want to add the menu.</param>
+		/// <returns>Returns the commandId for this menu item add command. Useful if you later want to unregister this command.</returns>
+		public static string RegisterAddSubmenuEmotes(MapMenu.ItemArgs itemArgs, Func<NGuid, NGuid, bool> externalCheck = null)
+		{
+			string commandId = System.Guid.NewGuid().ToString();
+			_onSubmenuEmotes.Add(commandId, (itemArgs, externalCheck));
+			return commandId;
+		}
+
+		/// <summary>
+		/// Registers a new menu item to add to the Kill submenu.
+		/// </summary>
+		/// <param name="itemArgs">The MapMenu.ItemArgs of the menu to add (includes a callback for when this new menu item is selected).</param>
+		/// <param name="externalCheck">An optional callback to dynamically determine when you want to add the menu.</param>
+		/// <returns>Returns the commandId for this menu item add command. Useful if you later want to unregister this command.</returns>
+		public static string RegisterAddSubmenuKill(MapMenu.ItemArgs itemArgs, Func<NGuid, NGuid, bool> externalCheck = null)
+		{
+			string commandId = System.Guid.NewGuid().ToString();
+			_onSubmenuKill.Add(commandId, (itemArgs, externalCheck));
+			return commandId;
+		}
+
+		/// <summary>
+		/// Registers a new menu item to add to the GM Tools submenu.
+		/// </summary>
+		/// <param name="itemArgs">The MapMenu.ItemArgs of the menu to add (includes a callback for when this new menu item is selected).</param>
+		/// <param name="externalCheck">An optional callback to dynamically determine when you want to add the menu.</param>
+		/// <returns>Returns the commandId for this menu item add command. Useful if you later want to unregister this command.</returns>
+		public static string RegisterAddSubmenuGm(MapMenu.ItemArgs itemArgs, Func<NGuid, NGuid, bool> externalCheck = null)
+		{
+			string commandId = System.Guid.NewGuid().ToString();
+			_onSubmenuGm.Add(commandId, (itemArgs, externalCheck));
+			return commandId;
+		}
+
+		/// <summary>
+		/// Registers a new menu item to add to the Attacks submenu.
+		/// </summary>
+		/// <param name="itemArgs">The MapMenu.ItemArgs of the menu to add (includes a callback for when this new menu item is selected).</param>
+		/// <param name="externalCheck">An optional callback to dynamically determine when you want to add the menu.</param>
+		/// <returns>Returns the commandId for this menu item add command. Useful if you later want to unregister this command.</returns>
+		public static string RegisterAddSubmenuAttacks(MapMenu.ItemArgs itemArgs, Func<NGuid, NGuid, bool> externalCheck = null)
+		{
+			string commandId = System.Guid.NewGuid().ToString();
+			_onSubmenuAttacks.Add(commandId, (itemArgs, externalCheck));
+			return commandId;
+		}
+
+		/// <summary>
+		/// Registers a new menu item to add to the Size submenu.
+		/// </summary>
+		/// <param name="itemArgs">The MapMenu.ItemArgs of the menu to add (includes a callback for when this new menu item is selected).</param>
+		/// <param name="externalCheck">An optional callback to dynamically determine when you want to add the menu.</param>
+		/// <returns>Returns the commandId for this menu item add command. Useful if you later want to unregister this command.</returns>
+		public static string RegisterAddSubmenuSize(MapMenu.ItemArgs itemArgs, Func<NGuid, NGuid, bool> externalCheck = null)
+		{
+			string commandId = System.Guid.NewGuid().ToString();
+			_onSubmenuSize.Add(commandId, (itemArgs, externalCheck));
+			return commandId;
+		}
+
+		/// <summary>
+		/// Registers a new menu item to add to the HideVolume menu.
+		/// </summary>
+		/// <param name="itemArgs">The MapMenu.ItemArgs of the menu to add (includes a callback for when this new menu item is selected).</param>
+		/// <param name="externalCheck">An optional callback to dynamically determine when you want to add the menu.</param>
+		/// <returns>Returns the commandId for this menu item add command. Useful if you later want to unregister this command.</returns>
+		public static string RegisterAddHideVolume(MapMenu.ItemArgs itemArgs, Func<HideVolumeItem, bool> externalCheck = null)
+		{
+			string commandId = System.Guid.NewGuid().ToString();
+			_onHideVolumeCallback.Add(commandId, (itemArgs, externalCheck));
+			return commandId;
+		}
+
+		/// <summary>
+		/// Unregisters the specified Add command from the Character menu.
+		/// </summary>
+		/// <param name="commandId">The commandId to remove.</param>
+		public static bool UnregisterAddCharacter(string commandId) => _onCharacterCallback.Remove(commandId);
+
+		/// <summary>
+		/// Unregisters the specified Add command from the CanAttack menu.
+		/// </summary>
+		/// <param name="commandId">The commandId to remove.</param>
+		public static bool UnregisterAddCanAttack(string commandId) => _onCanAttack.Remove(commandId);
+
+		/// <summary>
+		/// Unregisters the specified Add command from the CantAttack menu.
+		/// </summary>
+		/// <param name="commandId">The commandId to remove.</param>
+		public static bool UnregisterAddCantAttack(string commandId) => _onCantAttack.Remove(commandId);
+
+		/// <summary>
+		/// Unregisters the specified Add command from the Emotes submenu.
+		/// </summary>
+		/// <param name="commandId">The commandId to remove.</param>
+		public static bool UnregisterAddSubmenuEmotes(string commandId) => _onSubmenuEmotes.Remove(commandId);
+
+		/// <summary>
+		/// Unregisters the specified Add command from the Kill submenu.
+		/// </summary>
+		/// <param name="commandId">The commandId to remove.</param>
+		public static bool UnregisterAddSubmenuKill(string commandId) => _onSubmenuKill.Remove(commandId);
+
+		/// <summary>
+		/// Unregisters the specified Add command from the GM Tools submenu.
+		/// </summary>
+		/// <param name="commandId">The commandId to remove.</param>
+		public static bool UnregisterAddSubmenuGm(string commandId) => _onSubmenuGm.Remove(commandId);
+
+		/// <summary>
+		/// Unregisters the specified Add command from the Attacks submenu.
+		/// </summary>
+		/// <param name="commandId">The commandId to remove.</param>
+		public static bool UnregisterAddSubmenuAttacks(string commandId) => _onSubmenuAttacks.Remove(commandId);
+
+		/// <summary>
+		/// Unregisters the specified Add command from the Size menu.
+		/// </summary>
+		/// <param name="commandId">The commandId to remove.</param>
+		public static bool UnregisterAddSubmenuSize(string commandId) => _onSubmenuSize.Remove(commandId);
+
+
+
 		// Add RemoveOn
 		[Obsolete("Use RegisterRemoveSubmenuAttacks instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
