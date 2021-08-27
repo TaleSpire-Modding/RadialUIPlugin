@@ -2,6 +2,7 @@
 using Bounce.Unmanaged;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
@@ -77,26 +78,273 @@ namespace RadialUI
 
 		
 		// Add RemoveOn
+		[Obsolete("Use RegisterRemoveSubmenuAttacks instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public static void AddOnRemoveSubmenuAttacks(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnSubmenuAttacks, key, value, callback);
+		[Obsolete("Use RegisterRemoveCanAttack instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public static void AddOnRemoveCanAttack(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnCanAttack, key, value, callback);
+		[Obsolete("Use RegisterRemoveCantAttack instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public static void AddOnRemoveCantAttack(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnCantAttack, key, value, callback);
+		[Obsolete("Use RegisterRemoveCharacter instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public static void AddOnRemoveCharacter(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnCharacter, key, value, callback);
+		[Obsolete("Use RegisterRemoveHideVolume instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public static void AddOnRemoveHideVolume(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnHideVolume, key, value, callback);
+		[Obsolete("Use RegisterRemoveSubmenuEmotes instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public static void AddOnRemoveSubmenuEmotes(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnSubmenuEmotes, key, value, callback);
+		[Obsolete("Use RegisterRemoveSubmenuGm instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public static void AddOnRemoveSubmenuGm(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnSubmenuGm, key, value, callback);
+		[Obsolete("Use RegisterRemoveSubmenuKill instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public static void AddOnRemoveSubmenuKill(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnSubmenuKill, key, value, callback);
+		[Obsolete("Use RegisterRemoveSubmenuSize instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public static void AddOnRemoveSubmenuSize(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnSubmenuSize, key, value, callback);
 
+
+		/// <summary>
+		/// Registers a menu item for removal from the Attacks submenu.
+		/// </summary>
+		/// <param name="menuTitle">The title of the menu to remove.</param>
+		/// <param name="callback">An optional callback to dynamically determine when you want to remove the menu.</param>
+		/// <returns>Returns the commandId for this menu item removal command. Useful if you later want to unregister this command.</returns>
+		public static string RegisterRemoveSubmenuAttacks(string menuTitle, ShouldShowMenu callback = null)
+		{
+			string commandId = System.Guid.NewGuid().ToString();
+			AddRemoveOn(_removeOnSubmenuAttacks, commandId, menuTitle, callback);
+			return commandId;
+		}
+
+		/// <summary>
+		/// Registers a menu item for removal from the CanAttack menu.
+		/// </summary>
+		/// <param name="menuTitle">The title of the menu to remove.</param>
+		/// <param name="callback">An optional callback to dynamically determine when you want to remove the menu.</param>
+		/// <returns>Returns the commandId for this menu item removal command. Useful if you later want to unregister this command.</returns>
+		public static string RegisterRemoveCanAttack(string menuTitle, ShouldShowMenu callback = null)
+		{
+			string commandId = System.Guid.NewGuid().ToString();
+			AddRemoveOn(_removeOnCanAttack, commandId, menuTitle, callback);
+			return commandId;
+		}
+
+		/// <summary>
+		/// Registers a menu item for removal from the CantAttack menu.
+		/// </summary>
+		/// <param name="menuTitle">The title of the menu to remove.</param>
+		/// <param name="callback">An optional callback to dynamically determine when you want to remove the menu.</param>
+		/// <returns>Returns the commandId for this menu item removal command. Useful if you later want to unregister this command.</returns>
+		public static string RegisterRemoveCantAttack(string menuTitle, ShouldShowMenu callback = null)
+		{
+			string commandId = System.Guid.NewGuid().ToString();
+			AddRemoveOn(_removeOnCantAttack, commandId, menuTitle, callback);
+			return commandId;
+		}
+
+		/// <summary>
+		/// Registers a menu item for removal from the Character menu.
+		/// </summary>
+		/// <param name="menuTitle">The title of the menu to remove.</param>
+		/// <param name="callback">An optional callback to dynamically determine when you want to remove the menu.</param>
+		/// <returns>Returns the commandId for this menu item removal command. Useful if you later want to unregister this command.</returns>
+		public static string RegisterRemoveCharacter(string menuTitle, ShouldShowMenu callback = null)
+		{
+			string commandId = System.Guid.NewGuid().ToString();
+			AddRemoveOn(_removeOnCharacter, commandId, menuTitle, callback);
+			return commandId;
+		}
+
+		/// <summary>
+		/// Registers a menu item for removal from the HideVolume menu.
+		/// </summary>
+		/// <param name="menuTitle">The title of the menu to remove.</param>
+		/// <param name="callback">An optional callback to dynamically determine when you want to remove the menu.</param>
+		/// <returns>Returns the commandId for this menu item removal command. Useful if you later want to unregister this command.</returns>
+		public static string RegisterRemoveHideVolume(string menuTitle, ShouldShowMenu callback = null)
+		{
+			string commandId = System.Guid.NewGuid().ToString();
+			AddRemoveOn(_removeOnHideVolume, commandId, menuTitle, callback);
+			return commandId;
+		}
+
+		/// <summary>
+		/// Registers a menu item for removal from the Emotes submenu.
+		/// </summary>
+		/// <param name="menuTitle">The title of the menu to remove.</param>
+		/// <param name="callback">An optional callback to dynamically determine when you want to remove the menu.</param>
+		/// <returns>Returns the commandId for this menu item removal command. Useful if you later want to unregister this command.</returns>
+		public static string RegisterRemoveSubmenuEmotes(string menuTitle, ShouldShowMenu callback = null)
+		{
+			string commandId = System.Guid.NewGuid().ToString();
+			AddRemoveOn(_removeOnSubmenuEmotes, commandId, menuTitle, callback);
+			return commandId;
+		}
+
+		/// <summary>
+		/// Registers a menu item for removal from the GM Tools submenu.
+		/// </summary>
+		/// <param name="menuTitle">The title of the menu to remove.</param>
+		/// <param name="callback">An optional callback to dynamically determine when you want to remove the menu.</param>
+		/// <returns>Returns the commandId for this menu item removal command. Useful if you later want to unregister this command.</returns>
+		public static string RegisterRemoveSubmenuGm(string menuTitle, ShouldShowMenu callback = null)
+		{
+			string commandId = System.Guid.NewGuid().ToString();
+			AddRemoveOn(_removeOnSubmenuGm, commandId, menuTitle, callback);
+			return commandId;
+		}
+
+		/// <summary>
+		/// Registers a menu item for removal from the Kill submenu.
+		/// </summary>
+		/// <param name="menuTitle">The title of the menu to remove.</param>
+		/// <param name="callback">An optional callback to dynamically determine when you want to remove the menu.</param>
+		/// <returns>Returns the commandId for this menu item removal command. Useful if you later want to unregister this command.</returns>
+		public static string RegisterRemoveSubmenuKill(string menuTitle, ShouldShowMenu callback = null)
+		{
+			string commandId = System.Guid.NewGuid().ToString();
+			AddRemoveOn(_removeOnSubmenuKill, commandId, menuTitle, callback);
+			return commandId;
+		}
+
+		/// <summary>
+		/// Registers a menu item for removal from the Size submenu.
+		/// </summary>
+		/// <param name="menuTitle">The title of the menu to remove.</param>
+		/// <param name="callback">An optional callback to dynamically determine when you want to remove the menu.</param>
+		/// <returns>Returns the commandId for this menu item removal command. Useful if you later want to unregister this command.</returns>
+		public static string RegisterRemoveSubmenuSize(string menuTitle, ShouldShowMenu callback = null)
+		{
+			string commandId = System.Guid.NewGuid().ToString();
+			AddRemoveOn(_removeOnSubmenuSize, commandId, menuTitle, callback);
+			return commandId;
+		}
+
+
 		// Remove RemoveOn
-		public static void RemoveOnRemoveSubmenuAttacks(string key, string value) => RemoveRemoveOn(_removeOnSubmenuAttacks, key, value);
-		public static void RemoveOnRemoveCanAttack(string key, string value) => RemoveRemoveOn(_removeOnCanAttack, key, value);
-		public static void RemoveOnRemoveCantAttack(string key, string value) => RemoveRemoveOn(_removeOnCantAttack, key, value);
-		public static void RemoveOnRemoveCharacter(string key, string value) => RemoveRemoveOn(_removeOnCharacter, key, value);
-		public static void RemoveOnRemoveHideVolume(string key, string value) => RemoveRemoveOn(_removeOnHideVolume, key, value);
-		public static void RemoveOnRemoveSubmenuEmotes(string key, string value) => RemoveRemoveOn(_removeOnSubmenuEmotes, key, value);
-		public static void RemoveOnRemoveSubmenuGm(string key, string value) => RemoveRemoveOn(_removeOnSubmenuGm, key, value);
-		public static void RemoveOnRemoveSubmenuKill(string key, string value) => RemoveRemoveOn(_removeOnSubmenuKill, key, value);
-		public static void RemoveOnRemoveSubmenuSize(string key, string value) => RemoveRemoveOn(_removeOnSubmenuSize, key, value);
+		[Obsolete("Use UnregisterRemoveSubmenuAttacks instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		public static void RemoveOnRemoveSubmenuAttacks(string commandId, string menuTitle) => RemoveRemoveOn(_removeOnSubmenuAttacks, commandId, menuTitle);
+		[Obsolete("Use UnregisterRemoveCanAttack instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		public static void RemoveOnRemoveCanAttack(string commandId, string menuTitle) => RemoveRemoveOn(_removeOnCanAttack, commandId, menuTitle);
+		[Obsolete("Use UnregisterRemoveCantAttack instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		public static void RemoveOnRemoveCantAttack(string commandId, string menuTitle) => RemoveRemoveOn(_removeOnCantAttack, commandId, menuTitle);
+		[Obsolete("Use UnregisterRemoveCharacter instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		public static void RemoveOnRemoveCharacter(string commandId, string menuTitle) => RemoveRemoveOn(_removeOnCharacter, commandId, menuTitle);
+		[Obsolete("Use UnregisterRemoveHideVolume instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		public static void RemoveOnRemoveHideVolume(string commandId, string menuTitle) => RemoveRemoveOn(_removeOnHideVolume, commandId, menuTitle);
+		[Obsolete("Use UnregisterRemoveSubmenuEmotes instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		public static void RemoveOnRemoveSubmenuEmotes(string commandId, string menuTitle) => RemoveRemoveOn(_removeOnSubmenuEmotes, commandId, menuTitle);
+		[Obsolete("Use UnregisterRemoveSubmenuGm instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		public static void RemoveOnRemoveSubmenuGm(string commandId, string menuTitle) => RemoveRemoveOn(_removeOnSubmenuGm, commandId, menuTitle);
+		[Obsolete("Use UnregisterRemoveSubmenuKill instead.")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		public static void RemoveOnRemoveSubmenuKill(string commandId, string menuTitle) => RemoveRemoveOn(_removeOnSubmenuKill, commandId, menuTitle);
+		[Obsolete("Use UnregisterRemoveSubmenuSize instead.")] 
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		public static void RemoveOnRemoveSubmenuSize(string commandId, string menuTitle) => RemoveRemoveOn(_removeOnSubmenuSize, commandId, menuTitle);
+
+
+		/// <summary>
+		/// Unregisters the specified Remove command from the Attacks submenu.
+		/// </summary>
+		/// <param name="commandId">The commandId to remove.</param>
+		/// <param name="menuTitle">An optional title of the menu to remove.</param>
+		public static void UnregisterRemoveSubmenuAttacks(string commandId, string menuTitle = null)
+		{
+			RemoveRemoveOn(_removeOnSubmenuAttacks, commandId, menuTitle);
+		}
+
+		/// <summary>
+		/// Unregisters the specified Remove command from the CanAttack menu.
+		/// </summary>
+		/// <param name="commandId">The commandId to remove.</param>
+		/// <param name="menuTitle">An optional title of the menu to remove.</param>
+		public static void UnregisterRemoveCanAttack(string commandId, string menuTitle = null)
+		{
+			RemoveRemoveOn(_removeOnCanAttack, commandId, menuTitle);
+		}
+
+		/// <summary>
+		/// Unregisters the specified Remove command from the CantAttack menu.
+		/// </summary>
+		/// <param name="commandId">The commandId to remove.</param>
+		/// <param name="menuTitle">An optional title of the menu to remove.</param>
+		public static void UnregisterRemoveCantAttack(string commandId, string menuTitle = null)
+		{
+			RemoveRemoveOn(_removeOnCantAttack, commandId, menuTitle);
+		}
+
+		/// <summary>
+		/// Unregisters the specified Remove command from the Character menu.
+		/// </summary>
+		/// <param name="commandId">The commandId to remove.</param>
+		/// <param name="menuTitle">An optional title of the menu to remove.</param>
+		public static void UnregisterRemoveCharacter(string commandId, string menuTitle = null)
+		{
+			RemoveRemoveOn(_removeOnCharacter, commandId, menuTitle);
+		}
+
+		/// <summary>
+		/// Unregisters the specified Remove command from the HideVolume menu.
+		/// </summary>
+		/// <param name="commandId">The commandId to remove.</param>
+		/// <param name="menuTitle">An optional title of the menu to remove.</param>
+		public static void UnregisterRemoveHideVolume(string commandId, string menuTitle = null)
+		{
+			RemoveRemoveOn(_removeOnHideVolume, commandId, menuTitle);
+		}
+
+		/// <summary>
+		/// Unregisters the specified Remove command from the Emotes submenu.
+		/// </summary>
+		/// <param name="commandId">The commandId to remove.</param>
+		/// <param name="menuTitle">An optional title of the menu to remove.</param>
+		public static void UnregisterRemoveSubmenuEmotes(string commandId, string menuTitle = null)
+		{
+			RemoveRemoveOn(_removeOnSubmenuEmotes, commandId, menuTitle);
+		}
+
+		/// <summary>
+		/// Unregisters the specified Remove command from the GM Tools submenu.
+		/// </summary>
+		/// <param name="commandId">The commandId to remove.</param>
+		/// <param name="menuTitle">An optional title of the menu to remove.</param>
+		public static void UnregisterRemoveSubmenuGm(string commandId, string menuTitle = null)
+		{
+			RemoveRemoveOn(_removeOnSubmenuGm, commandId, menuTitle);
+		}
+
+		/// <summary>
+		/// Unregisters the specified Remove command from the Kill submenu.
+		/// </summary>
+		/// <param name="commandId">The commandId to remove.</param>
+		/// <param name="menuTitle">An optional title of the menu to remove.</param>
+		public static void UnregisterRemoveSubmenuKill(string commandId, string menuTitle = null)
+		{
+			RemoveRemoveOn(_removeOnSubmenuKill, commandId, menuTitle);
+		}
+
+		/// <summary>
+		/// Unregisters the specified Remove command from the Size submenu.
+		/// </summary>
+		/// <param name="commandId">The commandId to remove.</param>
+		/// <param name="menuTitle">An optional title of the menu to remove.</param>
+		public static void UnregisterRemoveSubmenuSize(string commandId, string menuTitle = null)
+		{
+			RemoveRemoveOn(_removeOnSubmenuSize, commandId, menuTitle);
+		}
+
 
 		private static void AddRemoveOn(Dictionary<string, List<RadialCheckRemove>> data, string key, string value, ShouldShowMenu shouldRemoveCallback)
 		{
@@ -105,13 +353,13 @@ namespace RadialUI
 			data[key].Add(new RadialCheckRemove(value, shouldRemoveCallback));
 		}
 
-		private static bool RemoveRemoveOn(Dictionary<string, List<RadialCheckRemove>> data, string key, string value)
+		private static bool RemoveRemoveOn(Dictionary<string, List<RadialCheckRemove>> data, string key, string value = null)
 		{
 			if (!data.ContainsKey(key))
 				return false;
 			List<RadialCheckRemove> radialCheckRemoves = data[key];
 			int countBefore = radialCheckRemoves.Count;
-			radialCheckRemoves.RemoveAll(x => x.TitleToRemove == value);
+			radialCheckRemoves.RemoveAll(x => value == null || x.TitleToRemove == value);  // Simply remove everthing if value is null.
 			bool successfullyRemoved = radialCheckRemoves.Count != countBefore;
 			if (radialCheckRemoves.Count == 0)
 				data.Remove(key);
