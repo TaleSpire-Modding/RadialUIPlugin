@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using HarmonyLib;
 using UnityEngine;
 using Object = System.Object;
 
@@ -11,11 +12,11 @@ namespace RadialUI
 {
 
 	[BepInPlugin(Guid, "RadialUIPlugin", Version)]
-	public class RadialUIPlugin : BaseUnityPlugin
+	public partial class RadialUIPlugin : BaseUnityPlugin
 	{
 		// constants
 		public const string Guid = "org.hollofox.plugins.RadialUIPlugin";
-		public const string Version = "1.6.0.0";
+		public const string Version = "1.7.0.0";
 
 		/// <summary>
 		/// Awake plugin
@@ -23,8 +24,10 @@ namespace RadialUI
 		void Awake()
 		{
 			Logger.LogInfo("In Awake for RadialUI");
+            Debug.Log("RadialUI Plug-in loaded");
 
-			Debug.Log("RadialUI Plug-in loaded");
+            var harmony = new Harmony(Guid);
+            harmony.PatchAll();
 		}
 
 
@@ -98,14 +101,14 @@ namespace RadialUI
 		public static void RemoveOnRemoveSubmenuKill(string key, string value) => RemoveRemoveOn(_removeOnSubmenuKill, key, value);
 		public static void RemoveOnRemoveSubmenuSize(string key, string value) => RemoveRemoveOn(_removeOnSubmenuSize, key, value);
 
-		private static void AddRemoveOn(Dictionary<string, List<RadialCheckRemove>> data, string key, string value, ShouldShowMenu shouldRemoveCallback)
+		internal static void AddRemoveOn(Dictionary<string, List<RadialCheckRemove>> data, string key, string value, ShouldShowMenu shouldRemoveCallback)
 		{
 			if (!data.ContainsKey(key))
 				data.Add(key, new List<RadialCheckRemove>());
 			data[key].Add(new RadialCheckRemove(value, shouldRemoveCallback));
 		}
 
-		private static bool RemoveRemoveOn(Dictionary<string, List<RadialCheckRemove>> data, string key, string value)
+		internal static bool RemoveRemoveOn(Dictionary<string, List<RadialCheckRemove>> data, string key, string value)
 		{
 			if (!data.ContainsKey(key))
 				return false;

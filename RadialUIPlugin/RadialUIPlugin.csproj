@@ -362,6 +362,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Menu Patches\StatMenuPatch.cs" />
     <Compile Include="RadialCheckRemove.cs" />
     <Compile Include="RadialExtensions.cs" />
     <Compile Include="RadialUIPlugin.cs" />
@@ -372,5 +373,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
