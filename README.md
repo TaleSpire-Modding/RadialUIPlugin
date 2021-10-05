@@ -93,7 +93,11 @@ Build the project.
 Browse to the newly created ```bin/Debug``` or ```bin/Release``` folders and copy the ```RadialUIPlugin.dll``` to ```Steam\steamapps\common\TaleSpire\BepInEx\plugins```
 
 ## Changelog
-- 1.4.0: Refactor and Callback for Remove menu, provided by CodeRushed.
+- 1.6.0: Refactor and Callback for Remove menu, provided by CodeRushed.
+- 1.5.1: Fixed problem of infinite spawning of menus due to removal.
+- 1.5.0: Fixed problem of patch 15 from BouncyRock
+- 1.4.1: Fixed problem of dissapearing root
+- 1.4.0: Add ability to remove existing buttons to replace them.
 - 1.3.1: fixed backwards compatability due to paramater signature.
 - 1.3.0: Expand Submenu to allow a checker
 - 1.2.5: Privatized method and new method to return last creature selected from menu.
