@@ -26,6 +26,7 @@ namespace RadialUI
         /// <param name="value">0 to 7 (id of stat being hidden)</param>
         /// <param name="callback">Optional callback to hide stat</param>
         public static void HideDefaultCharacterSubmenuStat(string key, string value, ShouldShowMenu callback = null) => _hideStat.Add( key, (value, callback));
+        public static void HideDefaultCharacterSubmenuStat(string key, RadialCheckRemove remove) => _hideStat.Add( key, (remove.TitleToRemove, remove.ShouldRemoveCallback));
 
         /// <summary>
         /// Re-allows a stat to show (useful for script engine on unpatch)
@@ -41,13 +42,8 @@ namespace RadialUI.Menu_Patches
     
 
     [HarmonyPatch(typeof(CreatureMenuBoardTool), "Menu_Stats")]
-    internal class StatMenuPatch
+    internal class StatSubMenuPatch
     {
-        public static bool Show(string menuText, string miniId, string targetId)
-        {
-            return false;
-        }
-
         internal static bool Prefix(MapMenu map, object obj, Creature ____selectedCreature)
         {
             var miniId = NGuid.Empty;
@@ -59,12 +55,19 @@ namespace RadialUI.Menu_Patches
                 if (RadialUIPlugin._hideStat.CanAdd(i.ToString(), miniId.ToString(), targetId.ToString())) map.AddStat(statNames[i], ____selectedCreature.CreatureId, i);
             }
 
-            foreach (var key in RadialUIPlugin._onStatCallback.Keys.Where(key => RadialUIPlugin._onStatCallback[key].Item2 == null || RadialUIPlugin._onStatCallback[key].Item2(miniId,targetId)))
+            return false;
+        }
+
+        internal static void Postfix(MapMenu map, object obj, Creature ____selectedCreature)
+        {
+            var miniId = NGuid.Empty;
+            var targetId = ____selectedCreature.CreatureId.Value;
+
+            foreach (var key in RadialUIPlugin._onStatCallback.Keys.Where(key => RadialUIPlugin._onStatCallback[key].Item2 == null || RadialUIPlugin._onStatCallback[key].Item2(miniId, targetId)))
             {
                 map.AddItem(RadialUIPlugin._onStatCallback[key].Item1);
             }
-
-            return false;
         }
+
     }
 }

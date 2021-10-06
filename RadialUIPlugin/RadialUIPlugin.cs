@@ -31,23 +31,13 @@ namespace RadialUI
 		}
 
 
-		// Character Related Add
-		private static readonly Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)> _onCharacterCallback = new Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)>();
-		private static readonly Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)> _onCanAttack = new Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)>();
-		private static readonly Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)> _onCantAttack = new Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)>();
 		private static readonly Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)> _onSubmenuEmotes = new Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)>();
-		private static readonly Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)> _onSubmenuKill = new Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)>();
-		private static readonly Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)> _onSubmenuGm = new Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)>();
+        private static readonly Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)> _onSubmenuGm = new Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)>();
 		private static readonly Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)> _onSubmenuAttacks = new Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)>();
 		private static readonly Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)> _onSubmenuSize = new Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)>();
 
-		// Character Related Remove
-		private static readonly Dictionary<string, List<RadialCheckRemove>> _removeOnCharacter = new Dictionary<string, List<RadialCheckRemove>>();
-		private static readonly Dictionary<string, List<RadialCheckRemove>> _removeOnCanAttack = new Dictionary<string, List<RadialCheckRemove>>();
-		private static readonly Dictionary<string, List<RadialCheckRemove>> _removeOnCantAttack = new Dictionary<string, List<RadialCheckRemove>>();
-		private static readonly Dictionary<string, List<RadialCheckRemove>> _removeOnSubmenuEmotes = new Dictionary<string, List<RadialCheckRemove>>();
-		private static readonly Dictionary<string, List<RadialCheckRemove>> _removeOnSubmenuKill = new Dictionary<string, List<RadialCheckRemove>>();
-		private static readonly Dictionary<string, List<RadialCheckRemove>> _removeOnSubmenuGm = new Dictionary<string, List<RadialCheckRemove>>();
+        private static readonly Dictionary<string, List<RadialCheckRemove>> _removeOnSubmenuEmotes = new Dictionary<string, List<RadialCheckRemove>>();
+        private static readonly Dictionary<string, List<RadialCheckRemove>> _removeOnSubmenuGm = new Dictionary<string, List<RadialCheckRemove>>();
 		private static readonly Dictionary<string, List<RadialCheckRemove>> _removeOnSubmenuAttacks = new Dictionary<string, List<RadialCheckRemove>>();
 		private static readonly Dictionary<string, List<RadialCheckRemove>> _removeOnSubmenuSize = new Dictionary<string, List<RadialCheckRemove>>();
 		private static readonly Dictionary<string, List<RadialCheckRemove>> _removeOnHideVolume = new Dictionary<string, List<RadialCheckRemove>>();
@@ -55,13 +45,8 @@ namespace RadialUI
 		// Hide Volumes
 		private static readonly Dictionary<string, (MapMenu.ItemArgs, Func<HideVolumeItem, bool>)> _onHideVolumeCallback = new Dictionary<string, (MapMenu.ItemArgs, Func<HideVolumeItem, bool>)>();
 
-		// Add On Character
-		public static void AddOnCharacter(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onCharacterCallback.Add(key, (value, externalCheck));
-		public static void AddOnCanAttack(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onCanAttack.Add(key, (value, externalCheck));
-		public static void AddOnCantAttack(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onCantAttack.Add(key, (value, externalCheck));
 		public static void AddOnSubmenuEmotes(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onSubmenuEmotes.Add(key, (value, externalCheck));
-		public static void AddOnSubmenuKill(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onSubmenuKill.Add(key, (value, externalCheck));
-		public static void AddOnSubmenuGm(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onSubmenuGm.Add(key, (value, externalCheck));
+        public static void AddOnSubmenuGm(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onSubmenuGm.Add(key, (value, externalCheck));
 		public static void AddOnSubmenuAttacks(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onSubmenuAttacks.Add(key, (value, externalCheck));
 		public static void AddOnSubmenuSize(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onSubmenuSize.Add(key, (value, externalCheck));
 
@@ -69,37 +54,25 @@ namespace RadialUI
 		public static void AddOnHideVolume(string key, MapMenu.ItemArgs value, Func<HideVolumeItem, bool> externalCheck = null) => _onHideVolumeCallback.Add(key, (value, externalCheck));
 
 		// Remove On Character
-		public static bool RemoveOnCharacter(string key) => _onCharacterCallback.Remove(key);
-		public static bool RemoveOnCanAttack(string key) => _onCanAttack.Remove(key);
-		public static bool RemoveOnCantAttack(string key) => _onCantAttack.Remove(key);
-		public static bool RemoveOnSubmenuEmotes(string key) => _onSubmenuEmotes.Remove(key);
-		public static bool RemoveOnSubmenuKill(string key) => _onSubmenuKill.Remove(key);
-		public static bool RemoveOnSubmenuGm(string key) => _onSubmenuGm.Remove(key);
+        public static bool RemoveOnSubmenuEmotes(string key) => _onSubmenuEmotes.Remove(key);
+        public static bool RemoveOnSubmenuGm(string key) => _onSubmenuGm.Remove(key);
 		public static bool RemoveOnSubmenuAttacks(string key) => _onSubmenuAttacks.Remove(key);
 		public static bool RemoveOnSubmenuSize(string key) => _onSubmenuSize.Remove(key);
 
 		
 		// Add RemoveOn
 		public static void AddOnRemoveSubmenuAttacks(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnSubmenuAttacks, key, value, callback);
-		public static void AddOnRemoveCanAttack(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnCanAttack, key, value, callback);
-		public static void AddOnRemoveCantAttack(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnCantAttack, key, value, callback);
-		public static void AddOnRemoveCharacter(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnCharacter, key, value, callback);
-		public static void AddOnRemoveHideVolume(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnHideVolume, key, value, callback);
+        public static void AddOnRemoveHideVolume(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnHideVolume, key, value, callback);
 		public static void AddOnRemoveSubmenuEmotes(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnSubmenuEmotes, key, value, callback);
 		public static void AddOnRemoveSubmenuGm(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnSubmenuGm, key, value, callback);
-		public static void AddOnRemoveSubmenuKill(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnSubmenuKill, key, value, callback);
-		public static void AddOnRemoveSubmenuSize(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnSubmenuSize, key, value, callback);
+        public static void AddOnRemoveSubmenuSize(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnSubmenuSize, key, value, callback);
 
 		// Remove RemoveOn
 		public static void RemoveOnRemoveSubmenuAttacks(string key, string value) => RemoveRemoveOn(_removeOnSubmenuAttacks, key, value);
-		public static void RemoveOnRemoveCanAttack(string key, string value) => RemoveRemoveOn(_removeOnCanAttack, key, value);
-		public static void RemoveOnRemoveCantAttack(string key, string value) => RemoveRemoveOn(_removeOnCantAttack, key, value);
-		public static void RemoveOnRemoveCharacter(string key, string value) => RemoveRemoveOn(_removeOnCharacter, key, value);
-		public static void RemoveOnRemoveHideVolume(string key, string value) => RemoveRemoveOn(_removeOnHideVolume, key, value);
+        public static void RemoveOnRemoveHideVolume(string key, string value) => RemoveRemoveOn(_removeOnHideVolume, key, value);
 		public static void RemoveOnRemoveSubmenuEmotes(string key, string value) => RemoveRemoveOn(_removeOnSubmenuEmotes, key, value);
 		public static void RemoveOnRemoveSubmenuGm(string key, string value) => RemoveRemoveOn(_removeOnSubmenuGm, key, value);
-		public static void RemoveOnRemoveSubmenuKill(string key, string value) => RemoveRemoveOn(_removeOnSubmenuKill, key, value);
-		public static void RemoveOnRemoveSubmenuSize(string key, string value) => RemoveRemoveOn(_removeOnSubmenuSize, key, value);
+        public static void RemoveOnRemoveSubmenuSize(string key, string value) => RemoveRemoveOn(_removeOnSubmenuSize, key, value);
 
 		internal static void AddRemoveOn(Dictionary<string, List<RadialCheckRemove>> data, string key, string value, ShouldShowMenu shouldRemoveCallback)
 		{
@@ -277,13 +250,14 @@ namespace RadialUI
 				Debug.Log(title);
 
 				// Minis Related
-				if (IsMini(title)) AddMenuItem(_onCharacterCallback, rightClickCreatureId, mapMenu);
+				/*
+                if (IsMini(title)) AddMenuItem(_onCharacterCallback, rightClickCreatureId, mapMenu);
 				if (CanAttack(title)) AddMenuItem(_onCanAttack, rightClickCreatureId, mapMenu);
 				if (CanNotAttack(title)) AddMenuItem(_onCantAttack, rightClickCreatureId, mapMenu);
 
 				if (IsMini(title)) RemoveMenuItem(_removeOnCharacter, rightClickCreatureId, mapMenu);
 				if (CanAttack(title)) RemoveMenuItem(_removeOnCanAttack, rightClickCreatureId, mapMenu);
-				if (CanNotAttack(title)) RemoveMenuItem(_removeOnCantAttack, rightClickCreatureId, mapMenu);
+				if (CanNotAttack(title)) RemoveMenuItem(_removeOnCantAttack, rightClickCreatureId, mapMenu);*/
 
 				// Minis Submenu
 				if (IsEmotes(title)) AddMenuItem(_onSubmenuEmotes, rightClickCreatureId, mapMenu);
@@ -309,7 +283,7 @@ namespace RadialUI
 			Debug.LogWarning($"{label}: {menuPosition.x}, {menuPosition.y}, {menuPosition.z}");
 		}
 
-		private static void RemoveMenuItem(Dictionary<string, List<RadialCheckRemove>> removeOnCharacter, NGuid miniAtMenu, MapMenu map)
+		internal static void RemoveMenuItem(Dictionary<string, List<RadialCheckRemove>> removeOnCharacter, NGuid miniAtMenu, MapMenu map)
 		{
 			target = Talespire.RadialMenus.GetTargetCreatureId();
 			IEnumerable<string> indexes = removeOnCharacter.SelectMany(i => i.Value.Select(x => x.TitleToRemove)).Distinct();
@@ -457,9 +431,9 @@ namespace RadialUI
 
 
 		// Current ShortHand to see if Mini
-		private bool IsMini(string title) => title == "Emotes" || title == "Attacks";
+		/*private bool IsMini(string title) => title == "Emotes" || title == "Attacks";
 		private bool CanAttack(string title) => title == "Attacks";
-		private bool CanNotAttack(string title) => title == "Emotes";
+		private bool CanNotAttack(string title) => title == "Emotes";*/
 
 		// Mini Submenus
 		private bool IsEmotes(string title) => title == "Twirl";

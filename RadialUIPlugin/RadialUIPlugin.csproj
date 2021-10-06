@@ -362,7 +362,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Menu Patches\StatMenuPatch.cs" />
+    <Compile Include="Menu Patches\CreatureRootMenuPatch.cs" />
+    <Compile Include="Menu Patches\KillSubMenuPatch.cs" />
+    <Compile Include="Menu Patches\StatSubMenuPatch.cs" />
     <Compile Include="RadialCheckRemove.cs" />
     <Compile Include="RadialExtensions.cs" />
     <Compile Include="RadialUIPlugin.cs" />

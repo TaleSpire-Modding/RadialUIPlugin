@@ -12,6 +12,17 @@ namespace RadialUI
 	{
 		private const BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
 
+        public static bool CanShow(this Dictionary<string, List<RadialCheckRemove>> listOfRemovers, string menuId,string minid, string targetid)
+        {
+            var list = listOfRemovers.Values.SelectMany(l => l.Where(r => r.TitleToRemove == menuId && r.ShouldRemoveCallback != null));
+            return list.All(r => !r.ShouldRemoveCallback(menuId, minid, targetid));
+        }
+
+        public static void RemoveItemByString(this MapMenu mapMenu, string title)
+        {
+
+        }
+
 		public static string GetTitle(this MapMenuItem mapMenuItem)
 		{
 			if (mapMenuItem == null)
