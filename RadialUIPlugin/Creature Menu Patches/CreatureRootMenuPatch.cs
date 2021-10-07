@@ -4,7 +4,6 @@ using System.Linq;
 using BepInEx;
 using Bounce.Unmanaged;
 using HarmonyLib;
-using RadialUI.Menu_Patches;
 using UnityEngine;
 
 namespace RadialUI
@@ -24,8 +23,8 @@ namespace RadialUI
         // Add On Character
         public static void AddCustomButtonOnCharacter(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onCharacterCallback.Add(key, (value, externalCheck));
         public static bool RemoveCustomButtonOnCharacter(string key) => _onCharacterCallback.Remove(key);
-        public static void HideDefaultCharacterMenuItem(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnCharacter, key, value, callback);
-        public static void ShowDefaultCharacterMenuItem(string key, string value) => RemoveRemoveOn(_removeOnCharacter, key, value);
+        public static void HideDefaultCharacterMenuItem(string key, string value, ShouldShowMenu callback = null) => RadialUI.RadialUIPlugin.AddRemoveOn(_removeOnCharacter, key, value, callback);
+        public static void ShowDefaultCharacterMenuItem(string key, string value) => RadialUI.RadialUIPlugin.RemoveRemoveOn(_removeOnCharacter, key, value);
 
 
         [Obsolete("This method signature will be replaced with AddCustomButtonOnCharacter on Version 2.1.0.0")]
@@ -33,9 +32,9 @@ namespace RadialUI
         [Obsolete("This method signature will be replaced with RemoveCustomButtonOnCharacter on Version 2.1.0.0")]
         public static bool RemoveOnCharacter(string key) => _onCharacterCallback.Remove(key);
         [Obsolete("This method signature will be replaced with HideDefaultCharacterMenuItem on Version 2.1.0.0")]
-        public static void AddOnRemoveCharacter(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnCharacter, key, value, callback);
+        public static void AddOnRemoveCharacter(string key, string value, ShouldShowMenu callback = null) => RadialUI.RadialUIPlugin.AddRemoveOn(_removeOnCharacter, key, value, callback);
         [Obsolete("This method signature will be replaced with ShowDefaultCharacterMenuItem on Version 2.1.0.0")]
-        public static void RemoveOnRemoveCharacter(string key, string value) => RemoveRemoveOn(_removeOnCharacter, key, value);
+        public static void RemoveOnRemoveCharacter(string key, string value) => RadialUI.RadialUIPlugin.RemoveRemoveOn(_removeOnCharacter, key, value);
 
         [Obsolete("This method signature will be removed on Version 2.1.0.0")]
         public static void AddOnCanAttack(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onCanAttack.Add(key, (value, externalCheck));
@@ -48,21 +47,19 @@ namespace RadialUI
         public static bool RemoveOnCantAttack(string key) => _onCantAttack.Remove(key);
 
         [Obsolete("This method signature will be removed on Version 2.1.0.0")]
-        public static void AddOnRemoveCanAttack(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnCanAttack, key, value, callback);
+        public static void AddOnRemoveCanAttack(string key, string value, ShouldShowMenu callback = null) => RadialUI.RadialUIPlugin.AddRemoveOn(_removeOnCanAttack, key, value, callback);
         [Obsolete("This method signature will be removed on Version 2.1.0.0")]
-        public static void AddOnRemoveCantAttack(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnCantAttack, key, value, callback);
+        public static void AddOnRemoveCantAttack(string key, string value, ShouldShowMenu callback = null) => RadialUI.RadialUIPlugin.AddRemoveOn(_removeOnCantAttack, key, value, callback);
 
         [Obsolete("This method signature will be removed on Version 2.1.0.0")]
-        public static void RemoveOnRemoveCanAttack(string key, string value) => RemoveRemoveOn(_removeOnCanAttack, key, value);
+        public static void RemoveOnRemoveCanAttack(string key, string value) => RadialUI.RadialUIPlugin.RemoveRemoveOn(_removeOnCanAttack, key, value);
         [Obsolete("This method signature will be removed on Version 2.1.0.0")]
-        public static void RemoveOnRemoveCantAttack(string key, string value) => RemoveRemoveOn(_removeOnCantAttack, key, value);
+        public static void RemoveOnRemoveCantAttack(string key, string value) => RadialUI.RadialUIPlugin.RemoveRemoveOn(_removeOnCantAttack, key, value);
     }
 }
 
-namespace RadialUI.Menu_Patches
+namespace RadialUI.Creature_Menu_Patches
 {
-    
-
     [HarmonyPatch(typeof(CreatureMenuBoardTool), "Begin")]
     internal class CreatureRootMenuPatch
     {

@@ -4,7 +4,6 @@ using System.Linq;
 using BepInEx;
 using Bounce.Unmanaged;
 using HarmonyLib;
-using RadialUI.Menu_Patches;
 using UnityEngine;
 
 namespace RadialUI
@@ -16,21 +15,21 @@ namespace RadialUI
 
         public static void AddCustomButtonOnSubmenuKill(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onSubmenuKill.Add(key, (value, externalCheck));
         public static bool RemoveCustomButtonOnSubmenuKill(string key) => _onSubmenuKill.Remove(key);
-        public static void HideDefaultSubmenuKillItem(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnSubmenuKill, key, value, callback);
-        public static void ShowDefaultSubmenuKillItem(string key, string value) => RemoveRemoveOn(_removeOnSubmenuKill, key, value);
+        public static void HideDefaultSubmenuKillItem(string key, string value, ShouldShowMenu callback = null) => RadialUI.RadialUIPlugin.AddRemoveOn(_removeOnSubmenuKill, key, value, callback);
+        public static void ShowDefaultSubmenuKillItem(string key, string value) => RadialUI.RadialUIPlugin.RemoveRemoveOn(_removeOnSubmenuKill, key, value);
 
         [Obsolete("This method signature will be replaced with AddCustomButtonOnSubmenuKill on Version 2.1.0.0")]
         public static void AddOnSubmenuKill(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onSubmenuKill.Add(key, (value, externalCheck));
         [Obsolete("This method signature will be replaced with RemoveCustomButtonOnSubmenuKill on Version 2.1.0.0")]
         public static bool RemoveOnSubmenuKill(string key) => _onSubmenuKill.Remove(key);
         [Obsolete("This method signature will be replaced with HideDefaultSubmenuKillItem on Version 2.1.0.0")]
-        public static void AddOnRemoveSubmenuKill(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnSubmenuKill, key, value, callback);
+        public static void AddOnRemoveSubmenuKill(string key, string value, ShouldShowMenu callback = null) => RadialUI.RadialUIPlugin.AddRemoveOn(_removeOnSubmenuKill, key, value, callback);
         [Obsolete("This method signature will be replaced with ShowDefaultSubmenuKillItem on Version 2.1.0.0")]
-        public static void RemoveOnRemoveSubmenuKill(string key, string value) => RemoveRemoveOn(_removeOnSubmenuKill, key, value);
+        public static void RemoveOnRemoveSubmenuKill(string key, string value) => RadialUI.RadialUIPlugin.RemoveRemoveOn(_removeOnSubmenuKill, key, value);
     }
 }
 
-namespace RadialUI.Menu_Patches
+namespace RadialUI.Creature_Menu_Patches
 {
     [HarmonyPatch(typeof(CreatureMenuBoardTool), "Menu_KillMenu")]
     internal class KillSubMenuPatch

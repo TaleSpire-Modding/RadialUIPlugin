@@ -362,9 +362,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Menu Patches\CreatureRootMenuPatch.cs" />
-    <Compile Include="Menu Patches\KillSubMenuPatch.cs" />
-    <Compile Include="Menu Patches\StatSubMenuPatch.cs" />
+    <Compile Include="Creature Menu Patches\CreatureRootMenuPatch.cs" />
+    <Compile Include="Creature Menu Patches\AttacksSubMenuPatch.cs" />
+    <Compile Include="Creature Menu Patches\GMToolsSubMenuPatch.cs" />
+    <Compile Include="Creature Menu Patches\StatusSubMenuPatch.cs" />
+    <Compile Include="Creature Menu Patches\EmotesSubMenuPatch.cs" />
+    <Compile Include="Creature Menu Patches\KillSubMenuPatch.cs" />
+    <Compile Include="Creature Menu Patches\StatSubMenuPatch.cs" />
     <Compile Include="RadialCheckRemove.cs" />
     <Compile Include="RadialExtensions.cs" />
     <Compile Include="RadialUIPlugin.cs" />
@@ -375,6 +379,9 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="HideVolume Menu Patches\" />
+    <Folder Include="Placeables Menu Patches\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

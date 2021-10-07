@@ -4,7 +4,6 @@ using System.Linq;
 using BepInEx;
 using Bounce.Unmanaged;
 using HarmonyLib;
-using RadialUI.Menu_Patches;
 using UnityEngine;
 
 namespace RadialUI
@@ -37,10 +36,8 @@ namespace RadialUI
     }
 }
 
-namespace RadialUI.Menu_Patches
+namespace RadialUI.Creature_Menu_Patches
 {
-    
-
     [HarmonyPatch(typeof(CreatureMenuBoardTool), "Menu_Stats")]
     internal class StatSubMenuPatch
     {
@@ -63,7 +60,7 @@ namespace RadialUI.Menu_Patches
             var miniId = NGuid.Empty;
             var targetId = ____selectedCreature.CreatureId.Value;
 
-            foreach (var key in RadialUIPlugin._onStatCallback.Keys.Where(key => RadialUIPlugin._onStatCallback[key].Item2 == null || RadialUIPlugin._onStatCallback[key].Item2(miniId, targetId)))
+            foreach (var key in RadialUI.RadialUIPlugin._onStatCallback.Keys.Where(key => RadialUIPlugin._onStatCallback[key].Item2 == null || RadialUIPlugin._onStatCallback[key].Item2(miniId, targetId)))
             {
                 map.AddItem(RadialUIPlugin._onStatCallback[key].Item1);
             }
