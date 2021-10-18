@@ -26,22 +26,22 @@ namespace RadialUI.HideVolume_Menu_Patches
     [HarmonyPatch(typeof(GMHideVolumeMenuBoardTool), "Begin")]
     internal class HideVolumeMenuPatch
     {
-        internal static bool Prefix(MapMenu map, object obj, HideVolumeItem ____selectedVolume)
+        internal static bool Prefix(HideVolumeItem ____selectedVolume)
         {
             var targetId = ____selectedVolume;
             return true;
         }
 
-        internal static void Postfix(MapMenu map, object obj, HideVolumeItem ____selectedVolume, Vector3 ____selectedPos)
+        internal static void Postfix(HideVolumeItem ____selectedVolume, Vector3 ____selectedPos, ref GMHideVolumeMenuBoardTool __instance)
         {
             MapMenu mapMenu = MapMenuManager.OpenMenu(____selectedPos, true);
 
-            var toggleTiles = Reflections.GetMenuAction<GMHideVolumeMenuBoardTool>("ToggleTiles");
-            var deleteBlock = Reflections.GetMenuAction<GMHideVolumeMenuBoardTool>("DeleteBlock");
-
+            var toggleTiles = Reflections.GetMenuAction("ToggleTiles", __instance);
+            var deleteBlock = Reflections.GetMenuAction("DeleteBlock", __instance);
+            
             // Add checker to see if below are removed
-            mapMenu.AddItem(toggleTiles, "Toggle Visibility");
-            mapMenu.AddItem(deleteBlock, "Delete", closeMenuOnActivate: true);
+            mapMenu.AddItem(toggleTiles.Invoke, "Toggle Visibility");
+            mapMenu.AddItem(deleteBlock.Invoke, "Delete", closeMenuOnActivate: true);
 
             // Add new methods here
         }

@@ -60,11 +60,12 @@ namespace RadialUI
 
 namespace RadialUI.Creature_Menu_Patches
 {
-    [HarmonyPatch(typeof(CreatureMenuBoardTool), "Begin")]
+    // [HarmonyPatch(typeof(CreatureMenuBoardTool), "Begin")]
     internal class CreatureRootMenuPatch
     {
-        internal static void Postfix(MapMenu map, object obj, Creature ____selectedCreature, CreatureMenuBoardTool __instance, ref List<UIWorldIconItem>  ____creatureVisabilityIcons)
+        internal static void Postfix(Creature ____selectedCreature, CreatureMenuBoardTool __instance, ref List<UIWorldIconItem>  ____creatureVisabilityIcons)
         {
+            /*
             var miniId = NGuid.Empty;
             var targetId = ____selectedCreature.CreatureId.Value;
 
@@ -92,7 +93,7 @@ namespace RadialUI.Creature_Menu_Patches
             foreach (var key in RadialUIPlugin._onCantAttack.Keys.Where(key => RadialUIPlugin._onCantAttack[key].Item2 == null || RadialUIPlugin._onCantAttack[key].Item2(miniId, targetId)))
             {
                 map.AddItem(RadialUIPlugin._onCantAttack[key].Item1);
-            }
+            }*/
         }
     }
 }
