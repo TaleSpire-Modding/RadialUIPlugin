@@ -36,12 +36,12 @@ namespace RadialUI.HideVolume_Menu_Patches
         {
             MapMenu mapMenu = MapMenuManager.OpenMenu(____selectedPos, true);
 
-            var toggleTiles = Reflections.GetMenuAction("ToggleTiles", __instance);
-            var deleteBlock = Reflections.GetMenuAction("DeleteBlock", __instance);
+            var toggleTiles = Reflections.GetMenuItemAction("ToggleTiles", __instance);
+            var deleteBlock = Reflections.GetMenuItemAction("DeleteBlock", __instance);
             
             // Add checker to see if below are removed
-            mapMenu.AddItem(toggleTiles.Invoke, "Toggle Visibility");
-            mapMenu.AddItem(deleteBlock.Invoke, "Delete", closeMenuOnActivate: true);
+            mapMenu.AddItem(toggleTiles, "Toggle Visibility");
+            mapMenu.AddItem(deleteBlock, "Delete", closeMenuOnActivate: true);
 
             // Add new methods here
         }

@@ -8,9 +8,22 @@ namespace RadialUI.Reflection_Extensions
     {
         private const BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
         // To Do
-        public static Action<MapMenuItem,object> GetMenuAction<Tclass>(string method,Tclass o)
+        public static Action<MapMenu,object> GetMenuAction<Tclass>(string method,Tclass o)
         {
-            return CreateReusableAction<Tclass,MapMenuItem,object>(method, o); 
+            return CreateReusableAction<Tclass,MapMenu,object>(method, o); 
+        }
+
+        public static Action<MapMenuItem, object> GetMenuItemAction<Tclass>(string method, Tclass o)
+        {
+            return CreateReusableAction<Tclass, MapMenuItem, object>(method, o);
+        }
+
+        public static T CallMethod<T,TClass>(string methodName, TClass instance, object[] param = null)
+        {
+            if (param == null) param = new object[0];
+            var method = typeof(TClass).GetMethod(methodName, bindFlags);
+            var result = (T) method.Invoke(instance, param);
+            return result;
         }
 
         public static Action<Tp1, Tp2> CreateReusableAction<TClass, Tp1, Tp2>(string methodName, TClass instance)

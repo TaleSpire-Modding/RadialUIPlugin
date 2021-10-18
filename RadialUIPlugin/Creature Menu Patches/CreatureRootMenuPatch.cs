@@ -4,6 +4,7 @@ using System.Linq;
 using BepInEx;
 using Bounce.Unmanaged;
 using HarmonyLib;
+using RadialUI.Reflection_Extensions;
 using UnityEngine;
 
 namespace RadialUI
@@ -60,25 +61,45 @@ namespace RadialUI
 
 namespace RadialUI.Creature_Menu_Patches
 {
-    // [HarmonyPatch(typeof(CreatureMenuBoardTool), "Begin")]
+    [HarmonyPatch(typeof(CreatureMenuBoardTool), "Begin")]
     internal class CreatureRootMenuPatch
     {
-        internal static void Postfix(Creature ____selectedCreature, CreatureMenuBoardTool __instance, ref List<UIWorldIconItem>  ____creatureVisabilityIcons)
+        internal static void Postfix(Creature ____selectedCreature, CreatureMenuBoardTool __instance, 
+            ref List<UIWorldIconItem>  ____creatureVisabilityIcons, float ____hitHeightDif, MapMenu.MenuType ___AttackMenuStyle)
         {
-            /*
             var miniId = NGuid.Empty;
             var targetId = ____selectedCreature.CreatureId.Value;
 
-            foreach(var removerList in RadialUIPlugin._removeOnCanAttack.Values)
+            var map = MapMenuManager.OpenMenu(____selectedCreature.transform.position + Vector3.up * ____hitHeightDif, true);
+
+            if (LocalClient.SelectedCreatureId != new CreatureGuid() &&
+                LocalClient.SelectedCreatureId != ____selectedCreature.CreatureId)
             {
-                foreach (var remover in removerList)
-                {
-                    if (remover.ShouldRemoveCallback(remover.TitleToRemove, miniId.ToString(), targetId.ToString()))
-                    {
-                        map.RemoveItemByString(remover.TitleToRemove);
-                    }
-                }
+                var Attack_Menu = Reflections.GetMenuAction("Attack_Menu", __instance);
+                var AttackMenuStyle = Reflections.CallMethod<MapMenu.MenuType,CreatureMenuBoardTool>("AttackMenuStyle", __instance);
+                map.AddMenuItem(AttackMenuStyle,
+                    Attack_Menu, "Attacks",
+                    icon: Icons.GetIconSprite("Attacks"));
             }
+
+            if (!CreatureManager.PlayerCanControlCreature(LocalPlayer.Id, this._selectedCreature.CreatureId))
+                return;
+            map.AddMenuItem(new Func<MapMenu.MenuType>(this.EmoteMenuStyle), new System.Action<MapMenu, object>(this.Emote_Menu), "Emotes", icon: Icons.GetIconSprite("emote"));
+            map.AddMenuItem(new Func<MapMenu.MenuType>(this.StatusEmoteMenuStyle), new System.Action<MapMenu, object>(this.StatusEmote_Menu), "Status", icon: Icons.GetIconSprite("status_emote"));
+            if (____selectedCreature.TorchEnabled)
+                map.AddItem(new System.Action<MapMenuItem, object>(this.Menu_DisableTorch), "Disable Torch", icon: Icons.GetIconSprite("torch"), closeMenuOnActivate: true);
+            else
+                map.AddItem(new System.Action<MapMenuItem, object>(this.Menu_EnableTorch), "Enable Torch", icon: Icons.GetIconSprite("torch"), closeMenuOnActivate: true);
+            if (____selectedCreature.Link != null)
+                map.AddMenuItem(MapMenu.MenuType.SUBROOT, new System.Action<MapMenu, object>(this.LinkMenu), "Link", icon: Icons.GetIconSprite("link"));
+            if (LocalClient.IsInGmMode)
+            {
+                map.AddItem(new System.Action<MapMenuItem, object>(this.HideCreature), ____selectedCreature.IsExplicitlyHidden ? "Reveal" : "Hide", icon: Icons.GetIconSprite("creaturehide"), closeMenuOnActivate: true);
+                map.AddMenuItem(MapMenu.MenuType.SUBROOT, new System.Action<MapMenu, object>(this.Menu_GMTools), "GM Tools", icon: Icons.GetIconSprite("dungeonmaster"));
+                map.AddMenuItem(MapMenu.MenuType.BRANCH, new System.Action<MapMenu, object>(this.Menu_KillMenu), "KillMenu", icon: Icons.GetIconSprite("remove"));
+                map.AddItem(new System.Action<MapMenuItem, object>(this.EnableFlying), "Fly Toggle", icon: Icons.GetIconSprite("fly"), closeMenuOnActivate: true);
+            }
+
 
             foreach (var key in RadialUIPlugin._onCharacterCallback.Keys.Where(key => RadialUIPlugin._onCharacterCallback[key].Item2 == null || RadialUIPlugin._onCharacterCallback[key].Item2(miniId, targetId)))
             {
@@ -93,7 +114,7 @@ namespace RadialUI.Creature_Menu_Patches
             foreach (var key in RadialUIPlugin._onCantAttack.Keys.Where(key => RadialUIPlugin._onCantAttack[key].Item2 == null || RadialUIPlugin._onCantAttack[key].Item2(miniId, targetId)))
             {
                 map.AddItem(RadialUIPlugin._onCantAttack[key].Item1);
-            }*/
+            }
         }
     }
 }

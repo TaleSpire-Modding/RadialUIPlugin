@@ -4,6 +4,7 @@ using System.Linq;
 using BepInEx;
 using Bounce.Unmanaged;
 using HarmonyLib;
+using RadialUI.Reflection_Extensions;
 using UnityEngine;
 
 namespace RadialUI
@@ -34,12 +35,13 @@ namespace RadialUI.Creature_Menu_Patches
     [HarmonyPatch(typeof(CreatureMenuBoardTool), "Menu_KillMenu")]
     internal class KillSubMenuPatch
     {
-        private static void Action_Kill(MapMenuItem item, object obj) => ((Creature)obj).BoardAsset.RequestDelete();
-
-        internal static bool Prefix(MapMenu map, object obj, Creature ____selectedCreature)
+        
+        internal static bool Prefix(MapMenu map, object obj, Creature ____selectedCreature, CreatureMenuBoardTool __instance)
         {
             var miniId = NGuid.Empty;
             var targetId = ____selectedCreature.CreatureId.Value;
+
+            var Action_Kill = Reflections.GetMenuAction("Action_Kill", __instance);
 
             if (RadialUIPlugin._removeOnSubmenuKill.CanShow("Kill Creature",miniId.ToString(),targetId.ToString())) map.AddItem(Action_Kill, "Kill Creature", icon: Icons.GetIconSprite("remove"), closeMenuOnActivate: true,obj:____selectedCreature);
             return true;
