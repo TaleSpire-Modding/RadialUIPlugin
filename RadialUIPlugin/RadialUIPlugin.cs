@@ -42,17 +42,14 @@ namespace RadialUI
 		private static readonly Dictionary<string, List<RadialCheckRemove>> _removeOnSubmenuSize = new Dictionary<string, List<RadialCheckRemove>>();
 		private static readonly Dictionary<string, List<RadialCheckRemove>> _removeOnHideVolume = new Dictionary<string, List<RadialCheckRemove>>();
 
-		// Hide Volumes
-		private static readonly Dictionary<string, (MapMenu.ItemArgs, Func<HideVolumeItem, bool>)> _onHideVolumeCallback = new Dictionary<string, (MapMenu.ItemArgs, Func<HideVolumeItem, bool>)>();
-
+		
 		public static void AddOnSubmenuEmotes(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onSubmenuEmotes.Add(key, (value, externalCheck));
         public static void AddOnSubmenuGm(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onSubmenuGm.Add(key, (value, externalCheck));
 		public static void AddOnSubmenuAttacks(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onSubmenuAttacks.Add(key, (value, externalCheck));
 		public static void AddOnSubmenuSize(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onSubmenuSize.Add(key, (value, externalCheck));
 
 		// Add On HideVolume
-		public static void AddOnHideVolume(string key, MapMenu.ItemArgs value, Func<HideVolumeItem, bool> externalCheck = null) => _onHideVolumeCallback.Add(key, (value, externalCheck));
-
+		
 		// Remove On Character
         public static bool RemoveOnSubmenuEmotes(string key) => _onSubmenuEmotes.Remove(key);
         public static bool RemoveOnSubmenuGm(string key) => _onSubmenuGm.Remove(key);
@@ -95,7 +92,7 @@ namespace RadialUI
 		}
 
 		// Remove On HideVolume
-		public static bool RemoveOnHideVolume(string key) => _onHideVolumeCallback.Remove(key);
+		
 
 		// Check to see if map menu is new
 		private static int lastMenuCount = 0;

@@ -369,18 +369,19 @@
     <Compile Include="Creature Menu Patches\EmotesSubMenuPatch.cs" />
     <Compile Include="Creature Menu Patches\KillSubMenuPatch.cs" />
     <Compile Include="Creature Menu Patches\StatSubMenuPatch.cs" />
+    <Compile Include="HideVolume Menu Patches\HideVolumeMenuPatch.cs" />
     <Compile Include="RadialCheckRemove.cs" />
     <Compile Include="RadialExtensions.cs" />
     <Compile Include="RadialUIPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RadialSubmenu.cs" />
+    <Compile Include="Reflection Extensions\Reflections.cs" />
     <Compile Include="Talespire.RadialMenus.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="HideVolume Menu Patches\" />
     <Folder Include="Placeables Menu Patches\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
