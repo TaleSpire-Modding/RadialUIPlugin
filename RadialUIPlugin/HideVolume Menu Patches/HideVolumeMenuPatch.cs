@@ -21,7 +21,7 @@ namespace RadialUI
     }
 }
 
-namespace RadialUI.Creature_Menu_Patches
+namespace RadialUI.HideVolume_Menu_Patches
 {
     [HarmonyPatch(typeof(GMHideVolumeMenuBoardTool), "Begin")]
     internal class HideVolumeMenuPatch
@@ -39,8 +39,11 @@ namespace RadialUI.Creature_Menu_Patches
             var toggleTiles = Reflections.GetMenuAction<GMHideVolumeMenuBoardTool>("ToggleTiles");
             var deleteBlock = Reflections.GetMenuAction<GMHideVolumeMenuBoardTool>("DeleteBlock");
 
+            // Add checker to see if below are removed
             mapMenu.AddItem(toggleTiles, "Toggle Visibility");
             mapMenu.AddItem(deleteBlock, "Delete", closeMenuOnActivate: true);
+
+            // Add new methods here
         }
     }
 }
