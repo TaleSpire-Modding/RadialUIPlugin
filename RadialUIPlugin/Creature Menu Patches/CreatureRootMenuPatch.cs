@@ -64,8 +64,7 @@ namespace RadialUI.Creature_Menu_Patches
     [HarmonyPatch(typeof(CreatureMenuBoardTool), "Begin")]
     internal class CreatureRootMenuPatch
     {
-        internal static void Postfix(Creature ____selectedCreature, CreatureMenuBoardTool __instance, 
-            ref List<UIWorldIconItem>  ____creatureVisabilityIcons, float ____hitHeightDif, MapMenu.MenuType ___AttackMenuStyle)
+        internal static void Postfix(Creature ____selectedCreature, CreatureMenuBoardTool __instance, float ____hitHeightDif)
         {
             var miniId = NGuid.Empty;
             var targetId = ____selectedCreature.CreatureId.Value;
@@ -82,22 +81,33 @@ namespace RadialUI.Creature_Menu_Patches
                     icon: Icons.GetIconSprite("Attacks"));
             }
 
-            if (!CreatureManager.PlayerCanControlCreature(LocalPlayer.Id, this._selectedCreature.CreatureId))
+            if (!CreatureManager.PlayerCanControlCreature(LocalPlayer.Id, ____selectedCreature.CreatureId))
                 return;
-            map.AddMenuItem(new Func<MapMenu.MenuType>(this.EmoteMenuStyle), new System.Action<MapMenu, object>(this.Emote_Menu), "Emotes", icon: Icons.GetIconSprite("emote"));
-            map.AddMenuItem(new Func<MapMenu.MenuType>(this.StatusEmoteMenuStyle), new System.Action<MapMenu, object>(this.StatusEmote_Menu), "Status", icon: Icons.GetIconSprite("status_emote"));
-            if (____selectedCreature.TorchEnabled)
-                map.AddItem(new System.Action<MapMenuItem, object>(this.Menu_DisableTorch), "Disable Torch", icon: Icons.GetIconSprite("torch"), closeMenuOnActivate: true);
-            else
-                map.AddItem(new System.Action<MapMenuItem, object>(this.Menu_EnableTorch), "Enable Torch", icon: Icons.GetIconSprite("torch"), closeMenuOnActivate: true);
+
+            var Emote_Menu = Reflections.GetMenuAction("Emote_Menu", __instance);
+            var StatusEmote_Menu = Reflections.GetMenuAction("StatusEmote_Menu", __instance);
+
+            var EmoteMenuStyle = Reflections.CallMethod<MapMenu.MenuType, CreatureMenuBoardTool>("EmoteMenuStyle", __instance);
+            var StatusEmoteMenuStyle = Reflections.CallMethod<MapMenu.MenuType, CreatureMenuBoardTool>("StatusEmoteMenuStyle", __instance);
+
+            map.AddMenuItem(EmoteMenuStyle, Emote_Menu, "Emotes", icon: Icons.GetIconSprite("emote"));
+            map.AddMenuItem(StatusEmoteMenuStyle, StatusEmote_Menu, "Status", icon: Icons.GetIconSprite("status_emote"));
+
+            map.AddItem(
+                Reflections.GetMenuItemAction(____selectedCreature.TorchEnabled ? "Menu_DisableTorch" : "Menu_EnableTorch", __instance)
+                , ____selectedCreature.TorchEnabled ? "Disable Torch" : "Enable Torch"
+                , icon: Icons.GetIconSprite("torch"), closeMenuOnActivate: true);
+
             if (____selectedCreature.Link != null)
-                map.AddMenuItem(MapMenu.MenuType.SUBROOT, new System.Action<MapMenu, object>(this.LinkMenu), "Link", icon: Icons.GetIconSprite("link"));
+            {
+                map.AddMenuItem(MapMenu.MenuType.SUBROOT, Reflections.GetMenuAction("LinkMenu", __instance), "Link", icon: Icons.GetIconSprite("link"));
+            }
             if (LocalClient.IsInGmMode)
             {
-                map.AddItem(new System.Action<MapMenuItem, object>(this.HideCreature), ____selectedCreature.IsExplicitlyHidden ? "Reveal" : "Hide", icon: Icons.GetIconSprite("creaturehide"), closeMenuOnActivate: true);
-                map.AddMenuItem(MapMenu.MenuType.SUBROOT, new System.Action<MapMenu, object>(this.Menu_GMTools), "GM Tools", icon: Icons.GetIconSprite("dungeonmaster"));
-                map.AddMenuItem(MapMenu.MenuType.BRANCH, new System.Action<MapMenu, object>(this.Menu_KillMenu), "KillMenu", icon: Icons.GetIconSprite("remove"));
-                map.AddItem(new System.Action<MapMenuItem, object>(this.EnableFlying), "Fly Toggle", icon: Icons.GetIconSprite("fly"), closeMenuOnActivate: true);
+                map.AddItem(Reflections.GetMenuItemAction("HideCreature", __instance), ____selectedCreature.IsExplicitlyHidden ? "Reveal" : "Hide", icon: Icons.GetIconSprite("creaturehide"), closeMenuOnActivate: true);
+                map.AddMenuItem(MapMenu.MenuType.SUBROOT, Reflections.GetMenuAction("Menu_GMTools", __instance) , "GM Tools", icon: Icons.GetIconSprite("dungeonmaster"));
+                map.AddMenuItem(MapMenu.MenuType.BRANCH, Reflections.GetMenuAction("Menu_KillMenu", __instance) , "KillMenu", icon: Icons.GetIconSprite("remove"));
+                map.AddItem(Reflections.GetMenuItemAction("EnableFlying", __instance), "Fly Toggle", icon: Icons.GetIconSprite("fly"), closeMenuOnActivate: true);
             }
 
 
