@@ -74,41 +74,50 @@ namespace RadialUI.Creature_Menu_Patches
             if (LocalClient.SelectedCreatureId != new CreatureGuid() &&
                 LocalClient.SelectedCreatureId != ____selectedCreature.CreatureId)
             {
-                var Attack_Menu = Reflections.GetMenuAction("Attack_Menu", __instance);
-                var AttackMenuStyle = Reflections.CallMethod<MapMenu.MenuType,CreatureMenuBoardTool>("AttackMenuStyle", __instance);
-                map.AddMenuItem(AttackMenuStyle,
-                    Attack_Menu, "Attacks",
-                    icon: Icons.GetIconSprite("Attacks"));
+                if (RadialUIPlugin._removeOnCharacter.CanAdd("Attacks", miniId.ToString(), targetId.ToString()))
+                {
+                    map.AddMenuItem(
+                        Reflections.CallMethod<MapMenu.MenuType, CreatureMenuBoardTool>("AttackMenuStyle", __instance),
+                        Reflections.GetMenuAction("Attack_Menu", __instance), "Attacks",
+                        icon: Icons.GetIconSprite("Attacks"));
+                }
             }
 
             if (!CreatureManager.PlayerCanControlCreature(LocalPlayer.Id, ____selectedCreature.CreatureId))
                 return;
 
-            var Emote_Menu = Reflections.GetMenuAction("Emote_Menu", __instance);
-            var StatusEmote_Menu = Reflections.GetMenuAction("StatusEmote_Menu", __instance);
+            if (RadialUIPlugin._removeOnCharacter.CanAdd("Emotes", miniId.ToString(), targetId.ToString()))
+                map.AddMenuItem(Reflections.CallMethod<MapMenu.MenuType, CreatureMenuBoardTool>("EmoteMenuStyle", __instance), Reflections.GetMenuAction("Emote_Menu", __instance), "Emotes", icon: Icons.GetIconSprite("emote"));
+            if (RadialUIPlugin._removeOnCharacter.CanAdd("Status", miniId.ToString(), targetId.ToString()))
+                map.AddMenuItem(Reflections.CallMethod<MapMenu.MenuType, CreatureMenuBoardTool>("StatusEmoteMenuStyle", __instance), Reflections.GetMenuAction("StatusEmote_Menu", __instance), "Status", icon: Icons.GetIconSprite("status_emote"));
 
-            var EmoteMenuStyle = Reflections.CallMethod<MapMenu.MenuType, CreatureMenuBoardTool>("EmoteMenuStyle", __instance);
-            var StatusEmoteMenuStyle = Reflections.CallMethod<MapMenu.MenuType, CreatureMenuBoardTool>("StatusEmoteMenuStyle", __instance);
-
-            map.AddMenuItem(EmoteMenuStyle, Emote_Menu, "Emotes", icon: Icons.GetIconSprite("emote"));
-            map.AddMenuItem(StatusEmoteMenuStyle, StatusEmote_Menu, "Status", icon: Icons.GetIconSprite("status_emote"));
-
-            map.AddItem(
-                Reflections.GetMenuItemAction(____selectedCreature.TorchEnabled ? "Menu_DisableTorch" : "Menu_EnableTorch", __instance)
-                , ____selectedCreature.TorchEnabled ? "Disable Torch" : "Enable Torch"
-                , icon: Icons.GetIconSprite("torch"), closeMenuOnActivate: true);
+            if (RadialUIPlugin._removeOnCharacter.CanAdd("Torch", miniId.ToString(), targetId.ToString()))
+                map.AddItem(
+                    Reflections.GetMenuItemAction(____selectedCreature.TorchEnabled ? "Menu_DisableTorch" : "Menu_EnableTorch", __instance)
+                    , ____selectedCreature.TorchEnabled ? "Disable Torch" : "Enable Torch"
+                    , icon: Icons.GetIconSprite("torch"), closeMenuOnActivate: true);
 
             if (____selectedCreature.Link != null)
             {
-                map.AddMenuItem(MapMenu.MenuType.SUBROOT, Reflections.GetMenuAction("LinkMenu", __instance), "Link", icon: Icons.GetIconSprite("link"));
+                if (RadialUIPlugin._removeOnCharacter.CanAdd("Link", miniId.ToString(), targetId.ToString()))
+                    map.AddMenuItem(MapMenu.MenuType.SUBROOT, Reflections.GetMenuAction("LinkMenu", __instance), "Link", icon: Icons.GetIconSprite("link"));
             }
             if (LocalClient.IsInGmMode)
             {
-                map.AddItem(Reflections.GetMenuItemAction("HideCreature", __instance), ____selectedCreature.IsExplicitlyHidden ? "Reveal" : "Hide", icon: Icons.GetIconSprite("creaturehide"), closeMenuOnActivate: true);
-                map.AddMenuItem(MapMenu.MenuType.SUBROOT, Reflections.GetMenuAction("Menu_GMTools", __instance) , "GM Tools", icon: Icons.GetIconSprite("dungeonmaster"));
-                map.AddMenuItem(MapMenu.MenuType.BRANCH, Reflections.GetMenuAction("Menu_KillMenu", __instance) , "KillMenu", icon: Icons.GetIconSprite("remove"));
-                map.AddItem(Reflections.GetMenuItemAction("EnableFlying", __instance), "Fly Toggle", icon: Icons.GetIconSprite("fly"), closeMenuOnActivate: true);
+                if (RadialUIPlugin._removeOnCharacter.CanAdd("Hide", miniId.ToString(), targetId.ToString()))
+                    map.AddItem(Reflections.GetMenuItemAction("HideCreature", __instance), ____selectedCreature.IsExplicitlyHidden ? "Reveal" : "Hide", icon: Icons.GetIconSprite("creaturehide"), closeMenuOnActivate: true);
+                if (RadialUIPlugin._removeOnCharacter.CanAdd("GM Tools", miniId.ToString(), targetId.ToString()))
+                    map.AddMenuItem(MapMenu.MenuType.SUBROOT, Reflections.GetMenuAction("Menu_GMTools", __instance) , "GM Tools", icon: Icons.GetIconSprite("dungeonmaster"));
+                if (RadialUIPlugin._removeOnCharacter.CanAdd("KillMenu", miniId.ToString(), targetId.ToString()))
+                    map.AddMenuItem(MapMenu.MenuType.BRANCH, Reflections.GetMenuAction("Menu_KillMenu", __instance) , "KillMenu", icon: Icons.GetIconSprite("remove"));
+                if (RadialUIPlugin._removeOnCharacter.CanAdd("Fly Toggle", miniId.ToString(), targetId.ToString()))
+                    map.AddItem(Reflections.GetMenuItemAction("EnableFlying", __instance), "Fly Toggle", icon: Icons.GetIconSprite("fly"), closeMenuOnActivate: true);
             }
+
+            if (RadialUIPlugin._removeOnCharacter.CanAdd("HP", miniId.ToString(), targetId.ToString()))
+                map.AddStat("HP", ____selectedCreature.CreatureId, -1);
+            if (RadialUIPlugin._removeOnCharacter.CanAdd("Stats", miniId.ToString(), targetId.ToString()))
+                map.AddMenuItem(MapMenu.MenuType.SUBROOT, Reflections.GetMenuAction("Menu_Stats", __instance), "Stats", icon: Icons.GetIconSprite("stats"));
 
 
             foreach (var key in RadialUIPlugin._onCharacterCallback.Keys.Where(key => RadialUIPlugin._onCharacterCallback[key].Item2 == null || RadialUIPlugin._onCharacterCallback[key].Item2(miniId, targetId)))
