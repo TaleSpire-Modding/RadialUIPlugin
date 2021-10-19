@@ -24,8 +24,8 @@ namespace RadialUI
         // Add On Character
         public static void AddCustomButtonOnCharacter(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onCharacterCallback.Add(key, (value, externalCheck));
         public static bool RemoveCustomButtonOnCharacter(string key) => _onCharacterCallback.Remove(key);
-        public static void HideDefaultCharacterMenuItem(string key, string value, ShouldShowMenu callback = null) => RadialUI.RadialUIPlugin.AddRemoveOn(_removeOnCharacter, key, value, callback);
-        public static void ShowDefaultCharacterMenuItem(string key, string value) => RadialUI.RadialUIPlugin.RemoveRemoveOn(_removeOnCharacter, key, value);
+        public static void HideDefaultCharacterMenuItem(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnCharacter, key, value, callback);
+        public static void UnHideDefaultCharacterMenuItem(string key, string value) => RemoveRemoveOn(_removeOnCharacter, key, value);
 
 
         [Obsolete("This method signature will be replaced with AddCustomButtonOnCharacter on Version 2.1.0.0")]
@@ -114,25 +114,11 @@ namespace RadialUI.Creature_Menu_Patches
                     map.AddItem(Reflections.GetMenuItemAction("EnableFlying", __instance), "Fly Toggle", icon: Icons.GetIconSprite("fly"), closeMenuOnActivate: true);
             }
 
-            if (RadialUIPlugin._removeOnCharacter.CanAdd("HP", miniId.ToString(), targetId.ToString()))
-                map.AddStat("HP", ____selectedCreature.CreatureId, -1);
-            if (RadialUIPlugin._removeOnCharacter.CanAdd("Stats", miniId.ToString(), targetId.ToString()))
-                map.AddMenuItem(MapMenu.MenuType.SUBROOT, Reflections.GetMenuAction("Menu_Stats", __instance), "Stats", icon: Icons.GetIconSprite("stats"));
-
+            Reflections.CallMethod("AddStats", __instance,new object[] {map});
 
             foreach (var key in RadialUIPlugin._onCharacterCallback.Keys.Where(key => RadialUIPlugin._onCharacterCallback[key].Item2 == null || RadialUIPlugin._onCharacterCallback[key].Item2(miniId, targetId)))
             {
                 map.AddItem(RadialUIPlugin._onCharacterCallback[key].Item1);
-            }
-
-            // Obsolete below
-            foreach (var key in RadialUIPlugin._onCanAttack.Keys.Where(key => RadialUIPlugin._onCanAttack[key].Item2 == null || RadialUIPlugin._onCanAttack[key].Item2(miniId, targetId)))
-            {
-                map.AddItem(RadialUIPlugin._onCanAttack[key].Item1);
-            }
-            foreach (var key in RadialUIPlugin._onCantAttack.Keys.Where(key => RadialUIPlugin._onCantAttack[key].Item2 == null || RadialUIPlugin._onCantAttack[key].Item2(miniId, targetId)))
-            {
-                map.AddItem(RadialUIPlugin._onCantAttack[key].Item1);
             }
         }
     }

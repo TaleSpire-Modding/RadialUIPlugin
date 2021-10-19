@@ -26,6 +26,13 @@ namespace RadialUI.Reflection_Extensions
             return result;
         }
 
+        public static void CallMethod<TClass>(string methodName, TClass instance, object[] param = null)
+        {
+            if (param == null) param = new object[0];
+            var method = typeof(TClass).GetMethod(methodName, bindFlags);
+            method.Invoke(instance, param);
+        }
+
         public static Action<Tp1, Tp2> CreateReusableAction<TClass, Tp1, Tp2>(string methodName, TClass instance)
         {
             var method = typeof(TClass).GetMethod(methodName,bindFlags);
