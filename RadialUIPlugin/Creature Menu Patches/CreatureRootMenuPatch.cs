@@ -66,7 +66,7 @@ namespace RadialUI.Creature_Menu_Patches
     {
         internal static void Postfix(Creature ____selectedCreature, CreatureMenuBoardTool __instance, float ____hitHeightDif)
         {
-            var miniId = NGuid.Empty;
+            var miniId = LocalClient.SelectedCreatureId.Value;
             var targetId = ____selectedCreature.CreatureId.Value;
 
             var map = MapMenuManager.OpenMenu(____selectedCreature.transform.position + Vector3.up * ____hitHeightDif, true);
@@ -120,6 +120,8 @@ namespace RadialUI.Creature_Menu_Patches
             {
                 map.AddItem(RadialUIPlugin._onCharacterCallback[key].Item1);
             }
+
+            RadialUIPlugin.last = miniId;
         }
     }
 }

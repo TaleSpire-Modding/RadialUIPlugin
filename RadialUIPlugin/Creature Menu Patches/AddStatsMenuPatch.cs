@@ -9,7 +9,7 @@ namespace RadialUI.Creature_Menu_Patches
     {
         internal static bool Prefix(ref MapMenu mapMenu, Creature ____selectedCreature, CreatureMenuBoardTool __instance)
         {
-            var miniId = NGuid.Empty;
+            var miniId = LocalClient.SelectedCreatureId.Value;
             var targetId = ____selectedCreature.CreatureId.Value;
 
             if (RadialUIPlugin._removeOnCharacter.CanAdd("HP", miniId.ToString(), targetId.ToString()))

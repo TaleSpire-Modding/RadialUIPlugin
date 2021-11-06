@@ -363,6 +363,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Creature Menu Patches\AddStatsMenuPatch.cs" />
+    <Compile Include="Creature Menu Patches\SizeSubMenuPatch.cs" />
     <Compile Include="Creature Menu Patches\CreatureRootMenuPatch.cs" />
     <Compile Include="Creature Menu Patches\AttacksSubMenuPatch.cs" />
     <Compile Include="Creature Menu Patches\GMToolsSubMenuPatch.cs" />

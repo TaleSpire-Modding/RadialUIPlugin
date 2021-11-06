@@ -43,7 +43,7 @@ namespace RadialUI.Creature_Menu_Patches
     {
         internal static bool Prefix(MapMenu map, object obj, Creature ____selectedCreature)
         {
-            var miniId = NGuid.Empty;
+            var miniId = LocalClient.SelectedCreatureId.Value;
             var targetId = ____selectedCreature.CreatureId.Value;
 
             var statNames = CampaignSessionManager.StatNames;
@@ -57,7 +57,7 @@ namespace RadialUI.Creature_Menu_Patches
 
         internal static void Postfix(MapMenu map, object obj, Creature ____selectedCreature)
         {
-            var miniId = NGuid.Empty;
+            var miniId = LocalClient.SelectedCreatureId.Value;
             var targetId = ____selectedCreature.CreatureId.Value;
 
             foreach (var key in RadialUI.RadialUIPlugin._onStatCallback.Keys.Where(key => RadialUIPlugin._onStatCallback[key].Item2 == null || RadialUIPlugin._onStatCallback[key].Item2(miniId, targetId)))
