@@ -31,6 +31,7 @@ namespace RadialUI.HideVolume_Menu_Patches
 
         internal static void Postfix(HideVolumeItem ____selectedVolume, Vector3 ____selectedPos, ref GMHideVolumeMenuBoardTool __instance)
         {
+            RadialUIPlugin.lastHideVolume = ____selectedVolume;
             MapMenu mapMenu = MapMenuManager.OpenMenu(____selectedPos, true);
             
             var toggleTiles = Reflections.GetMenuItemAction("ToggleTiles", __instance);

@@ -11,7 +11,7 @@ namespace RadialUI
 	{
 		// constants
 		public const string Guid = "org.hollofox.plugins.RadialUIPlugin";
-		public const string Version = "2.0.1.0";
+		public const string Version = "2.0.2.0";
 
 		/// <summary>
 		/// Awake plugin
@@ -53,6 +53,13 @@ namespace RadialUI
         public static NGuid GetLastRadialTargetCreature()
         {
 			return last;
+        }
+
+        internal static HideVolumeItem lastHideVolume;
+
+        public static HideVolumeItem GetLastRadialHideVolume()
+        {
+            return lastHideVolume;
         }
 
 		internal static bool RemoveRemoveOn(Dictionary<string, List<RadialCheckRemove>> data, string key, string value)
