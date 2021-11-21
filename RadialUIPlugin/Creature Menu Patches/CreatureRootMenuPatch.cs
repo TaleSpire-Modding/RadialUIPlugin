@@ -67,7 +67,7 @@ namespace RadialUI.Creature_Menu_Patches
         internal static void Prefix(Creature ____selectedCreature, CreatureMenuBoardTool __instance,
             float ____hitHeightDif)
         {
-            var miniId = LocalClient.SelectedCreatureId.Value;
+            var miniId = ____selectedCreature.CreatureId.Value;
             RadialUIPlugin.last = miniId;
         }
 
