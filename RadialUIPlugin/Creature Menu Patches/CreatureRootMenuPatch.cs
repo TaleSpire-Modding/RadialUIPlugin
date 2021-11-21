@@ -64,7 +64,14 @@ namespace RadialUI.Creature_Menu_Patches
     [HarmonyPatch(typeof(CreatureMenuBoardTool), "Begin")]
     internal class CreatureRootMenuPatch
     {
-        internal static void Postfix(Creature ____selectedCreature, CreatureMenuBoardTool __instance, float ____hitHeightDif)
+        internal static void Prefix(Creature ____selectedCreature, CreatureMenuBoardTool __instance,
+            float ____hitHeightDif)
+        {
+            var miniId = LocalClient.SelectedCreatureId.Value;
+            RadialUIPlugin.last = miniId;
+        }
+
+            internal static void Postfix(Creature ____selectedCreature, CreatureMenuBoardTool __instance, float ____hitHeightDif)
         {
             var miniId = LocalClient.SelectedCreatureId.Value;
             var targetId = ____selectedCreature.CreatureId.Value;
@@ -120,8 +127,6 @@ namespace RadialUI.Creature_Menu_Patches
             {
                 map.AddItem(RadialUIPlugin._onCharacterCallback[key].Item1);
             }
-
-            RadialUIPlugin.last = miniId;
         }
     }
 }
