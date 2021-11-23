@@ -93,6 +93,12 @@ Build the project.
 Browse to the newly created ```bin/Debug``` or ```bin/Release``` folders and copy the ```RadialUIPlugin.dll``` to ```Steam\steamapps\common\TaleSpire\BepInEx\plugins```
 
 ## Changelog
+- 2.0.3: Adjusted last creature targeted instantiation to prefix.
+- 2.0.2: GetLastHideVolume is now supported.
+- 2.0.1: HideVolume support
+- 2.0.0: Completed Refactor, Code has been optimized whilst keeping same Interface
+- 1.7.0: Added Stat Submenu and started converting to Harmony Patching.
+- 1.6.1: Moved Repo
 - 1.6.0: Refactor and Callback for Remove menu, provided by CodeRushed.
 - 1.5.1: Fixed problem of infinite spawning of menus due to removal.
 - 1.5.0: Fixed problem of patch 15 from BouncyRock
