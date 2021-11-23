@@ -81,6 +81,7 @@ You will need to add references to:
 ```
 * BepInEx.dll  (Download from the BepInEx project.)
 * Bouncyrock.TaleSpire.Runtime (found in Steam\steamapps\common\TaleSpire\TaleSpire_Data\Managed)
+* 0Harmony.dll
 * UnityEngine.dll
 * UnityEngine.CoreModule.dll
 * UnityEngine.InputLegacyModule.dll 
