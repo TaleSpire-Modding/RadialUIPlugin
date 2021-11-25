@@ -94,6 +94,7 @@ Build the project.
 Browse to the newly created ```bin/Debug``` or ```bin/Release``` folders and copy the ```RadialUIPlugin.dll``` to ```Steam\steamapps\common\TaleSpire\BepInEx\plugins```
 
 ## Changelog
+- 2.0.5: Fix missed logic in extension.
 - 2.0.4: Slight optimization and refactor repeating code.
 - 2.0.3: Adjusted last creature targeted instantiation to prefix.
 - 2.0.2: GetLastHideVolume is now supported.
