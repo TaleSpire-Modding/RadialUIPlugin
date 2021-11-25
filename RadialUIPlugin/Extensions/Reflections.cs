@@ -2,7 +2,7 @@
 using System.Reflection;
 using UnityEngine;
 
-namespace RadialUI.Reflection_Extensions
+namespace RadialUI.Extensions
 {
     public static class Reflections
     {

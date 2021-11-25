@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using BepInEx;
 using Bounce.Unmanaged;
 using HarmonyLib;
-using UnityEngine;
+using RadialUI.Extensions;
 
 namespace RadialUI
 {
@@ -57,14 +56,8 @@ namespace RadialUI.Creature_Menu_Patches
 
         internal static void Postfix(MapMenu map, object obj, Creature ____selectedCreature)
         {
-            var miniId = LocalClient.SelectedCreatureId.Value;
             var targetId = ____selectedCreature.CreatureId.Value;
-
-            foreach (var key in RadialUI.RadialUIPlugin._onStatCallback.Keys.Where(key => RadialUIPlugin._onStatCallback[key].Item2 == null || RadialUIPlugin._onStatCallback[key].Item2(miniId, targetId)))
-            {
-                map.AddItem(RadialUIPlugin._onStatCallback[key].Item1);
-            }
+            map.AddItems(RadialUIPlugin._onStatCallback, targetId);
         }
-
     }
 }

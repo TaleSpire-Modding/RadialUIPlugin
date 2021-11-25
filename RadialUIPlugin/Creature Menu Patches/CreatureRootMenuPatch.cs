@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using BepInEx;
 using Bounce.Unmanaged;
 using HarmonyLib;
-using RadialUI.Reflection_Extensions;
+using RadialUI.Extensions;
 using UnityEngine;
 
 namespace RadialUI
@@ -123,10 +122,7 @@ namespace RadialUI.Creature_Menu_Patches
 
             Reflections.CallMethod("AddStats", __instance,new object[] {map});
 
-            foreach (var key in RadialUIPlugin._onCharacterCallback.Keys.Where(key => RadialUIPlugin._onCharacterCallback[key].Item2 == null || RadialUIPlugin._onCharacterCallback[key].Item2(miniId, targetId)))
-            {
-                map.AddItem(RadialUIPlugin._onCharacterCallback[key].Item1);
-            }
+            map.AddItems(RadialUIPlugin._onCharacterCallback, targetId);
         }
     }
 }

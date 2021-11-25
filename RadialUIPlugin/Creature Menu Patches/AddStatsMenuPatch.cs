@@ -1,6 +1,5 @@
-﻿using Bounce.Unmanaged;
-using HarmonyLib;
-using RadialUI.Reflection_Extensions;
+﻿using HarmonyLib;
+using RadialUI.Extensions;
 
 namespace RadialUI.Creature_Menu_Patches
 {

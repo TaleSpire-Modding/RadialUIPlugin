@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BepInEx;
 using HarmonyLib;
-using RadialUI.Reflection_Extensions;
+using RadialUI.Extensions;
 using UnityEngine;
 
 namespace RadialUI
