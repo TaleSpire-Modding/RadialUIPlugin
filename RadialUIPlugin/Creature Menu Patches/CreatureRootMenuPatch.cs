@@ -69,14 +69,19 @@ namespace RadialUI.Creature_Menu_Patches
     [HarmonyPatch(typeof(CreatureMenuBoardTool), "Begin")]
     internal class CreatureRootMenuPatch
     {
-        internal static void Prefix(Creature ____selectedCreature, CreatureMenuBoardTool __instance,
-            float ____hitHeightDif)
+        /// <summary>
+        /// Track the last targeted creature before everything else.
+        /// </summary>
+        internal static void Prefix(Creature ____selectedCreature)
         {
             var miniId = ____selectedCreature.CreatureId.Value;
             RadialUIPlugin.lastCreature = miniId;
         }
 
-            internal static void Postfix(Creature ____selectedCreature, CreatureMenuBoardTool __instance, float ____hitHeightDif)
+        /// <summary>
+        /// A lot of this code is a re-write but uses reflection to maintain code invocation.
+        /// </summary>
+        internal static void Postfix(Creature ____selectedCreature, CreatureMenuBoardTool __instance, float ____hitHeightDif)
         {
             var miniId = LocalClient.SelectedCreatureId.Value;
             var targetId = ____selectedCreature.CreatureId.Value;

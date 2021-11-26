@@ -4,10 +4,14 @@ using UnityEngine;
 
 namespace RadialUI.Extensions
 {
+    /// <summary>
+    /// Reflections specifically to continue original RadialUI Methods to maintain the invocation
+    /// of methods and run patches. 
+    /// </summary>
     public static class Reflections
     {
         private const BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
-        // To Do
+        
         public static Action<MapMenu,object> GetMenuAction<Tclass>(string method,Tclass o)
         {
             return CreateReusableAction<Tclass,MapMenu,object>(method, o); 
