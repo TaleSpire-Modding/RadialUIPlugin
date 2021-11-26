@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using UnityEngine;
 
-namespace RadialUI
+namespace RadialUI.Extensions
 {
 	public static class RadialExtensions
 	{
@@ -18,6 +15,7 @@ namespace RadialUI
             return list.All(r => !r.ShouldRemoveCallback(menuId, minid, targetid));
         }
 
+		// Legacy Code, Not used internally.
         public static string GetTitle(this MapMenuItem mapMenuItem)
 		{
 			if (mapMenuItem == null)
