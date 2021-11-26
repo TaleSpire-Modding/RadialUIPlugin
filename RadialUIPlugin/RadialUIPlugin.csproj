@@ -374,7 +374,7 @@
     <Compile Include="Extensions\Mapmenu.cs" />
     <Compile Include="HideVolume Menu Patches\HideVolumeMenuPatch.cs" />
     <Compile Include="RadialCheckRemove.cs" />
-    <Compile Include="RadialExtensions.cs" />
+    <Compile Include="Extensions\RadialExtensions.cs" />
     <Compile Include="RadialUIPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RadialSubmenu.cs" />

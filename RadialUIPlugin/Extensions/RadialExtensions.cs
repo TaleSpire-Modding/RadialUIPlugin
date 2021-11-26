@@ -18,12 +18,7 @@ namespace RadialUI
             return list.All(r => !r.ShouldRemoveCallback(menuId, minid, targetid));
         }
 
-        public static void RemoveItemByString(this MapMenu mapMenu, string title)
-        {
-
-        }
-
-		public static string GetTitle(this MapMenuItem mapMenuItem)
+        public static string GetTitle(this MapMenuItem mapMenuItem)
 		{
 			if (mapMenuItem == null)
 				return null;

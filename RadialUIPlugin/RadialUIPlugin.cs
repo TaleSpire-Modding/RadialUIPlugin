@@ -25,17 +25,7 @@ namespace RadialUI
             harmony.PatchAll();
 		}
 
-        
-       private static readonly Dictionary<string, List<RadialCheckRemove>> _removeOnHideVolume = new Dictionary<string, List<RadialCheckRemove>>();
-
-        // Add RemoveOn
-        public static void AddOnRemoveHideVolume(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnHideVolume, key, value, callback);
-
-        // Remove RemoveOn
-		public static void RemoveOnRemoveHideVolume(string key, string value) => RemoveRemoveOn(_removeOnHideVolume, key, value);
-		
-		
-		internal static void AddRemoveOn(Dictionary<string, List<RadialCheckRemove>> data, string key, string value, ShouldShowMenu shouldRemoveCallback)
+        internal static void AddRemoveOn(Dictionary<string, List<RadialCheckRemove>> data, string key, string value, ShouldShowMenu shouldRemoveCallback)
 		{
 			if (!data.ContainsKey(key))
 				data.Add(key, new List<RadialCheckRemove>());
@@ -48,21 +38,7 @@ namespace RadialUI
             return true;
         }
 
-        internal static NGuid last;
-
-        public static NGuid GetLastRadialTargetCreature()
-        {
-			return last;
-        }
-
-        internal static HideVolumeItem lastHideVolume;
-
-        public static HideVolumeItem GetLastRadialHideVolume()
-        {
-            return lastHideVolume;
-        }
-
-		internal static bool RemoveRemoveOn(Dictionary<string, List<RadialCheckRemove>> data, string key, string value)
+        internal static bool RemoveRemoveOn(Dictionary<string, List<RadialCheckRemove>> data, string key, string value)
 		{
 			if (!data.ContainsKey(key))
 				return false;

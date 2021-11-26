@@ -15,5 +15,13 @@ namespace RadialUI.Extensions
                 map.AddItem(list[key].Item1);
             }
         }
+
+        public static void AddItems(this MapMenu map, Dictionary<string, (MapMenu.ItemArgs, Func<HideVolumeItem, bool>)> list, HideVolumeItem selectedVolume)
+        {
+            foreach (var key in list.Keys.Where(key => list[key].Item2 == null || list[key].Item2(selectedVolume)))
+            {
+                map.AddItem(list[key].Item1);
+            }
+        }
     }
 }

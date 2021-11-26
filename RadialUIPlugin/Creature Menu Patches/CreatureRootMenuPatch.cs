@@ -26,7 +26,6 @@ namespace RadialUI
         public static void HideDefaultCharacterMenuItem(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnCharacter, key, value, callback);
         public static void UnHideDefaultCharacterMenuItem(string key, string value) => RemoveRemoveOn(_removeOnCharacter, key, value);
 
-
         [Obsolete("This method signature will be replaced with AddCustomButtonOnCharacter on Version 2.1.0.0")]
         public static void AddOnCharacter(string key, MapMenu.ItemArgs value, Func<NGuid, NGuid, bool> externalCheck = null) => _onCharacterCallback.Add(key, (value, externalCheck));
         [Obsolete("This method signature will be replaced with RemoveCustomButtonOnCharacter on Version 2.1.0.0")]
@@ -55,6 +54,13 @@ namespace RadialUI
         public static void RemoveOnRemoveCanAttack(string key, string value) => RadialUI.RadialUIPlugin.RemoveRemoveOn(_removeOnCanAttack, key, value);
         [Obsolete("This method signature will be removed on Version 2.1.0.0")]
         public static void RemoveOnRemoveCantAttack(string key, string value) => RadialUI.RadialUIPlugin.RemoveRemoveOn(_removeOnCantAttack, key, value);
+
+        internal static NGuid lastCreature;
+
+        public static NGuid GetLastRadialTargetCreature()
+        {
+            return lastCreature;
+        }
     }
 }
 
@@ -67,7 +73,7 @@ namespace RadialUI.Creature_Menu_Patches
             float ____hitHeightDif)
         {
             var miniId = ____selectedCreature.CreatureId.Value;
-            RadialUIPlugin.last = miniId;
+            RadialUIPlugin.lastCreature = miniId;
         }
 
             internal static void Postfix(Creature ____selectedCreature, CreatureMenuBoardTool __instance, float ____hitHeightDif)

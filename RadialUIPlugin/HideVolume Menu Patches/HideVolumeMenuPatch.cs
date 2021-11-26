@@ -12,9 +12,23 @@ namespace RadialUI
     {
         // Hide Volumes
         internal static readonly Dictionary<string, (MapMenu.ItemArgs, Func<HideVolumeItem, bool>)> _onHideVolumeCallback = new Dictionary<string, (MapMenu.ItemArgs, Func<HideVolumeItem, bool>)>();
+        internal static readonly Dictionary<string, List<RadialCheckRemove>> _removeOnHideVolume = new Dictionary<string, List<RadialCheckRemove>>();
 
         public static void AddOnHideVolume(string key, MapMenu.ItemArgs value, Func<HideVolumeItem, bool> externalCheck = null) => _onHideVolumeCallback.Add(key, (value, externalCheck));
         public static bool RemoveOnHideVolume(string key) => _onHideVolumeCallback.Remove(key);
+
+        // Add RemoveOn
+        public static void AddOnRemoveHideVolume(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnHideVolume, key, value, callback);
+
+        // Remove RemoveOn
+        public static void RemoveOnRemoveHideVolume(string key, string value) => RemoveRemoveOn(_removeOnHideVolume, key, value);
+
+        internal static HideVolumeItem lastHideVolume;
+
+        public static HideVolumeItem GetLastRadialHideVolume()
+        {
+            return lastHideVolume;
+        }
     }
 }
 
@@ -25,13 +39,12 @@ namespace RadialUI.HideVolume_Menu_Patches
     {
         internal static bool Prefix(HideVolumeItem ____selectedVolume)
         {
-            var targetId = ____selectedVolume;
+            RadialUIPlugin.lastHideVolume = ____selectedVolume; 
             return true;
         }
 
         internal static void Postfix(HideVolumeItem ____selectedVolume, Vector3 ____selectedPos, ref GMHideVolumeMenuBoardTool __instance)
         {
-            RadialUIPlugin.lastHideVolume = ____selectedVolume;
             MapMenu mapMenu = MapMenuManager.OpenMenu(____selectedPos, true);
             
             var toggleTiles = Reflections.GetMenuItemAction("ToggleTiles", __instance);
@@ -41,11 +54,7 @@ namespace RadialUI.HideVolume_Menu_Patches
             mapMenu.AddItem(toggleTiles, "Toggle Visibility");
             mapMenu.AddItem(deleteBlock, "Delete", closeMenuOnActivate: true);
             
-            // Add new methods here
-            foreach (var key in RadialUIPlugin._onHideVolumeCallback.Keys.Where(key => RadialUIPlugin._onHideVolumeCallback[key].Item2 == null || RadialUIPlugin._onHideVolumeCallback[key].Item2(____selectedVolume)))
-            {
-                mapMenu.AddItem(RadialUIPlugin._onHideVolumeCallback[key].Item1);
-            }
+            mapMenu.AddItems(RadialUIPlugin._onHideVolumeCallback, ____selectedVolume);
         }
     }
 }
