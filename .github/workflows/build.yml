@@ -32,10 +32,6 @@ jobs:
           cd RadialUIPlugin
           dotnet restore RadialUIPluginPipeline.csproj
           dotnet build RadialUIPluginPipeline.csproj
-      - uses: actions/upload-artifact@master
-        with:
-          name: RadialUI
-          path: RadialUIPlugin\bin\Debug\RadialUI.dll
       
       - uses: actions/upload-artifact@master
         with:
