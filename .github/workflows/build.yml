@@ -32,8 +32,14 @@ jobs:
           cd RadialUIPlugin
           dotnet restore RadialUIPluginPipeline.csproj
           dotnet build RadialUIPluginPipeline.csproj
+
+      - name: Remove old artifacts
+        uses: c-hive/gha-remove-artifacts@v1
+        with:
+          age: '0 month'
       
-      - uses: actions/upload-artifact@master
+      - name: Upload new artifacts
+        uses: actions/upload-artifact@master
         with:
           name: dlls
           path: RadialUIPlugin\bin\Debug\RadialUI.dll
