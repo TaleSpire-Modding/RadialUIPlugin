@@ -9,9 +9,7 @@ on:
   
 jobs:
   build:
-
     runs-on: windows-latest
-
     steps:
       - name: Setup Nuget
         uses: nuget/setup-nuget@v1
@@ -43,3 +41,19 @@ jobs:
         with:
           name: dlls
           path: RadialUIPlugin\bin\Debug\RadialUI.dll
+
+    # Regression Testing Provision.
+  regress-Testing:
+    needs: build
+    runs-on: ubuntu-latest
+    name: "Reg"
+    strategy:
+      matrix:
+        repo: ['DontRestYourHeadPlugin','MoreSizesPlugin','GroupHideVolumesPlugin']
+    steps:
+        - name: Repository Dispatch
+          uses: peter-evans/repository-dispatch@v1
+          with:
+            token: ${{ secrets.dll_pat }}
+            repository: TaleSpire-Modding/${{ matrix.repo }}
+            event-type: regress_update
