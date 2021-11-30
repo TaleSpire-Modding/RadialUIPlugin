@@ -43,19 +43,9 @@ jobs:
         with:
           name: dlls
           path: RadialUIPlugin\bin\Debug\RadialUI.dll
-
-    # Regression Testing Provision.
-  regress-Testing:
-    needs: build
-    runs-on: ubuntu-latest
-    name: "Reg"
-    strategy:
-      matrix:
-        repo: ['DontRestYourHeadPlugin','MoreSizesPlugin','GroupHideVolumesPlugin']
-    steps:
-        - name: Repository Dispatch
-          uses: peter-evans/repository-dispatch@v1
-          with:
-            token: ${{ secrets.dll_pat }}
-            repository: TaleSpire-Modding/${{ matrix.repo }}
-            event-type: regress_update
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.dll_pat }}
+          repository: TaleSpire-Modding/RepoDispatcher
+          event-type: Radial_UI_Update
