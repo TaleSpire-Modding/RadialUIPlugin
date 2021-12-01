@@ -48,4 +48,4 @@ jobs:
         with:
           token: ${{ secrets.dll_pat }}
           repository: TaleSpire-Modding/RepoDispatcher
-          event-type: Radial_UI_Update
+          event-type: RadialUIPlugin
