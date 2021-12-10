@@ -47,5 +47,5 @@ jobs:
         uses: peter-evans/repository-dispatch@v1
         with:
           token: ${{ secrets.dll_pat }}
-          repository: TaleSpire-Modding/RepoDispatcher
+          repository: TaleSpire-Modding-Pipelines/RepoDispatcher
           event-type: RadialUIPlugin
