@@ -70,7 +70,10 @@ Texture2D tex = new Texture2D(32, 32);
 tex.LoadImage(System.IO.File.ReadAllBytes(dir + "Images/Icons/KO.Png"));
 Sprite icon = Sprite.Create(tex, new Rect(0, 0, 32, 32), new Vector2(0.5f, 0.5f));
 ```
-
+It is recommended to use the File Access Plugin supplied by Lord Ashes for a simple 1 liner:
+```csharp
+Sprite icon = LordAshes.FileAccessPlugin.Image.LoadSprite("update.png")
+```
 
 ## How to Compile / Modify
 
