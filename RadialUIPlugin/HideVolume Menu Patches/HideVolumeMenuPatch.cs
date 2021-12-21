@@ -19,8 +19,6 @@ namespace RadialUI
 
         // Add RemoveOn
         public static void AddOnRemoveHideVolume(string key, string value, ShouldShowMenu callback = null) => AddRemoveOn(_removeOnHideVolume, key, value, callback);
-
-        // Remove RemoveOn
         public static void RemoveOnRemoveHideVolume(string key, string value) => RemoveRemoveOn(_removeOnHideVolume, key, value);
 
         internal static HideVolumeItem lastHideVolume;
@@ -50,11 +48,14 @@ namespace RadialUI.HideVolume_Menu_Patches
             var toggleTiles = Reflections.GetMenuItemAction("ToggleTiles", __instance);
             var filterMenu = Reflections.GetMenuAction("FilterMenu", __instance);
             var deleteBlock = Reflections.GetMenuItemAction("DeleteBlock", __instance);
-            
+
             // Add checker to see if below are removed
-            mapMenu.AddItem(toggleTiles, "Toggle Visibility", icon: Icons.GetIconSprite("toggle_hide"));
-            mapMenu.AddMenuItem(MapMenu.MenuType.BRANCH, filterMenu, "Filters", icon: Icons.GetIconSprite("filter"));
-            mapMenu.AddItem(deleteBlock, "Delete", closeMenuOnActivate: true, icon: Icons.GetIconSprite("trashbin"));
+            if (RadialUIPlugin._removeOnHideVolume.CanAdd("Toggle Visibility"))
+                mapMenu.AddItem(toggleTiles, "Toggle Visibility", icon: Icons.GetIconSprite("toggle_hide"));
+            if (RadialUIPlugin._removeOnHideVolume.CanAdd("Filters"))
+                mapMenu.AddMenuItem(MapMenu.MenuType.BRANCH, filterMenu, "Filters", icon: Icons.GetIconSprite("filter"));
+            if (RadialUIPlugin._removeOnHideVolume.CanAdd("Delete"))
+                mapMenu.AddItem(deleteBlock, "Delete", closeMenuOnActivate: true, icon: Icons.GetIconSprite("trashbin"));
             
             mapMenu.AddItems(RadialUIPlugin._onHideVolumeCallback, ____selectedVolume);
         }

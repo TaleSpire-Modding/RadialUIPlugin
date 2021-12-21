@@ -10,7 +10,7 @@ namespace RadialUI
 	{
 		// constants
 		public const string Guid = "org.hollofox.plugins.RadialUIPlugin";
-		public const string Version = "2.0.6.0";
+		public const string Version = "2.0.7.0";
 
 		/// <summary>
 		/// Awake plugin
