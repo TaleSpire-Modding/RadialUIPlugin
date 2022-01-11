@@ -12,17 +12,18 @@ namespace RadialUI
 		public const string Guid = "org.hollofox.plugins.RadialUIPlugin";
 		public const string Version = "2.0.7.0";
 
+        public static List<Creature> SelectedCreatures = new List<Creature>();
+
 		/// <summary>
 		/// Awake plugin
 		/// </summary>
 		void Awake()
 		{
 			Logger.LogInfo("In Awake for RadialUI");
-            Debug.Log("RadialUI Plug-in loaded");
-
+            Debug.Log("RadialUI Plug-in loaded"); 
             var harmony = new Harmony(Guid);
             harmony.PatchAll();
-		}
+        }
 
 		/// <summary>
 		/// Adds a checker to a menu to check if it should render.
@@ -52,7 +53,7 @@ namespace RadialUI
             return true;
         }
 
-		/// <summary>
+        /// <summary>
 		/// Removes a default hider on an existing dictionary.
 		/// </summary>
 		/// <param name="data">the dictionary storing the existing menus to hide.</param>

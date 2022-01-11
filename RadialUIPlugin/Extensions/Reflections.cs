@@ -11,7 +11,52 @@ namespace RadialUI.Extensions
     public static class Reflections
     {
         private const BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
-        
+
+
+        public static Action<MapMenuItem, object> GetMenuItemActions(string method, CreatureMenuBoardTool tool)
+        {
+            return (t, u) =>
+            {
+                if (RadialUIPlugin.SelectedCreatures.Count > 0)
+                {
+                    foreach (var selected in RadialUIPlugin.SelectedCreatures)
+                    {
+                        tool.SetCreature(selected,0f);
+                        Console.WriteLine("Invoking");
+                        var a = CreateReusableAction<CreatureMenuBoardTool, MapMenuItem, object>(method, tool);
+                        a(t, u);
+                    }
+                }
+                else
+                {
+                    var a = CreateReusableAction<CreatureMenuBoardTool, MapMenuItem, object>(method, tool);
+                    a.Invoke(t, u);
+                }
+            };
+        }
+
+        public static Action<MapMenu, object> GetMenuActions(string method, CreatureMenuBoardTool tool)
+        {
+            return (t, u) =>
+            {
+                if (RadialUIPlugin.SelectedCreatures.Count > 0)
+                {
+                    foreach (var selected in RadialUIPlugin.SelectedCreatures)
+                    {
+                        tool.SetCreature(selected, 0f);
+                        Console.WriteLine("Invoking");
+                        var a = CreateReusableAction<CreatureMenuBoardTool, MapMenu, object>(method, tool);
+                        a(t, u);
+                    }
+                }
+                else
+                {
+                    var a = CreateReusableAction<CreatureMenuBoardTool, MapMenu, object>(method, tool);
+                    a.Invoke(t, u);
+                }
+            };
+        }
+
         public static Action<MapMenu,object> GetMenuAction<Tclass>(string method,Tclass o)
         {
             return CreateReusableAction<Tclass,MapMenu,object>(method, o); 

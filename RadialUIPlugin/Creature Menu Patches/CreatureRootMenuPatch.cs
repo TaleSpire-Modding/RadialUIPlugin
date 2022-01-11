@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BepInEx;
 using Bounce.Unmanaged;
 using HarmonyLib;
@@ -110,25 +111,25 @@ namespace RadialUI.Creature_Menu_Patches
 
             if (RadialUIPlugin._removeOnCharacter.CanAdd("Torch", miniId.ToString(), targetId.ToString()))
                 map.AddItem(
-                    Reflections.GetMenuItemAction(____selectedCreature.TorchEnabled ? "Menu_DisableTorch" : "Menu_EnableTorch", __instance)
+                    Reflections.GetMenuItemActions(____selectedCreature.TorchEnabled ? "Menu_DisableTorch" : "Menu_EnableTorch", __instance)
                     , ____selectedCreature.TorchEnabled ? "Disable Torch" : "Enable Torch"
                     , icon: Icons.GetIconSprite("torch"), closeMenuOnActivate: true);
 
             if (____selectedCreature.Link != null)
             {
                 if (RadialUIPlugin._removeOnCharacter.CanAdd("Link", miniId.ToString(), targetId.ToString()))
-                    map.AddMenuItem(MapMenu.MenuType.SUBROOT, Reflections.GetMenuAction("LinkMenu", __instance), "Link", icon: Icons.GetIconSprite("link"));
+                    map.AddMenuItem(MapMenu.MenuType.SUBROOT, Reflections.GetMenuActions("LinkMenu", __instance), "Link", icon: Icons.GetIconSprite("link"));
             }
             if (LocalClient.IsInGmMode)
             {
                 if (RadialUIPlugin._removeOnCharacter.CanAdd("Hide", miniId.ToString(), targetId.ToString()))
-                    map.AddItem(Reflections.GetMenuItemAction("HideCreature", __instance), ____selectedCreature.IsExplicitlyHidden ? "Reveal" : "Hide", icon: Icons.GetIconSprite("creaturehide"), closeMenuOnActivate: true);
+                    map.AddItem(Reflections.GetMenuItemActions("HideCreature", __instance), ____selectedCreature.IsExplicitlyHidden ? "Reveal" : "Hide", icon: Icons.GetIconSprite("creaturehide"), closeMenuOnActivate: true);
                 if (RadialUIPlugin._removeOnCharacter.CanAdd("GM Tools", miniId.ToString(), targetId.ToString()))
                     map.AddMenuItem(MapMenu.MenuType.SUBROOT, Reflections.GetMenuAction("Menu_GMTools", __instance) , "GM Tools", icon: Icons.GetIconSprite("dungeonmaster"));
                 if (RadialUIPlugin._removeOnCharacter.CanAdd("KillMenu", miniId.ToString(), targetId.ToString()))
                     map.AddMenuItem(MapMenu.MenuType.BRANCH, Reflections.GetMenuAction("Menu_KillMenu", __instance) , "KillMenu", icon: Icons.GetIconSprite("remove"));
                 if (RadialUIPlugin._removeOnCharacter.CanAdd("Fly Toggle", miniId.ToString(), targetId.ToString()))
-                    map.AddItem(Reflections.GetMenuItemAction("EnableFlying", __instance), "Fly Toggle", icon: Icons.GetIconSprite("fly"), closeMenuOnActivate: true);
+                    map.AddItem(Reflections.GetMenuItemActions("EnableFlying", __instance), "Fly Toggle", icon: Icons.GetIconSprite("fly"), closeMenuOnActivate: true);
             }
 
             Reflections.CallMethod("AddStats", __instance,new object[] {map});

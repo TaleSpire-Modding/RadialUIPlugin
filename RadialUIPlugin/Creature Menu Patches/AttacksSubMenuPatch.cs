@@ -39,8 +39,8 @@ namespace RadialUI.Creature_Menu_Patches
             var miniId = LocalClient.SelectedCreatureId.Value;
             var targetId = ____selectedCreature.CreatureId.Value;
 
-            var AttackPlayer = Reflections.GetMenuItemAction("AttackPlayer", __instance);
-            var MagicMissile = Reflections.GetMenuItemAction("MagicMissile", __instance);
+            var AttackPlayer = Reflections.GetMenuItemActions("AttackPlayer", __instance);
+            var MagicMissile = Reflections.GetMenuItemActions("MagicMissile", __instance);
 
             if (RadialUIPlugin._removeOnSubmenuAttacks.CanAdd("Attack", miniId.ToString(), targetId.ToString()))
                 map.AddItem(AttackPlayer, "Attack", icon: Icons.GetIconSprite("Attacks"), obj: ____selectedCreature, closeMenuOnActivate: true);

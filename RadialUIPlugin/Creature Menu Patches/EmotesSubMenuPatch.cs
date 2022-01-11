@@ -41,7 +41,7 @@ namespace RadialUI.Creature_Menu_Patches
             var miniId = LocalClient.SelectedCreatureId.Value;
             var targetId = ____selectedCreature.CreatureId.Value;
 
-            var CallEmote = Reflections.GetMenuItemAction("CallEmote", __instance);
+            var CallEmote = Reflections.GetMenuItemActions("CallEmote", __instance);
 
             for (int index = 0; index < ____emotes.Count; ++index)
             {

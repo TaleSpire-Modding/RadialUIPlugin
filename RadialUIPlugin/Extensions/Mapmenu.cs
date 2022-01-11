@@ -18,7 +18,28 @@ namespace RadialUI.Extensions
             var miniId = LocalClient.SelectedCreatureId.Value;
             foreach (var key in list.Keys.Where(key => list[key].Item2 == null || list[key].Item2(miniId, targetId)))
             {
-                map.AddItem(list[key].Item1);
+                var item = list[key].Item1;
+                /*var placeholder = item.Action;
+                item.Action = (t, u) =>
+                {
+                    if (RadialUIPlugin.SelectedCreatures.Count > 0)
+                    {
+                        foreach (var selected in RadialUIPlugin.SelectedCreatures)
+                        {
+                            
+                            var a = placeholder;
+                            a(t, u);
+                        }
+                    }
+                    else
+                    {
+                        var a = placeholder;
+                        a(t, u);
+                    }
+                };*/
+                
+                
+                map.AddItem(item);
             }
         }
 
