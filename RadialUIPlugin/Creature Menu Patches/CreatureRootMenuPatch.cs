@@ -129,7 +129,7 @@ namespace RadialUI.Creature_Menu_Patches
                 if (RadialUIPlugin._removeOnCharacter.CanAdd("KillMenu", miniId.ToString(), targetId.ToString()))
                     map.AddMenuItem(MapMenu.MenuType.BRANCH, Reflections.GetMenuAction("Menu_KillMenu", __instance) , "KillMenu", icon: Icons.GetIconSprite("remove"));
                 if (RadialUIPlugin._removeOnCharacter.CanAdd("Fly Toggle", miniId.ToString(), targetId.ToString()))
-                    map.AddItem(Reflections.GetMenuItemActions("EnableFlying", __instance), "Fly Toggle", icon: Icons.GetIconSprite("fly"), closeMenuOnActivate: true);
+                    map.AddItem(Reflections.GetMenuItemActions("ToggleFlying", __instance), "Fly Toggle", icon: Icons.GetIconSprite("fly"), closeMenuOnActivate: true);
             }
 
             Reflections.CallMethod("AddStats", __instance,new object[] {map});

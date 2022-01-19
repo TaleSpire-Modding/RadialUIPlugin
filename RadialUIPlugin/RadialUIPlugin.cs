@@ -6,15 +6,14 @@ using UnityEngine;
 namespace RadialUI
 {
     [BepInPlugin(Guid, "RadialUIPlugin", Version)]
+	[BepInDependency("org.hollofox.plugins.MultiSelectPlugin", BepInDependency.DependencyFlags.SoftDependency)]
 	public partial class RadialUIPlugin : BaseUnityPlugin
 	{
 		// constants
 		public const string Guid = "org.hollofox.plugins.RadialUIPlugin";
-		public const string Version = "2.0.7.0";
+		public const string Version = "2.0.8.0";
 
-        public static List<Creature> SelectedCreatures = new List<Creature>();
-
-		/// <summary>
+        /// <summary>
 		/// Awake plugin
 		/// </summary>
 		void Awake()

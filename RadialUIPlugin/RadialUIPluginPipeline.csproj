@@ -82,6 +82,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\dlls\BepinexDlls\MonoMod.Utils.dll</HintPath>
     </Reference>
+    <Reference Include="MultiSelect">
+      <HintPath>..\..\MultiSelectPlugin\MultiSelectPlugin\bin\Debug\MultiSelect.dll</HintPath>
+    </Reference>
     <Reference Include="ShapesRuntime, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\dlls\TaleSpireDlls\ShapesRuntime.dll</HintPath>
@@ -195,10 +198,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RadialSubmenu.cs" />
     <Compile Include="Extensions\Reflections.cs" />
+    <Compile Include="Soft Dependencies\MultiSelectWrapper.cs" />
     <Compile Include="Talespire.RadialMenus.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Placeables Menu Patches\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="RadialUIPlugin.csproj">
+      <Project>{B1D07128-5C44-4003-B05F-D35A122E975A}</Project>
+      <Name>RadialUIPlugin</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

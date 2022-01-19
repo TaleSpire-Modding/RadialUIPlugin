@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RadialUI.Soft_Dependencies;
+using System;
 using System.Reflection;
 using UnityEngine;
 
@@ -17,9 +18,10 @@ namespace RadialUI.Extensions
         {
             return (t, u) =>
             {
-                if (RadialUIPlugin.SelectedCreatures.Count > 0)
+                var SelectedCreatures = MultiSelectWrapper.GetMultiSelectCreatures();
+                if (SelectedCreatures.Count > 0)
                 {
-                    foreach (var selected in RadialUIPlugin.SelectedCreatures)
+                    foreach (var selected in SelectedCreatures)
                     {
                         tool.SetCreature(selected,0f);
                         Console.WriteLine("Invoking");
@@ -37,11 +39,12 @@ namespace RadialUI.Extensions
 
         public static Action<MapMenu, object> GetMenuActions(string method, CreatureMenuBoardTool tool)
         {
+            var SelectedCreatures = MultiSelectWrapper.GetMultiSelectCreatures();
             return (t, u) =>
             {
-                if (RadialUIPlugin.SelectedCreatures.Count > 0)
+                if (SelectedCreatures.Count > 0)
                 {
-                    foreach (var selected in RadialUIPlugin.SelectedCreatures)
+                    foreach (var selected in SelectedCreatures)
                     {
                         tool.SetCreature(selected, 0f);
                         Console.WriteLine("Invoking");
