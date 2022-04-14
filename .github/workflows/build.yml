@@ -16,7 +16,7 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v2
-
+      
       - name: Download artifact
         #src: https://github.com/marketplace/actions/download-workflow-artifact
         uses: dawidd6/action-download-artifact@v2
@@ -32,6 +32,14 @@ jobs:
           cd RadialUIPlugin
           dotnet restore RadialUIPluginPipeline.csproj
           dotnet build RadialUIPluginPipeline.csproj
+
+      - name: test
+        run: |
+          cd RadialUIPlugin
+          # Run tests
+          
+      - name: Checkout Codecov
+        uses: codecov/codecov-action@v2
 
       - name: Remove old artifacts
         uses: c-hive/gha-remove-artifacts@v1
