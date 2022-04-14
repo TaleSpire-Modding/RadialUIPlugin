@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RadialUIPlugin\RadialUIPluginPipeline.csproj" />
+    <ProjectReference Include="..\RadialUIPlugin\RadialUIPlugin.csproj" />
   </ItemGroup>
 
 </Project>
