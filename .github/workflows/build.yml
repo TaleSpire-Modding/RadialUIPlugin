@@ -40,6 +40,10 @@ jobs:
           
       - name: Checkout Codecov
         uses: codecov/codecov-action@v2
+        with:
+          file: ./RadialUnitTests/coverage.opencover.xml
+          flags: unit
+          name: RadialUI
 
       - name: Remove old artifacts
         uses: c-hive/gha-remove-artifacts@v1
