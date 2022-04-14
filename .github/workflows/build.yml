@@ -31,7 +31,7 @@ jobs:
         run: |
           cd RadialUIPlugin
           dotnet restore RadialUIPluginPipeline.csproj
-          dotnet build RadialUIPluginPipeline.csproj
+          dotnet build RadialUIPluginPipeline.csproj --configuration Release
 
       - name: test
         run: |
@@ -55,7 +55,7 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: dlls
-          path: RadialUIPlugin\bin\Debug\RadialUI.dll
+          path: RadialUIPlugin\bin\Release\RadialUI.dll
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v1
         with:
