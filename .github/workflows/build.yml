@@ -37,7 +37,7 @@ jobs:
         run: |
           cd RadialUnitTests
           dotnet restore RadialUnitTests.csproj
-          dotnet test --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+          dotnet test --configuration Release --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
           
       - name: Checkout Codecov
         uses: codecov/codecov-action@v2
