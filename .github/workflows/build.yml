@@ -35,8 +35,8 @@ jobs:
 
       - name: test
         run: |
-          cd RadialUIPlugin
-          # Run tests
+          cd RadialUnitTests
+          dotnet test --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
           
       - name: Checkout Codecov
         uses: codecov/codecov-action@v2
