@@ -30,14 +30,14 @@ jobs:
       - name: build
         run: |
           cd RadialUIPlugin
-          dotnet restore RadialUIPluginPipeline.csproj
-          dotnet build RadialUIPluginPipeline.csproj --configuration Release
+          dotnet restore RadialUIPlugin.csproj
+          dotnet build RadialUIPlugin.csproj --configuration Release
 
       - name: test
         run: |
           cd RadialUnitTests
           dotnet restore RadialUnitTests.csproj
-          dotnet test --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+          dotnet test --configuration Release --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
           
       - name: Checkout Codecov
         uses: codecov/codecov-action@v2
