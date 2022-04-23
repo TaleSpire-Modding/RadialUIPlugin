@@ -2,6 +2,7 @@
 using Bounce.Unmanaged;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 namespace RadialUI
 {
@@ -27,6 +28,7 @@ namespace RadialUI
 			canAttack,
 			cantAttack,
 			HideVolume,
+			GMBlock,
 		}
 
 		private static MenuType openMenuType = MenuType.character;
@@ -262,8 +264,10 @@ namespace RadialUI
 			Vector3 result;
 			if (openMenuType == MenuType.character)
 				result = Talespire.RadialMenus.GetTargetCreature().transform.position + Vector3.up * Talespire.RadialMenus.GetHeightDiff();
-			else 
+			else if (openMenuType == MenuType.HideVolume)
 				result = Talespire.RadialMenus.GetRadialTargetHideVolume();
+			else
+                result = GMBlockInteractMenuBoardTool.block.WorldPosition;
 
 			// Create sub-menu
 			MapMenu mapMenu = MapMenuManager.OpenMenu(result, true);
@@ -272,6 +276,6 @@ namespace RadialUI
 			foreach (MapMenu.ItemArgs item in subMenuEntries[mainGuid])
 				if (!subMenuChecker.ContainsKey(item) || subMenuChecker[item]())
 					mapMenu.AddItem(item);
-		}
+        }
 	}
 }

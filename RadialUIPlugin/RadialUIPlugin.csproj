@@ -334,6 +334,7 @@
     <Compile Include="Creature Menu Patches\KillSubMenuPatch.cs" />
     <Compile Include="Creature Menu Patches\StatSubMenuPatch.cs" />
     <Compile Include="Extensions\Mapmenu.cs" />
+    <Compile Include="GM Block Menu Patches\GMBlockMenuPatch.cs" />
     <Compile Include="HideVolume Menu Patches\HideVolumeMenuPatch.cs" />
     <Compile Include="RadialCheckRemove.cs" />
     <Compile Include="Extensions\RadialExtensions.cs" />
