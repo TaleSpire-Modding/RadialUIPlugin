@@ -40,7 +40,7 @@ namespace RadialUI.Creature_Menu_Patches
     [HarmonyPatch(typeof(CreatureMenuBoardTool), "Menu_Stats")]
     internal class StatSubMenuPatch
     {
-        internal static bool Prefix(MapMenu map, object obj, Creature ____selectedCreature)
+        internal static bool Prefix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature)
         {
             var miniId = LocalClient.SelectedCreatureId.Value;
             var targetId = ____selectedCreature.CreatureId.Value;
@@ -54,7 +54,7 @@ namespace RadialUI.Creature_Menu_Patches
             return false;
         }
 
-        internal static void Postfix(MapMenu map, object obj, Creature ____selectedCreature)
+        internal static void Postfix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature)
         {
             var targetId = ____selectedCreature.CreatureId.Value;
             map.AddItems(RadialUIPlugin._onStatCallback, targetId);

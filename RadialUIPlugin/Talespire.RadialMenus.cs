@@ -21,7 +21,7 @@ namespace RadialUI
 
 			public static NGuid GetTargetCreatureId()
 			{
-				Creature targetCreature = GetTargetCreature();
+				var targetCreature = GetTargetCreature();
 				if (targetCreature == null)
 					return NGuid.Empty;
 
@@ -37,11 +37,11 @@ namespace RadialUI
 				return (float)mapField.GetValue(creatureMenuBoardTool);
 			}
 
-			public static Creature GetTargetCreature()
+			public static CreatureBoardAsset GetTargetCreature()
 			{
 				CreatureMenuBoardTool creatureMenuBoardTool = GetCreatureMenuBoardTool();
 				FieldInfo mapField = creatureMenuBoardTool.GetType().GetField("_selectedCreature", bindFlags);
-				return mapField.GetValue(creatureMenuBoardTool) as Creature;
+				return mapField.GetValue(creatureMenuBoardTool) as CreatureBoardAsset;
 			}
 
 			public static HideVolumeItem GetSelectedHideVolumeItem()

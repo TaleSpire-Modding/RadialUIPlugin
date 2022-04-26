@@ -72,7 +72,7 @@ namespace RadialUI.Creature_Menu_Patches
         /// <summary>
         /// Track the last targeted creature before everything else.
         /// </summary>
-        internal static void Prefix(Creature ____selectedCreature)
+        internal static void Prefix(CreatureBoardAsset ____selectedCreature)
         {
             var miniId = ____selectedCreature.CreatureId.Value;
             RadialUIPlugin.lastCreature = miniId;
@@ -81,7 +81,7 @@ namespace RadialUI.Creature_Menu_Patches
         /// <summary>
         /// A lot of this code is a re-write but uses reflection to maintain code invocation.
         /// </summary>
-        internal static void Postfix(Creature ____selectedCreature, CreatureMenuBoardTool __instance, float ____hitHeightDif)
+        internal static void Postfix(CreatureBoardAsset ____selectedCreature, CreatureMenuBoardTool __instance, float ____hitHeightDif)
         {
             var miniId = LocalClient.SelectedCreatureId.Value;
             var targetId = ____selectedCreature.CreatureId.Value;

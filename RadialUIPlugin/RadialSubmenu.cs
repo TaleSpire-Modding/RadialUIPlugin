@@ -210,25 +210,13 @@ namespace RadialUI
 		}
 
 		/// <summary>
-		/// Method for loading icons (sprites) from a file.
+		/// Please use File Access Plugin to handle loading icons.
 		/// </summary>
-		/// <param name="fileName">Drive, path and file name of the PNG or JPG file</param>
-		/// <returns>Spite holding the icon (which can be passed into the menu creation methods)</returns>
-		public static Sprite GetIconFromFile(string fileName)
-		{
-			Texture2D tex = new Texture2D(32, 32);
-			try
-			{
-
-				tex.LoadImage(System.IO.File.ReadAllBytes(fileName));
-			}
-			catch (Exception e)
-			{
-				Debug.Log($"Error thrown getting file: {e}");
-				return null;
-			}
-			return Sprite.Create(tex, new Rect(0, 0, 32, 32), new Vector2(0.5f, 0.5f));
-		}
+		[Obsolete]
+        public static Sprite GetIconFromFile(string fileName)
+        {
+            return null;
+        }
 
 		/// <summary>
 		/// Method used internally for tracking which mini the radial menu was opened on

@@ -34,7 +34,7 @@ namespace RadialUI.Creature_Menu_Patches
     internal class KillSubMenuPatch
     {
         
-        internal static bool Prefix(MapMenu map, object obj, Creature ____selectedCreature, CreatureMenuBoardTool __instance)
+        internal static bool Prefix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature, CreatureMenuBoardTool __instance)
         {
             
             var miniId = LocalClient.SelectedCreatureId.Value;
@@ -46,7 +46,7 @@ namespace RadialUI.Creature_Menu_Patches
             return false;
         }
 
-        internal static void Postfix(MapMenu map, object obj, Creature ____selectedCreature)
+        internal static void Postfix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature)
         {
             var targetId = ____selectedCreature.CreatureId.Value;
             map.AddItems(RadialUIPlugin._onSubmenuKill, targetId);

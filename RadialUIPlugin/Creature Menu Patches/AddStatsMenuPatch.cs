@@ -11,7 +11,7 @@ namespace RadialUI.Creature_Menu_Patches
         /// by patching this, consistency is maintained.
         /// main purpose of this is to add the checker to render the default components.
         /// </summary>
-        internal static bool Prefix(ref MapMenu mapMenu, Creature ____selectedCreature, CreatureMenuBoardTool __instance)
+        internal static bool Prefix(ref MapMenu mapMenu, CreatureBoardAsset ____selectedCreature, CreatureMenuBoardTool __instance)
         {
             var miniId = LocalClient.SelectedCreatureId.Value;
             var targetId = ____selectedCreature.CreatureId.Value;
