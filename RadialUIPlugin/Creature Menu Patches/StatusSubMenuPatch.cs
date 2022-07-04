@@ -32,6 +32,8 @@ namespace RadialUI.Creature_Menu_Patches
             var targetId = ____selectedCreature.CreatureId.Value;
 
             var CallStatusEmote = Reflections.GetMenuItemAction("CallStatusEmote", __instance);
+            
+            if (CallStatusEmote == null) return false;
 
             for (int index = 0; index < ____statusEmotes.Count; ++index)
             {

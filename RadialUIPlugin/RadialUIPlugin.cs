@@ -1,4 +1,5 @@
-﻿using BepInEx;
+﻿using System;
+using BepInEx;
 using System.Collections.Generic;
 using HarmonyLib;
 using UnityEngine;
@@ -10,7 +11,7 @@ namespace RadialUI
 	{
 		// constants
 		public const string Guid = "org.hollofox.plugins.RadialUIPlugin";
-		public const string Version = "2.1.1.0";
+		public const string Version = "2.2.0.0";
 
 		/// <summary>
 		/// Awake plugin
@@ -18,11 +19,20 @@ namespace RadialUI
 		void Awake()
 		{
 			Logger.LogInfo("In Awake for RadialUI");
-            Debug.Log("RadialUI Plug-in loaded");
-
+            
             var harmony = new Harmony(Guid);
-            harmony.PatchAll();
-		}
+
+            try
+            {
+                harmony.PatchAll();
+				Debug.Log("RadialUI Plug-in loaded");
+			}
+            catch (Exception e)
+            {
+				harmony.UnpatchSelf();
+				Debug.Log("RadialUI Failed to patch");
+			}
+        }
 
 		/// <summary>
 		/// Adds a checker to a menu to check if it should render.

@@ -28,14 +28,13 @@ namespace RadialUI.Creature_Menu_Patches
     { 
         internal static void Postfix(ref GMBlockInteractMenuBoardTool __instance)
         {
-            const string deleteBlock = "DeleteBlock";
-            var DeleteBlock = Reflections.GetMenuItemAction(deleteBlock, __instance);
+            var deleteBlock = Reflections.GetMenuItemAction("DeleteBlock", __instance);
 
-            MapMenu map = MapMenuManager.OpenMenu(GMBlockInteractMenuBoardTool.block.WorldPosition, true);
+            var map = MapMenuManager.OpenMenu(GMBlockInteractMenuBoardTool.block.WorldPosition, true);
             GMBlockInteractMenuBoardTool.block.OnOpenMenu(map);
 
-            if (RadialUIPlugin._removeOnGMBlock.CanAdd("Delete", null, null))
-                map.AddItem((DeleteBlock), "Delete", icon: Icons.GetIconSprite("delete"), closeMenuOnActivate: true);
+            if (deleteBlock != null && RadialUIPlugin._removeOnGMBlock.CanAdd("Delete", null, null))
+                map.AddItem((deleteBlock), "Delete", icon: Icons.GetIconSprite("delete"), closeMenuOnActivate: true);
         }
     }
 
@@ -44,16 +43,13 @@ namespace RadialUI.Creature_Menu_Patches
     {
         internal static bool Prefix(ref MapMenu map, ref GMBlockButtonAtmosphere __instance)
         {
-            const string onApply = "OnApply";
-            const string onEdit = "OnEdit";
+            var onApply = Reflections.GetMenuItemAction("OnApply", __instance);
+            var onEdit = Reflections.GetMenuItemAction("OnEdit", __instance);
 
-            var OnApply = Reflections.GetMenuItemAction(onApply, __instance);
-            var OnEdit = Reflections.GetMenuItemAction(onEdit, __instance);
-
-            if (RadialUIPlugin._removeOnGMBlock.CanAdd("Apply", null, null))
-                map.AddItem(OnApply, "Apply", icon: Icons.GetIconSprite("apply"), closeMenuOnActivate: true);
-            if (RadialUIPlugin._removeOnGMBlock.CanAdd("Edit", null, null))
-                map.AddItem(OnEdit, "Edit", icon: Icons.GetIconSprite("edit"), closeMenuOnActivate: true);
+            if (onApply != null && RadialUIPlugin._removeOnGMBlock.CanAdd("Apply", null, null))
+                map.AddItem(onApply, "Apply", icon: Icons.GetIconSprite("apply"), closeMenuOnActivate: true);
+            if (onEdit != null && RadialUIPlugin._removeOnGMBlock.CanAdd("Edit", null, null))
+                map.AddItem(onEdit, "Edit", icon: Icons.GetIconSprite("edit"), closeMenuOnActivate: true);
 
             return false;
         }

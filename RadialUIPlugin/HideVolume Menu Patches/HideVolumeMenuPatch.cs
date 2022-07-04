@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using BepInEx;
 using HarmonyLib;
 using RadialUI.Extensions;
@@ -43,18 +42,18 @@ namespace RadialUI.HideVolume_Menu_Patches
 
         internal static void Postfix(HideVolumeItem ____selectedVolume, Vector3 ____selectedPos, ref GMHideVolumeMenuBoardTool __instance)
         {
-            MapMenu mapMenu = MapMenuManager.OpenMenu(____selectedPos, true);
+            var mapMenu = MapMenuManager.OpenMenu(____selectedPos, true);
             
             var toggleTiles = Reflections.GetMenuItemAction("ToggleTiles", __instance);
             var filterMenu = Reflections.GetMenuAction("FilterMenu", __instance);
             var deleteBlock = Reflections.GetMenuItemAction("DeleteBlock", __instance);
 
             // Add checker to see if below are removed
-            if (RadialUIPlugin._removeOnHideVolume.CanAdd("Toggle Visibility"))
+            if (toggleTiles != null && RadialUIPlugin._removeOnHideVolume.CanAdd("Toggle Visibility"))
                 mapMenu.AddItem(toggleTiles, "Toggle Visibility", icon: Icons.GetIconSprite("toggle_hide"));
-            if (RadialUIPlugin._removeOnHideVolume.CanAdd("Filters"))
+            if (filterMenu != null && RadialUIPlugin._removeOnHideVolume.CanAdd("Filters"))
                 mapMenu.AddMenuItem(MapMenu.MenuType.BRANCH, filterMenu, "Filters", icon: Icons.GetIconSprite("filter"));
-            if (RadialUIPlugin._removeOnHideVolume.CanAdd("Delete"))
+            if (deleteBlock != null && RadialUIPlugin._removeOnHideVolume.CanAdd("Delete"))
                 mapMenu.AddItem(deleteBlock, "Delete", closeMenuOnActivate: true, icon: Icons.GetIconSprite("trashbin"));
             
             mapMenu.AddItems(RadialUIPlugin._onHideVolumeCallback, ____selectedVolume);

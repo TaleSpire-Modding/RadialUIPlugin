@@ -40,9 +40,10 @@ namespace RadialUI.Creature_Menu_Patches
             var miniId = LocalClient.SelectedCreatureId.Value;
             var targetId = ____selectedCreature.CreatureId.Value;
 
-            var Action_Kill = Reflections.GetMenuItemAction("Action_Kill", __instance);
+            var actionKill = Reflections.GetMenuItemAction("Action_Kill", __instance);
 
-            if (RadialUIPlugin._removeOnSubmenuKill.CanShow("Kill Creature",miniId.ToString(),targetId.ToString())) map.AddItem(Action_Kill, "Kill Creature", icon: Icons.GetIconSprite("remove"), closeMenuOnActivate: true,obj:____selectedCreature);
+            if (actionKill != null && RadialUIPlugin._removeOnSubmenuKill.CanShow("Kill Creature",miniId.ToString(),targetId.ToString())) 
+                map.AddItem(actionKill, "Kill Creature", icon: Icons.GetIconSprite("remove"), closeMenuOnActivate: true,obj:____selectedCreature);
             return false;
         }
 

@@ -40,8 +40,12 @@ namespace RadialUI.Extensions
         public static Action<Tp1, Tp2> CreateReusableAction<TClass, Tp1, Tp2>(string methodName, TClass instance)
         {
             var method = typeof(TClass).GetMethod(methodName,bindFlags);
-            Action<Tp1, Tp2> Caller = (Tp1 param1, Tp2 param2) => method.Invoke(instance, new object[] { param1, param2 });
-            Debug.Log(instance == null ? "Failed to get Instance" : "Instance Appended");
+            if (method == null)
+            {
+                Debug.Log($"Method {methodName} for {instance.GetType()} was not found.");
+                return null;
+            }
+            void Caller(Tp1 param1, Tp2 param2) => method.Invoke(instance, new object[] { param1, param2 });
             return Caller;
         }
 

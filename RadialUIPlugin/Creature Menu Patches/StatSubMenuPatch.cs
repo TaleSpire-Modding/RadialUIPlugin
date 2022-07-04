@@ -48,7 +48,8 @@ namespace RadialUI.Creature_Menu_Patches
             var statNames = CampaignSessionManager.StatNames;
             for (var i = 0; i < statNames.Length; i++)
             {
-                if (RadialUIPlugin._hideStat.CanAdd(i.ToString(), miniId.ToString(), targetId.ToString())) map.AddStat(statNames[i], ____selectedCreature.CreatureId, i);
+                if (RadialUIPlugin._hideStat.CanAdd(i.ToString(), miniId.ToString(), targetId.ToString())) 
+                    map.AddStat(statNames[i], ____selectedCreature.CreatureId, i);
             }
 
             return false;

@@ -41,13 +41,15 @@ namespace RadialUI.Creature_Menu_Patches
             var miniId = LocalClient.SelectedCreatureId.Value;
             var targetId = ____selectedCreature.CreatureId.Value;
 
-            var CallEmote = Reflections.GetMenuItemAction("CallEmote", __instance);
+            var callEmote = Reflections.GetMenuItemAction("CallEmote", __instance);
 
-            for (int index = 0; index < ____emotes.Count; ++index)
+            if (callEmote == null) return false;
+
+            for (var index = 0; index < ____emotes.Count; ++index)
             {
                 ActionTimeline emote = ____emotes[index];
                 if (RadialUIPlugin._removeOnSubmenuEmotes.CanAdd(emote.name, miniId.ToString(), targetId.ToString()))
-                    map.AddItem(CallEmote, emote.DisplayName, icon: Icons.GetIconSprite(emote.IconName), obj: emote.name, fadeName: false);
+                    map.AddItem(callEmote, emote.DisplayName, icon: Icons.GetIconSprite(emote.IconName), obj: emote.name, fadeName: false);
             }
             return false;
         }

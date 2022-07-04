@@ -40,48 +40,27 @@ namespace RadialUI.Creature_Menu_Patches
         {
             var miniId = LocalClient.SelectedCreatureId.Value;
             var targetId = ____selectedCreature.CreatureId.Value;
-            
-            if (RadialUIPlugin._removeOnSubmenuGm.CanAdd("", miniId.ToString(),
-                targetId.ToString()))
-            {
-                var Menu_SetCreaturePlayerPermission = Reflections.GetMenuAction("Menu_SetCreaturePlayerPermission", __instance);
-                var PermissionMenuStyle = CampaignSessionManager.PlayersInfo.Count >= 20 ? MapMenu.MenuType.SUBROOT : MapMenu.MenuType.BRANCH;
-                map.AddMenuItem(PermissionMenuStyle, Menu_SetCreaturePlayerPermission, "Player Permission", icon: Icons.GetIconSprite("permission"));
-            }
 
-            if (RadialUIPlugin._removeOnSubmenuGm.CanAdd("Rename", miniId.ToString(),
-                targetId.ToString()))
-            {
-                var Menu_RenameCreature = Reflections.GetMenuItemAction("Menu_RenameCreature", __instance);
-                map.AddItem(Menu_RenameCreature, "Rename", icon: Icons.GetIconSprite("rename"));
-            }
+            var menuSetCreaturePlayerPermission = Reflections.GetMenuAction("Menu_SetCreaturePlayerPermission", __instance);
+            var menuRenameCreature = Reflections.GetMenuItemAction("Menu_RenameCreature", __instance);
+            var menuMakeNotUnique = Reflections.GetMenuItemAction("Menu_MakeNotUnique", __instance);
+            var menuMakeUnique = Reflections.GetMenuItemAction("Menu_MakeUnique", __instance);
+            var menuSetSize = Reflections.GetMenuAction("Menu_SetSize", __instance);
+            var baseColorMenu = Reflections.GetMenuAction("BaseColor_Menu", __instance);
+            var permissionMenuStyle = CampaignSessionManager.PlayersInfo.Count >= 20 ? MapMenu.MenuType.SUBROOT : MapMenu.MenuType.BRANCH;
 
-            if (____selectedCreature.IsUnique && RadialUIPlugin._removeOnSubmenuGm.CanAdd("Make Not Unique", miniId.ToString(),
-                targetId.ToString()))
-            {
-                var Menu_MakeNotUnique  = Reflections.GetMenuItemAction("Menu_MakeNotUnique", __instance);
-                map.AddItem(Menu_MakeNotUnique, "Make Not Unique", icon: Icons.GetIconSprite("dungeonmaster"), closeMenuOnActivate: true);
-            }
-            else if (RadialUIPlugin._removeOnSubmenuGm.CanAdd("Make Unique", miniId.ToString(),
-                targetId.ToString()))
-            {
-                var Menu_MakeUnique  = Reflections.GetMenuItemAction("Menu_MakeUnique", __instance);
-                map.AddItem(Menu_MakeUnique, "Make Unique", icon: Icons.GetIconSprite("dungeonmaster"), closeMenuOnActivate: true);
-            }
-
-            if (RadialUIPlugin._removeOnSubmenuGm.CanAdd("Set Size", miniId.ToString(),
-                targetId.ToString()))
-            {
-                var Menu_SetSize = Reflections.GetMenuAction("Menu_SetSize", __instance);
-                map.AddMenuItem(MapMenu.MenuType.BRANCH, Menu_SetSize, "Set Size", icon: Icons.GetIconSprite("creaturesize"));
-            }
-            if (RadialUIPlugin._removeOnSubmenuGm.CanAdd("BaseColor", miniId.ToString(),
-                targetId.ToString()))
-            {
-                var BaseColor_Menu = Reflections.GetMenuAction("BaseColor_Menu", __instance);
-                map.AddMenuItem(MapMenu.MenuType.BRANCH, BaseColor_Menu, "BaseColor",
-                    icon: Icons.GetIconSprite("basecolor"));
-            }
+            if (menuSetCreaturePlayerPermission != null && RadialUIPlugin._removeOnSubmenuGm.CanAdd("", miniId.ToString(), targetId.ToString())) 
+                map.AddMenuItem(permissionMenuStyle, menuSetCreaturePlayerPermission, "Player Permission", icon: Icons.GetIconSprite("permission"));
+            if (menuRenameCreature != null && RadialUIPlugin._removeOnSubmenuGm.CanAdd("Rename", miniId.ToString(), targetId.ToString())) 
+                map.AddItem(menuRenameCreature, "Rename", icon: Icons.GetIconSprite("rename"));
+            if (menuMakeNotUnique != null && ____selectedCreature.IsUnique && RadialUIPlugin._removeOnSubmenuGm.CanAdd("Make Not Unique", miniId.ToString(), targetId.ToString()))
+                map.AddItem(menuMakeNotUnique, "Make Not Unique", icon: Icons.GetIconSprite("dungeonmaster"), closeMenuOnActivate: true);
+            else if (menuMakeUnique != null && RadialUIPlugin._removeOnSubmenuGm.CanAdd("Make Unique", miniId.ToString(), targetId.ToString())) 
+                map.AddItem(menuMakeUnique, "Make Unique", icon: Icons.GetIconSprite("dungeonmaster"), closeMenuOnActivate: true);
+            if (menuSetSize != null && RadialUIPlugin._removeOnSubmenuGm.CanAdd("Set Size", miniId.ToString(), targetId.ToString())) 
+                map.AddMenuItem(MapMenu.MenuType.BRANCH, menuSetSize, "Set Size", icon: Icons.GetIconSprite("creaturesize"));
+            if (baseColorMenu != null && RadialUIPlugin._removeOnSubmenuGm.CanAdd("BaseColor", miniId.ToString(), targetId.ToString())) 
+                map.AddMenuItem(MapMenu.MenuType.BRANCH, baseColorMenu, "BaseColor", icon: Icons.GetIconSprite("basecolor"));
 
             return false;
         }

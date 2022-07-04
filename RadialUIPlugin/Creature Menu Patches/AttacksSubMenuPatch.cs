@@ -39,13 +39,13 @@ namespace RadialUI.Creature_Menu_Patches
             var miniId = LocalClient.SelectedCreatureId.Value;
             var targetId = ____selectedCreature.CreatureId.Value;
 
-            var AttackPlayer = Reflections.GetMenuItemAction("AttackPlayer", __instance);
-            var MagicMissile = Reflections.GetMenuItemAction("MagicMissile", __instance);
+            var attackPlayer = Reflections.GetMenuItemAction("AttackPlayer", __instance);
+            var magicMissile = Reflections.GetMenuItemAction("MagicMissile", __instance);
 
-            if (RadialUIPlugin._removeOnSubmenuAttacks.CanAdd("Attack", miniId.ToString(), targetId.ToString()))
-                map.AddItem(AttackPlayer, "Attack", icon: Icons.GetIconSprite("Attacks"), obj: ____selectedCreature, closeMenuOnActivate: true);
-            if (RadialUIPlugin._removeOnSubmenuAttacks.CanAdd("Magic Missile", miniId.ToString(), targetId.ToString()))
-                map.AddItem(MagicMissile, "Magic Missile", icon: Icons.GetIconSprite("MagicMissile"), obj: ____selectedCreature, closeMenuOnActivate: true);
+            if (attackPlayer != null && RadialUIPlugin._removeOnSubmenuAttacks.CanAdd("Attack", miniId.ToString(), targetId.ToString()))
+                map.AddItem(attackPlayer, "Attack", icon: Icons.GetIconSprite("Attacks"), obj: ____selectedCreature, closeMenuOnActivate: true);
+            if (magicMissile != null && RadialUIPlugin._removeOnSubmenuAttacks.CanAdd("Magic Missile", miniId.ToString(), targetId.ToString()))
+                map.AddItem(magicMissile, "Magic Missile", icon: Icons.GetIconSprite("MagicMissile"), obj: ____selectedCreature, closeMenuOnActivate: true);
 
             return false;
         }
