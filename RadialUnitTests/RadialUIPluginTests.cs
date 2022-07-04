@@ -16,7 +16,7 @@ namespace RadialUnitTests
         [InlineData(null,null,null)]
         public void TestAlwaysTrue(string s1, string s2, string s3)
         {
-            Assert.True(RadialUIPlugin.alwaysTrue(s1, s2, s3));
+            Assert.True(RadialUIPlugin.AlwaysTrue(s1, s2, s3));
         }
 
         [Fact]
@@ -50,7 +50,7 @@ namespace RadialUnitTests
 
             Assert.Contains(key, data.Keys);
             Assert.True(data[key].SingleOrDefault(data => data.TitleToRemove == value) != null);
-            Assert.True(data[key].SingleOrDefault(data => data.TitleToRemove == value).ShouldRemoveCallback == RadialUIPlugin.alwaysTrue);
+            Assert.True(data[key].SingleOrDefault(data => data.TitleToRemove == value).ShouldRemoveCallback == RadialUIPlugin.AlwaysTrue);
         }
 
         [Fact]

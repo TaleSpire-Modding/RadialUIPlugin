@@ -40,6 +40,7 @@ namespace RadialUI.Creature_Menu_Patches
     [HarmonyPatch(typeof(CreatureMenuBoardTool), "Menu_Stats")]
     internal class StatSubMenuPatch
     {
+        // ReSharper disable InconsistentNaming
         internal static bool Prefix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature)
         {
             var miniId = LocalClient.SelectedCreatureId.Value;

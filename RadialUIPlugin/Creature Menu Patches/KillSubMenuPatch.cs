@@ -33,7 +33,7 @@ namespace RadialUI.Creature_Menu_Patches
     [HarmonyPatch(typeof(CreatureMenuBoardTool), "Menu_KillMenu")]
     internal class KillSubMenuPatch
     {
-        
+        // ReSharper disable InconsistentNaming
         internal static bool Prefix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature, CreatureMenuBoardTool __instance)
         {
             

@@ -25,7 +25,8 @@ namespace RadialUI.Creature_Menu_Patches
 {
     [HarmonyPatch(typeof(GMBlockInteractMenuBoardTool), "Begin")]
     internal class GMBlockMenuPatch
-    { 
+    {
+        // ReSharper disable InconsistentNaming
         internal static void Postfix(ref GMBlockInteractMenuBoardTool __instance)
         {
             var deleteBlock = Reflections.GetMenuItemAction("DeleteBlock", __instance);

@@ -36,6 +36,7 @@ namespace RadialUI.Creature_Menu_Patches
     [HarmonyPatch(typeof(CreatureMenuBoardTool), "Emote_Menu")]
     internal class EmotesSubMenuPatch
     {
+        // ReSharper disable InconsistentNaming
         internal static bool Prefix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature, List<ActionTimeline> ____emotes, CreatureMenuBoardTool __instance)
         {
             var miniId = LocalClient.SelectedCreatureId.Value;

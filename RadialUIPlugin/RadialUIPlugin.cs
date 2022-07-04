@@ -6,12 +6,13 @@ using UnityEngine;
 
 namespace RadialUI
 {
-    [BepInPlugin(Guid, "RadialUIPlugin", Version)]
+    [BepInPlugin(Guid, Name, Version)]
 	public partial class RadialUIPlugin : BaseUnityPlugin
 	{
 		// constants
 		public const string Guid = "org.hollofox.plugins.RadialUIPlugin";
 		public const string Version = "2.2.0.0";
+		public const string Name = "RadialUIPlugin";
 
 		/// <summary>
 		/// Awake plugin
@@ -21,13 +22,12 @@ namespace RadialUI
 			Logger.LogInfo("In Awake for RadialUI");
             
             var harmony = new Harmony(Guid);
-
             try
             {
                 harmony.PatchAll();
 				Debug.Log("RadialUI Plug-in loaded");
 			}
-            catch (Exception e)
+            catch (Exception)
             {
 				harmony.UnpatchSelf();
 				Debug.Log("RadialUI Failed to patch");
@@ -45,7 +45,7 @@ namespace RadialUI
 		{
 			if (!data.ContainsKey(key))
 				data.Add(key, new List<RadialCheckRemove>());
-            if (shouldRemoveCallback == null) shouldRemoveCallback = alwaysTrue;
+            if (shouldRemoveCallback == null) shouldRemoveCallback = AlwaysTrue;
 			data[key].Add(new RadialCheckRemove(value, shouldRemoveCallback));
 		}
 
@@ -57,7 +57,7 @@ namespace RadialUI
         /// <param name="s2">mini id</param>
         /// <param name="s3">target id</param>
         /// <returns>True</returns>
-        public static bool alwaysTrue(string s1, string s2, string s3)
+        public static bool AlwaysTrue(string s1, string s2, string s3)
         {
             return true;
         }
