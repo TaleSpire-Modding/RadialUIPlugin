@@ -126,8 +126,11 @@ namespace RadialUI.Creature_Menu_Patches
                     map.AddItem(toggleFlying, "Fly Toggle", icon: Icons.GetIconSprite("fly"), closeMenuOnActivate: true);
             }
 
-            Reflections.CallMethod("AddStats", __instance,new object[] {map});
+            var morphsMenu = Reflections.GetMenuAction("Morphs_Menu", __instance);
+            if (morphsMenu != null && RadialUIPlugin._removeOnCharacter.CanAdd("Morphs", miniId.ToString(), targetId.ToString()))
+                map.AddMenuItem(MapMenu.MenuType.BRANCH, morphsMenu, "Morphs", icon: Icons.GetIconSprite("character"));
 
+            Reflections.CallMethod("AddStats", __instance,new object[] {map});
             map.AddItems(RadialUIPlugin._onCharacterCallback, targetId);
         }
     }

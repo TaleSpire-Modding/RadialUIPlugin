@@ -6,12 +6,12 @@ using RadialUI;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RForRotatePlugin")]
+[assembly: AssemblyTitle(RadialUIPlugin.Name)]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("D20ArmyKnife")]
-[assembly: AssemblyProduct("RForRotatePlugin")]
-[assembly: AssemblyCopyright("Copyright ©  2020")]
+[assembly: AssemblyCompany("HolloFox")]
+[assembly: AssemblyProduct(RadialUIPlugin.Name)]
+[assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
