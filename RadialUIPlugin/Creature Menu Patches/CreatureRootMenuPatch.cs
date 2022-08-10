@@ -93,14 +93,15 @@ namespace RadialUI.Creature_Menu_Patches
 
             var emoteMenu = Reflections.GetMenuAction("Emote_Menu", __instance);
             var statusEmoteMenu = Reflections.GetMenuAction("StatusEmote_Menu", __instance);
-            var torchToggle = Reflections.GetMenuItemAction(____selectedCreature.TorchEnabled ? "Menu_DisableTorch" : "Menu_EnableTorch", __instance);
 
+            var torchToggle = Reflections.GetMenuItemAction("Menu_ToggleTorch", __instance);
+            
             if (emoteMenu != null && RadialUIPlugin._removeOnCharacter.CanAdd("Emotes", miniId.ToString(), targetId.ToString()))
                 map.AddMenuItem(Reflections.CallMethod<MapMenu.MenuType, CreatureMenuBoardTool>("EmoteMenuStyle", __instance), emoteMenu, "Emotes", icon: Icons.GetIconSprite("emote"));
             if (statusEmoteMenu != null && RadialUIPlugin._removeOnCharacter.CanAdd("Status", miniId.ToString(), targetId.ToString()))
                 map.AddMenuItem(Reflections.CallMethod<MapMenu.MenuType, CreatureMenuBoardTool>("StatusEmoteMenuStyle", __instance), statusEmoteMenu, "Status", icon: Icons.GetIconSprite("status_emote"));
             if (torchToggle != null && RadialUIPlugin._removeOnCharacter.CanAdd("Torch", miniId.ToString(), targetId.ToString()))
-                map.AddItem(torchToggle, ____selectedCreature.TorchEnabled ? "Disable Torch" : "Enable Torch", icon: Icons.GetIconSprite("torch"), closeMenuOnActivate: true);
+                map.AddToggleItem(____selectedCreature.TorchEnabled, torchToggle, "Disable Torch", "Enable Torch", icon: Icons.GetIconSprite("torch"));
 
             if (____selectedCreature.Link != null)
             {
@@ -117,13 +118,13 @@ namespace RadialUI.Creature_Menu_Patches
                 var toggleFlying = Reflections.GetMenuItemAction("ToggleFlying", __instance);
 
                 if (hideCreature !=null && RadialUIPlugin._removeOnCharacter.CanAdd("Hide", miniId.ToString(), targetId.ToString()))
-                    map.AddItem(hideCreature, ____selectedCreature.IsExplicitlyHidden ? "Reveal" : "Hide", icon: Icons.GetIconSprite("creaturehide"), closeMenuOnActivate: true);
+                    map.AddToggleItem(____selectedCreature.IsExplicitlyHidden, hideCreature, "Reveal" , "Hide", icon: Icons.GetIconSprite("creaturehide"));
                 if (menuGmTools != null && RadialUIPlugin._removeOnCharacter.CanAdd("GM Tools", miniId.ToString(), targetId.ToString()))
                     map.AddMenuItem(MapMenu.MenuType.SUBROOT, menuGmTools , "GM Tools", icon: Icons.GetIconSprite("dungeonmaster"));
                 if (menuKillMenu != null && RadialUIPlugin._removeOnCharacter.CanAdd("KillMenu", miniId.ToString(), targetId.ToString()))
                     map.AddMenuItem(MapMenu.MenuType.BRANCH, menuKillMenu , "KillMenu", icon: Icons.GetIconSprite("remove"));
                 if (toggleFlying != null && RadialUIPlugin._removeOnCharacter.CanAdd("Fly Toggle", miniId.ToString(), targetId.ToString()))
-                    map.AddItem(toggleFlying, "Fly Toggle", icon: Icons.GetIconSprite("fly"), closeMenuOnActivate: true);
+                    map.AddToggleItem(____selectedCreature.Flying, toggleFlying, "Disable Flying", " Enable Flying", icon: Icons.GetIconSprite("fly"));
             }
 
             var morphsMenu = Reflections.GetMenuAction("Morphs_Menu", __instance);
