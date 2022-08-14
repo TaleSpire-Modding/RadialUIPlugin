@@ -42,11 +42,17 @@ namespace RadialUI.Creature_Menu_Patches
 
             var attackPlayer = Reflections.GetMenuItemAction("AttackPlayer", __instance);
             var magicMissile = Reflections.GetMenuItemAction("MagicMissile", __instance);
+            var redLaser = Reflections.GetMenuItemAction("RedLaser", __instance);
+            var greenLaser = Reflections.GetMenuItemAction("GreenLaser", __instance);
 
             if (attackPlayer != null && RadialUIPlugin._removeOnSubmenuAttacks.CanAdd("Attack", miniId.ToString(), targetId.ToString()))
                 map.AddItem(attackPlayer, "Attack", icon: Icons.GetIconSprite("Attacks"), obj: ____selectedCreature, closeMenuOnActivate: true);
             if (magicMissile != null && RadialUIPlugin._removeOnSubmenuAttacks.CanAdd("Magic Missile", miniId.ToString(), targetId.ToString()))
                 map.AddItem(magicMissile, "Magic Missile", icon: Icons.GetIconSprite("MagicMissile"), obj: ____selectedCreature, closeMenuOnActivate: true);
+            if (redLaser != null && RadialUIPlugin._removeOnSubmenuAttacks.CanAdd("RedLaser", miniId.ToString(), targetId.ToString()))
+                map.AddItem(redLaser, "Red Laser", icon: Icons.GetIconSprite("RedLaser"), obj: ____selectedCreature, closeMenuOnActivate: true);
+            if (greenLaser != null && RadialUIPlugin._removeOnSubmenuAttacks.CanAdd("GreenLaser", miniId.ToString(), targetId.ToString()))
+                map.AddItem(greenLaser, "Green Laser", icon: Icons.GetIconSprite("GreenLaser"), obj: ____selectedCreature, closeMenuOnActivate: true);
 
             return false;
         }

@@ -11,7 +11,7 @@ namespace RadialUI
 	{
 		// constants
 		public const string Guid = "org.hollofox.plugins.RadialUIPlugin";
-		public const string Version = "2.2.1.0";
+		public const string Version = "2.2.3.0";
 		public const string Name = "RadialUIPlugin";
 
 		/// <summary>
