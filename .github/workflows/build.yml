@@ -5,7 +5,7 @@ on:
     branches:
       - master
   repository_dispatch:
-    types: [regress_update]
+    types: [regress_update, TaleSpire-Modding-Pipelines/AutomationDlls]
   
 jobs:
   build:
@@ -23,7 +23,7 @@ jobs:
         with:
           github_token: ${{ secrets.dll_pat }}
           workflow: build.yml
-          branch: master
+          branch: ${{ github.event.client_payload.branch }}
           path: .
           repo: TaleSpire-Modding-Pipelines/AutomationDlls
 
