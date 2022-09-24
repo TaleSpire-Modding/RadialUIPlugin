@@ -19,11 +19,23 @@ jobs:
       
       - name: Download artifact
         #src: https://github.com/marketplace/actions/download-workflow-artifact
+        if: ${{ github.event.client_payload.branch != Null}}
         uses: dawidd6/action-download-artifact@v2
         with:
           github_token: ${{ secrets.dll_pat }}
           workflow: build.yml
           branch: ${{ github.event.client_payload.branch }}
+          path: .
+          repo: TaleSpire-Modding-Pipelines/AutomationDlls
+      
+      - name: Download artifact
+        #src: https://github.com/marketplace/actions/download-workflow-artifact
+        if: ${{ github.event.client_payload.branch == Null}}
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          github_token: ${{ secrets.dll_pat }}
+          workflow: build.yml
+          branch: master
           path: .
           repo: TaleSpire-Modding-Pipelines/AutomationDlls
 
