@@ -19,7 +19,7 @@ jobs:
       
       - name: Download artifact
         #src: https://github.com/marketplace/actions/download-workflow-artifact
-        if: ${{ github.event.client_payload.branch != Null}}
+        if: ${{ github.event.client_payload.branch != null}}
         uses: dawidd6/action-download-artifact@v2
         with:
           github_token: ${{ secrets.dll_pat }}
@@ -30,7 +30,7 @@ jobs:
       
       - name: Download artifact
         #src: https://github.com/marketplace/actions/download-workflow-artifact
-        if: ${{ github.event.client_payload.branch == Null}}
+        if: ${{ github.event.client_payload.branch == null}}
         uses: dawidd6/action-download-artifact@v2
         with:
           github_token: ${{ secrets.dll_pat }}
