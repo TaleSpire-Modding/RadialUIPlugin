@@ -38,6 +38,6 @@ jobs:
 
       - name: publish
         run: |
-          cd bin/Release
+          cd RadialUIPlugin/bin/Release
           dotnet nuget push *.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json --skip-duplicate
           dotnet nuget push *.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/${{ github.repository_owner }} --skip-duplicate
