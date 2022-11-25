@@ -1,0 +1,36 @@
+name: Push to nuget feed on release
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'manifest.json'
+
+jobs:
+  Build_and_Release:
+    runs-on: windows-latest
+    steps:
+      - name: Setup Nuget
+        uses: nuget/setup-nuget@v1
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: build
+        run: |
+          cd SetInjectionFlag
+          dotnet restore SetInjectionFlag.csproj
+          dotnet build SetInjectionFlag.csproj --configuration Release
+
+      - name: test
+        run: |
+          cd RadialUnitTests
+          dotnet restore RadialUnitTests.csproj
+          dotnet test --configuration Release --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+
+      - name: publish
+        run: |
+          cd bin/Release
+          dotnet nuget push *.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+          dotnet nuget push *.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/${{ github.repository_owner }} --skip-duplicate

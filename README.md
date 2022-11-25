@@ -70,10 +70,7 @@ Texture2D tex = new Texture2D(32, 32);
 tex.LoadImage(System.IO.File.ReadAllBytes(dir + "Images/Icons/KO.Png"));
 Sprite icon = Sprite.Create(tex, new Rect(0, 0, 32, 32), new Vector2(0.5f, 0.5f));
 ```
-It is recommended to use the File Access Plugin supplied by Lord Ashes for a simple 1 liner:
-```csharp
-Sprite icon = LordAshes.FileAccessPlugin.Image.LoadSprite("update.png")
-```
+
 
 ## How to Compile / Modify
 
@@ -97,36 +94,27 @@ Build the project.
 Browse to the newly created ```bin/Debug``` or ```bin/Release``` folders and copy the ```RadialUIPlugin.dll``` to ```Steam\steamapps\common\TaleSpire\BepInEx\plugins```
 
 ## Changelog
+- 2.2.3: Fix lasers
+- 2.2.2: CyberPunk update release
+- 2.2.1: Patch for Polymorph feature (backwards compatible with sys reflec checker)
+- 2.2.0: Added in sys reflec checkers
+- 2.1.2: Fly fix
+- 2.1.1: HF Release Fix
+- 2.1.0: GMBlock compatibility added.
+- 2.0.7: Patch for TS Update
+- 2.0.6: Patch for Hide Volume Filters Update.
 - 2.0.5: Fix missed logic in extension.
 - 2.0.4: Slight optimization and refactor repeating code.
 - 2.0.3: Adjusted last creature targeted instantiation to prefix.
 - 2.0.2: GetLastHideVolume is now supported.
 - 2.0.1: HideVolume support
 - 2.0.0: Completed Refactor, Code has been optimized whilst keeping same Interface
-- 1.7.0: Added Stat Submenu and started converting to Harmony Patching.
-- 1.6.1: Moved Repo
-- 1.6.0: Refactor and Callback for Remove menu, provided by CodeRushed.
-- 1.5.1: Fixed problem of infinite spawning of menus due to removal.
-- 1.5.0: Fixed problem of patch 15 from BouncyRock
-- 1.4.1: Fixed problem of dissapearing root
-- 1.4.0: Add ability to remove existing buttons to replace them.
-- 1.3.1: fixed backwards compatability due to paramater signature.
-- 1.3.0: Expand Submenu to allow a checker
-- 1.2.5: Privatized method and new method to return last creature selected from menu.
-- 1.2.4: Image not found does not block radial from loading
-- 1.2.3: bugfix
-- 1.2.2: Add size submenu hook
-- 1.2.1: Delay callback to fix forms
-- 1.2.0: Add hooks to character submenus, Added code to manage submenus.
-- 1.1.1: Add Docs on how to implement submenus
-- 1.1.0: Removed Modding Utils and display on main menu
-- 1.0.2: Fixed Issue on radial breaking upon leaving board
-- 1.0.0: Initial release
 
 ## Shoutouts
 Shoutout to my Patreons on https://www.patreon.com/HolloFox recognising your
 mighty contribution to my caffeine addiciton:
 - John Fuller
 - [Tales Tavern](https://talestavern.com/) - MadWizard
+- Joaqim Planstedt
 
 Lord Ashes providing dependent code unify snippet controlling submenus.
