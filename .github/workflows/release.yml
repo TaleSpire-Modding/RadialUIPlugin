@@ -6,7 +6,6 @@ on:
       - master
     paths:
       - 'manifest.json'
-      - './.github/workflows/release.yml'
 
 jobs:
   Build_and_Release:
