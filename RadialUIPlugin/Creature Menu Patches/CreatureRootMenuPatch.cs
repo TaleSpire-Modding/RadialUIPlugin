@@ -67,7 +67,7 @@ namespace RadialUI
 namespace RadialUI.Creature_Menu_Patches
 {
     [HarmonyPatch(typeof(CreatureMenuBoardTool), "Begin")]
-    internal class CreatureRootMenuPatch
+    internal sealed class CreatureRootMenuPatch
     {
         // ReSharper disable InconsistentNaming
         internal static void Prefix(CreatureBoardAsset ____selectedCreature)

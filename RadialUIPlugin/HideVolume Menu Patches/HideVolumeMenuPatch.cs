@@ -32,7 +32,7 @@ namespace RadialUI
 namespace RadialUI.HideVolume_Menu_Patches
 {
     [HarmonyPatch(typeof(GMHideVolumeMenuBoardTool), "Begin")]
-    internal class HideVolumeMenuPatch
+    internal sealed class HideVolumeMenuPatch
     {
         // ReSharper disable InconsistentNaming
         internal static bool Prefix(HideVolumeItem ____selectedVolume)

@@ -7,7 +7,7 @@ namespace RadialUnitTests
 {
 
     // First simple test and asserts regardless of inputs, return true. Used for buttons on minis as default
-    public class RadialUIPluginTests
+    public sealed class RadialUIPluginTests
     {
         public static bool CustomShouldShowMenu(string menuText, string miniId, string targetId) => true;
 
