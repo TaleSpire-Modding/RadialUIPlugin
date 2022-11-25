@@ -21,6 +21,22 @@ jobs:
           dotnet restore RadialUIPlugin.csproj
           dotnet build RadialUIPlugin.csproj --configuration Release
 
+  Test:
+    needs: Build
+    runs-on: windows-latest
+    steps:
+      - name: Setup Nuget
+        uses: nuget/setup-nuget@v1
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Dotnet Build
+        run: |
+          cd RadialUIPlugin
+          dotnet restore RadialUIPlugin.csproj
+          dotnet build RadialUIPlugin.csproj --configuration Release
+          
       - name: test
         run: |
           cd RadialUnitTests
