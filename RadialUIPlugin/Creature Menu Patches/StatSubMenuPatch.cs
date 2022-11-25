@@ -38,7 +38,7 @@ namespace RadialUI
 namespace RadialUI.Creature_Menu_Patches
 {
     [HarmonyPatch(typeof(CreatureMenuBoardTool), "Menu_Stats")]
-    internal class StatSubMenuPatch
+    internal sealed class StatSubMenuPatch
     {
         // ReSharper disable InconsistentNaming
         internal static bool Prefix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature)

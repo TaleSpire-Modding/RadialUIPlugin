@@ -1,14 +1,28 @@
-name: Push to nuget feed on release
+name: Checks Builds on PR
 
-on:
-  push:
-    branches:
-      - master
-  repository_dispatch:
-    types: [regress_update, TaleSpire-Modding-Pipelines/AutomationDlls]
-  
+on: [pull_request]
+
 jobs:
-  build:
+  Build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Setup Nuget
+        uses: nuget/setup-nuget@v1
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Dotnet Build
+        run: |
+          cd RadialUIPlugin
+          dotnet restore RadialUIPlugin.csproj
+          dotnet build RadialUIPlugin.csproj --configuration Release
+
+  Test:
+    needs: Build
     runs-on: windows-latest
     steps:
       - name: Setup Nuget
@@ -16,35 +30,13 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v2
-      
-      - name: Download artifact
-        #src: https://github.com/marketplace/actions/download-workflow-artifact
-        if: ${{ github.event.client_payload.branch != null}}
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          github_token: ${{ secrets.dll_pat }}
-          workflow: build.yml
-          branch: ${{ github.event.client_payload.branch }}
-          path: .
-          repo: TaleSpire-Modding-Pipelines/AutomationDlls
-      
-      - name: Download artifact
-        #src: https://github.com/marketplace/actions/download-workflow-artifact
-        if: ${{ github.event.client_payload.branch == null}}
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          github_token: ${{ secrets.dll_pat }}
-          workflow: build.yml
-          branch: master
-          path: .
-          repo: TaleSpire-Modding-Pipelines/AutomationDlls
 
-      - name: build
+      - name: Dotnet Build
         run: |
           cd RadialUIPlugin
           dotnet restore RadialUIPlugin.csproj
           dotnet build RadialUIPlugin.csproj --configuration Release
-
+          
       - name: test
         run: |
           cd RadialUnitTests
@@ -57,20 +49,3 @@ jobs:
           file: ./RadialUnitTests/coverage.opencover.xml
           flags: unit
           name: RadialUI
-
-      - name: Remove old artifacts
-        uses: c-hive/gha-remove-artifacts@v1
-        with:
-          age: '0 month'
-      
-      - name: Upload new artifacts
-        uses: actions/upload-artifact@master
-        with:
-          name: dlls
-          path: RadialUIPlugin\bin\Release\RadialUI.dll
-      - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v1
-        with:
-          token: ${{ secrets.dll_pat }}
-          repository: TaleSpire-Modding-Pipelines/RepoDispatcher
-          event-type: ${{ github.repository }}

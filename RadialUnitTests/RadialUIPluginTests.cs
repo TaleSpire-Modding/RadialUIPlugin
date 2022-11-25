@@ -7,7 +7,7 @@ namespace RadialUnitTests
 {
 
     // First simple test and asserts regardless of inputs, return true. Used for buttons on minis as default
-    public class RadialUIPluginTests
+    public sealed class RadialUIPluginTests
     {
         public static bool CustomShouldShowMenu(string menuText, string miniId, string targetId) => true;
 
@@ -32,8 +32,8 @@ namespace RadialUnitTests
             RadialUIPlugin.AddRemoveOn(data,key,value,CustomShouldShowMenu);
 
             Assert.Contains(key, data.Keys);
-            Assert.True(data[key].SingleOrDefault( data => data.TitleToRemove == value) != null);
-            Assert.True(data[key].SingleOrDefault(data => data.TitleToRemove == value).ShouldRemoveCallback == CustomShouldShowMenu);
+            Assert.True(data[key].SingleOrDefault( dat => dat.TitleToRemove == value) != null);
+            Assert.True(data[key].SingleOrDefault(dat => dat.TitleToRemove == value).ShouldRemoveCallback == CustomShouldShowMenu);
         }
 
         [Fact]
@@ -49,8 +49,8 @@ namespace RadialUnitTests
             RadialUIPlugin.AddRemoveOn(data, key, value, null);
 
             Assert.Contains(key, data.Keys);
-            Assert.True(data[key].SingleOrDefault(data => data.TitleToRemove == value) != null);
-            Assert.True(data[key].SingleOrDefault(data => data.TitleToRemove == value).ShouldRemoveCallback == RadialUIPlugin.AlwaysTrue);
+            Assert.True(data[key].SingleOrDefault(dat => dat.TitleToRemove == value) != null);
+            Assert.True(data[key].SingleOrDefault(dat => dat.TitleToRemove == value).ShouldRemoveCallback == RadialUIPlugin.AlwaysTrue);
         }
 
         [Fact]
@@ -63,7 +63,7 @@ namespace RadialUnitTests
             RadialUIPlugin.AddRemoveOn(data, key, value, null);
 
             Assert.Contains(key, data.Keys);
-            Assert.True(data[key].SingleOrDefault(data => data.TitleToRemove == value) != null);
+            Assert.True(data[key].SingleOrDefault(dat => dat.TitleToRemove == value) != null);
 
             var result = RadialUIPlugin.RemoveRemoveOn(data, key, value);
             Assert.True(result);
@@ -79,7 +79,7 @@ namespace RadialUnitTests
             RadialUIPlugin.AddRemoveOn(data, key, value, null);
 
             Assert.Contains(key, data.Keys);
-            Assert.True(data[key].SingleOrDefault(data => data.TitleToRemove == value) != null);
+            Assert.True(data[key].SingleOrDefault(dat => dat.TitleToRemove == value) != null);
 
             var result = RadialUIPlugin.RemoveRemoveOn(data, "wrong key", "Doesn't exist");
             Assert.False(result);
@@ -95,7 +95,7 @@ namespace RadialUnitTests
             RadialUIPlugin.AddRemoveOn(data, key, value, null);
 
             Assert.Contains(key, data.Keys);
-            Assert.True(data[key].SingleOrDefault(data => data.TitleToRemove == value) != null);
+            Assert.True(data[key].SingleOrDefault(dat => dat.TitleToRemove == value) != null);
 
             var result = RadialUIPlugin.RemoveRemoveOn(data, key, "Doesn't exist");
             Assert.False(result);

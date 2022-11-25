@@ -4,7 +4,7 @@ using RadialUI.Extensions;
 namespace RadialUI.Creature_Menu_Patches
 {
     [HarmonyPatch(typeof(CreatureMenuBoardTool), "AddStats")]
-    internal class AddStatsMenuPatch
+    internal sealed class AddStatsMenuPatch
     {
         // ReSharper disable InconsistentNaming
         internal static bool Prefix(ref MapMenu mapMenu, CreatureBoardAsset ____selectedCreature, CreatureMenuBoardTool __instance)

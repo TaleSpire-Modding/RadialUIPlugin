@@ -1,136 +1,34 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B1D07128-5C44-4003-B05F-D35A122E975A}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RadialUI</RootNamespace>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <TargetFramework>net472</TargetFramework>
     <AssemblyName>RadialUI</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>2.2.3</Version>
+    <PackageId>TaleSpire.$(AssemblyName)</PackageId>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/TaleSpire-Modding/RadialUIPlugin.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/TaleSpire-Modding/RadialUIPlugin.git</PackageProjectUrl>
+    <Description>This is a developer tool based package used to help devs easily configure UI Radial Menus.</Description>
+    <PackageTags>TaleSpire;Mods;</PackageTags>
+    <licenseUrl>https://github.com/TaleSpire-Modding/RadialUIPlugin/raw/main/LICENSE.txt</licenseUrl>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <Authors>HolloFox</Authors>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Creature Menu Patches\AddStatsMenuPatch.cs" />
-    <Compile Include="Creature Menu Patches\SizeSubMenuPatch.cs" />
-    <Compile Include="Creature Menu Patches\CreatureRootMenuPatch.cs" />
-    <Compile Include="Creature Menu Patches\AttacksSubMenuPatch.cs" />
-    <Compile Include="Creature Menu Patches\GMToolsSubMenuPatch.cs" />
-    <Compile Include="Creature Menu Patches\StatusSubMenuPatch.cs" />
-    <Compile Include="Creature Menu Patches\EmotesSubMenuPatch.cs" />
-    <Compile Include="Creature Menu Patches\KillSubMenuPatch.cs" />
-    <Compile Include="Creature Menu Patches\StatSubMenuPatch.cs" />
-    <Compile Include="Extensions\Mapmenu.cs" />
-    <Compile Include="GM Block Menu Patches\GMBlockMenuPatch.cs" />
-    <Compile Include="HideVolume Menu Patches\HideVolumeMenuPatch.cs" />
-    <Compile Include="RadialCheckRemove.cs" />
-    <Compile Include="Extensions\RadialExtensions.cs" />
-    <Compile Include="RadialUIPlugin.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RadialSubmenu.cs" />
-    <Compile Include="Extensions\Reflections.cs" />
-    <Compile Include="Talespire.RadialMenus.cs" />
+    <None Include="..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Placeables Menu Patches\" />
+    <PackageReference Include="TaleSpire" Version="0.0.4"></PackageReference>
+    <PackageReference Include="Talespire.BepInEx" Version="5.4.11"></PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="0Harmony">
-      <HintPath>..\..\automationdlls\BepinexDlls\0Harmony.dll</HintPath>
-    </Reference>
-    <Reference Include="BepInEx">
-      <HintPath>..\..\automationdlls\BepinexDlls\BepInEx.dll</HintPath>
-    </Reference>
-    <Reference Include="BepInEx.Harmony">
-      <HintPath>..\..\automationdlls\BepinexDlls\BepInEx.Harmony.dll</HintPath>
-    </Reference>
-    <Reference Include="BepInEx.Preloader">
-      <HintPath>..\..\automationdlls\BepinexDlls\BepInEx.Preloader.dll</HintPath>
-    </Reference>
-    <Reference Include="Bouncyrock.BouncePackage.BrDataFormat.Runtime">
-      <HintPath>..\..\automationdlls\TaleSpireDlls\Bouncyrock.BouncePackage.BrDataFormat.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Bouncyrock.BouncePackage.Runtime">
-      <HintPath>..\..\automationdlls\TaleSpireDlls\Bouncyrock.BouncePackage.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Bouncyrock.BouncePackage.TaleSpire.Runtime">
-      <HintPath>..\..\automationdlls\TaleSpireDlls\Bouncyrock.BouncePackage.TaleSpire.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Bouncyrock.BouncePhysics.Runtime">
-      <HintPath>..\..\automationdlls\TaleSpireDlls\Bouncyrock.BouncePhysics.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Bouncyrock.MiniZ.Runtime">
-      <HintPath>..\..\automationdlls\TaleSpireDlls\Bouncyrock.MiniZ.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Bouncyrock.PicoHash.Runtime">
-      <HintPath>..\..\automationdlls\TaleSpireDlls\Bouncyrock.PicoHash.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Bouncyrock.TaleSpire.3rdParty.Runtime">
-      <HintPath>..\..\automationdlls\TaleSpireDlls\Bouncyrock.TaleSpire.3rdParty.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Bouncyrock.TaleSpire.AssetManagement">
-      <HintPath>..\..\automationdlls\TaleSpireDlls\Bouncyrock.TaleSpire.AssetManagement.dll</HintPath>
-    </Reference>
-    <Reference Include="Bouncyrock.TaleSpire.BounceTools.Runtime">
-      <HintPath>..\..\automationdlls\TaleSpireDlls\Bouncyrock.TaleSpire.BounceTools.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Bouncyrock.TaleSpire.DataModel.Runtime">
-      <HintPath>..\..\automationdlls\TaleSpireDlls\Bouncyrock.TaleSpire.DataModel.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Bouncyrock.TaleSpire.Runtime">
-      <HintPath>..\..\automationdlls\TaleSpireDlls\Bouncyrock.TaleSpire.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="HarmonyXInterop">
-      <HintPath>..\..\automationdlls\BepinexDlls\HarmonyXInterop.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil">
-      <HintPath>..\..\automationdlls\BepinexDlls\Mono.Cecil.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Mdb">
-      <HintPath>..\..\automationdlls\BepinexDlls\Mono.Cecil.Mdb.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Pdb">
-      <HintPath>..\..\automationdlls\BepinexDlls\Mono.Cecil.Pdb.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Rocks">
-      <HintPath>..\..\automationdlls\BepinexDlls\Mono.Cecil.Rocks.dll</HintPath>
-    </Reference>
-    <Reference Include="MonoMod.RuntimeDetour">
-      <HintPath>..\..\automationdlls\BepinexDlls\MonoMod.RuntimeDetour.dll</HintPath>
-    </Reference>
-    <Reference Include="MonoMod.Utils">
-      <HintPath>..\..\automationdlls\BepinexDlls\MonoMod.Utils.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Mathematics">
-      <HintPath>..\..\automationdlls\TaleSpireDlls\Unity.Mathematics.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine">
-      <HintPath>..\..\automationdlls\TaleSpireDlls\UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\automationdlls\TaleSpireDlls\UnityEngine.CoreModule.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

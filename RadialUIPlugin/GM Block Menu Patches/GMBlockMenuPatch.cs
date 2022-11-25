@@ -24,7 +24,7 @@ namespace RadialUI
 namespace RadialUI.Creature_Menu_Patches
 {
     [HarmonyPatch(typeof(GMBlockInteractMenuBoardTool), "Begin")]
-    internal class GMBlockMenuPatch
+    internal sealed class GMBlockMenuPatch
     {
         // ReSharper disable InconsistentNaming
         internal static void Postfix(ref GMBlockInteractMenuBoardTool __instance)
@@ -40,7 +40,7 @@ namespace RadialUI.Creature_Menu_Patches
     }
 
     [HarmonyPatch(typeof(GMBlockButtonAtmosphere), "OnOpenMenu")]
-    internal class GMBlockButtonPatch
+    internal sealed class GMBlockButtonPatch
     {
         internal static bool Prefix(ref MapMenu map, ref GMBlockButtonAtmosphere __instance)
         {

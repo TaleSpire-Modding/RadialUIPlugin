@@ -7,7 +7,7 @@ using UnityEngine;
 namespace RadialUI
 {
     [BepInPlugin(Guid, Name, Version)]
-	public partial class RadialUIPlugin : BaseUnityPlugin
+	public sealed partial class RadialUIPlugin : BaseUnityPlugin
 	{
 		// constants
 		public const string Guid = "org.hollofox.plugins.RadialUIPlugin";
