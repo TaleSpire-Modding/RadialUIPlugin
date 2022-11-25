@@ -6,6 +6,7 @@ on:
       - master
     paths:
       - 'manifest.json'
+      - './.github/workflows/release.yml'
 
 jobs:
   Build_and_Release:
@@ -19,9 +20,9 @@ jobs:
 
       - name: build
         run: |
-          cd SetInjectionFlag
-          dotnet restore SetInjectionFlag.csproj
-          dotnet build SetInjectionFlag.csproj --configuration Release
+          cd RadialUIPlugin
+          dotnet restore RadialUIPlugin.csproj
+          dotnet build RadialUIPlugin.csproj --configuration Release
 
       - name: test
         run: |
