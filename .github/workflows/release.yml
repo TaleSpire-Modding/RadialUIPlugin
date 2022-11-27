@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - master
-    paths:
-     - 'manifest.json'
+#    paths:
+#     - 'manifest.json'
 
 jobs:
   Build_and_Release:
@@ -60,7 +60,7 @@ jobs:
         run: |
           New-Item -Path 'thunderstore' -ItemType Directory
           Copy-Item -Path LICENSE.txt -Destination 'thunderstore'
-          Copy-Item -Path RadialUIPlugin/bin/Release/net48/RadialUI.dll -Destination 'thunderstore'
+          Copy-Item -Path RadialUIPlugin/bin/Release/net472/RadialUI.dll -Destination 'thunderstore'
       
       - uses: GreenTF/upload-thunderstore-package@v2.2
         with:
