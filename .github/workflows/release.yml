@@ -47,19 +47,6 @@ jobs:
           Set-Content ${{steps.package.outputs.PROJECT}} -Value $projectValue
           dotnet restore ${{steps.package.outputs.PROJECT}}
           dotnet build ${{steps.package.outputs.PROJECT}} --configuration Release
-
-      - name: Test
-        run: |
-          cd RadialUnitTests
-          dotnet restore RadialUnitTests.csproj
-          dotnet test --configuration Release --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-          
-      - name: Checkout Codecov
-        uses: codecov/codecov-action@v2
-        with:
-          file: ./RadialUnitTests/coverage.opencover.xml
-          flags: unit
-          name: RadialUI
           
       - name: Publish
         shell: pwsh
