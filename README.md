@@ -76,24 +76,12 @@ Sprite icon = Sprite.Create(tex, new Rect(0, 0, 32, 32), new Vector2(0.5f, 0.5f)
 
 Open ```RadialUIPlugin.sln``` in Visual Studio.
 
-You will need to add references to:
-
-```
-* BepInEx.dll  (Download from the BepInEx project.)
-* Bouncyrock.TaleSpire.Runtime (found in Steam\steamapps\common\TaleSpire\TaleSpire_Data\Managed)
-* 0Harmony.dll
-* UnityEngine.dll
-* UnityEngine.CoreModule.dll
-* UnityEngine.InputLegacyModule.dll 
-* UnityEngine.UI
-* Unity.TextMeshPro
-```
-
 Build the project.
 
 Browse to the newly created ```bin/Debug``` or ```bin/Release``` folders and copy the ```RadialUIPlugin.dll``` to ```Steam\steamapps\common\TaleSpire\BepInEx\plugins```
 
 ## Changelog
+- 2.2.4: Pipeline to deploy
 - 2.2.3: Fix lasers
 - 2.2.2: CyberPunk update release
 - 2.2.1: Patch for Polymorph feature (backwards compatible with sys reflec checker)
