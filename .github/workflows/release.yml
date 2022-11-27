@@ -59,7 +59,9 @@ jobs:
         shell: pwsh
         run: |
           New-Item -Path 'thunderstore' -ItemType Directory
+          Copy-Item -Path icon.png -Destination 'thunderstore'
           Copy-Item -Path LICENSE.txt -Destination 'thunderstore'
+          Copy-Item -Path README.md -Destination 'thunderstore'
           Copy-Item -Path RadialUIPlugin/bin/Release/net472/RadialUI.dll -Destination 'thunderstore'
       
       - uses: GreenTF/upload-thunderstore-package@v2.2
