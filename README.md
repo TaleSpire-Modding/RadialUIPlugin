@@ -1,4 +1,5 @@
 # Radial UI Plugin
+[![Push to nuget feed on release](https://github.com/TaleSpire-Modding/RadialUIPlugin/actions/workflows/release.yml/badge.svg)](https://github.com/TaleSpire-Modding/RadialUIPlugin/actions/workflows/release.yml)
 
 This is a plugin for TaleSpire using BepInEx.
 
