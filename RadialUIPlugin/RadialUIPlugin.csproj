@@ -4,7 +4,7 @@
     <TargetFramework>net472</TargetFramework>
     <AssemblyName>RadialUI</AssemblyName>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>2.2.3</Version>
+    <Version>0.0.0</Version>
     <PackageId>TaleSpire.$(AssemblyName)</PackageId>
     <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
     <RepositoryType>git</RepositoryType>

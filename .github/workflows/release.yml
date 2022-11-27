@@ -1,15 +1,15 @@
-name: Push to nuget feed on release
+name: Nuget Published
 
 on:
   push:
     branches:
       - master
     paths:
-      - 'manifest.json'
+     - 'manifest.json'
 
 jobs:
   Build_and_Release:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Setup Nuget
         uses: nuget/setup-nuget@v1
@@ -17,27 +17,58 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: build
+      - name: Read Manifest
+        shell: pwsh
+        id: package
+        run: |
+          $json = Get-Content "manifest.json" | ConvertFrom-Json
+          $version = $json.version_number
+          $name = $json.name
+          $description = $json.description
+          echo "VERSION_NUMBER=${version}" >> $env:GITHUB_OUTPUT
+          echo "NAME=${name}" >> $env:GITHUB_OUTPUT
+          echo "DESCRIPTION=${description}" >> $env:GITHUB_OUTPUT
+          echo "PROJECT=RadialUIPlugin.csproj" >> $env:GITHUB_OUTPUT
+          echo "PLUGIN=RadialUIPlugin.cs" >> $env:GITHUB_OUTPUT
+          $dependencies = ""
+          foreach ($dep in $json.dependencies){
+            $first,$second,$rest = $dep -split '-',3
+            $dependencies = "${dependencies} ${first}-${second}@${rest}".Trim()
+          }
+          echo "DEPENDENCIES=${dependencies}" >> $env:GITHUB_OUTPUT
+
+      - name: Build
+        shell: pwsh
         run: |
           cd RadialUIPlugin
-          dotnet restore RadialUIPlugin.csproj
-          dotnet build RadialUIPlugin.csproj --configuration Release
-
-      - name: test
-        run: |
-          cd RadialUnitTests
-          dotnet restore RadialUnitTests.csproj
-          dotnet test --configuration Release --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-                
-      - name: Checkout Codecov
-        uses: codecov/codecov-action@v2
-        with:
-          file: ./RadialUnitTests/coverage.opencover.xml
-          flags: unit
-          name: RadialUI
-
-      - name: publish
+          $pluginValue = (Get-Content ${{steps.package.outputs.PLUGIN}}) -Replace "0.0.0.0", "${{steps.package.outputs.VERSION_NUMBER}}.0" 
+          $projectValue = (Get-Content ${{steps.package.outputs.PROJECT}}) -Replace "<Version>0.0.0</Version>", "<Version>${{steps.package.outputs.VERSION_NUMBER}}</Version>" 
+          Set-Content ${{steps.package.outputs.PLUGIN}} -Value $pluginValue
+          Set-Content ${{steps.package.outputs.PROJECT}} -Value $projectValue
+          dotnet restore ${{steps.package.outputs.PROJECT}}
+          dotnet build ${{steps.package.outputs.PROJECT}} --configuration Release
+          
+      - name: Publish
+        shell: pwsh
         run: |
           cd RadialUIPlugin/bin/Release
           dotnet nuget push *.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json --skip-duplicate
           dotnet nuget push *.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/${{ github.repository_owner }} --skip-duplicate
+          
+      - name: Package for ThunderStore
+        shell: pwsh
+        run: |
+          New-Item -Path 'thunderstore' -ItemType Directory
+          Copy-Item -Path LICENSE.txt -Destination 'thunderstore'
+          Copy-Item -Path RadialUIPlugin/bin/Release/net48/RadialUI.dll -Destination 'thunderstore'
+      
+      - uses: GreenTF/upload-thunderstore-package@v2.2
+        with:
+          namespace: HolloFox_TS # the thunderstore 'team' to publish under
+          description: ${{steps.package.outputs.DESCRIPTION}} # Use the description from manifest
+          token: ${{ secrets.HOLLOFOX_TS_TOKEN }}
+          name: ${{steps.package.outputs.NAME}} # the name of the package
+          version: ${{steps.package.outputs.VERSION_NUMBER}} # Use the version from manifest
+          community: talespire
+          path: thunderstore
+          deps: ${{steps.package.outputs.DEPENDENCIES}}
