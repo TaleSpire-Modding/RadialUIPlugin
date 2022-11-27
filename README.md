@@ -82,6 +82,7 @@ Build the project.
 Browse to the newly created ```bin/Debug``` or ```bin/Release``` folders and copy the ```RadialUIPlugin.dll``` to ```Steam\steamapps\common\TaleSpire\BepInEx\plugins```
 
 ## Changelog
+```
 - 2.2.4: Pipeline to deploy
 - 2.2.3: Fix lasers
 - 2.2.2: CyberPunk update release
@@ -98,6 +99,7 @@ Browse to the newly created ```bin/Debug``` or ```bin/Release``` folders and cop
 - 2.0.2: GetLastHideVolume is now supported.
 - 2.0.1: HideVolume support
 - 2.0.0: Completed Refactor, Code has been optimized whilst keeping same Interface
+```
 
 ## Shoutouts
 Shoutout to my Patreons on https://www.patreon.com/HolloFox recognising your
