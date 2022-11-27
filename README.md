@@ -83,6 +83,7 @@ Browse to the newly created ```bin/Debug``` or ```bin/Release``` folders and cop
 
 ## Changelog
 ```
+- 2.2.5: Fix icon and readme deploy
 - 2.2.4: Pipeline to deploy
 - 2.2.3: Fix lasers
 - 2.2.2: CyberPunk update release
