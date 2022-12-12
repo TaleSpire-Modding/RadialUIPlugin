@@ -74,3 +74,8 @@ jobs:
           community: talespire
           path: thunderstore
           deps: ${{steps.package.outputs.DEPENDENCIES}}
+
+      - uses: DenverCoder1/doxygen-github-pages-action@v1.2.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          config_file: Doxyfile
