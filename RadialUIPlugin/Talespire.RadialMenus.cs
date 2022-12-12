@@ -5,6 +5,20 @@ using UnityEngine;
 
 namespace RadialUI
 {
+
+    public static class Checkers
+    {
+		/// <summary>
+		/// Wraps a checker to see if a player can control mini
+		/// </summary>
+		/// <param name="s1">Selected Mini</param>
+		/// <param name="s2">Mini being targeted</param>
+		/// <returns>Determines if player has control</returns>
+        public static bool HasOwnership(NGuid s1, NGuid s2)
+        {
+            return CreatureManager.PlayerCanControlCreature(LocalPlayer.Id, new CreatureGuid(s2));
+        }
+    }
 	public static class Talespire
 	{
 		public static class RadialMenus

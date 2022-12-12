@@ -83,6 +83,7 @@ Browse to the newly created ```bin/Debug``` or ```bin/Release``` folders and cop
 
 ## Changelog
 ```
+- 2.2.7: Packaged a HasOwnership checker
 - 2.2.6: Fix players not seeing additions when only GM can see them
 - 2.2.5: Fix icon and readme deploy
 - 2.2.4: Pipeline to deploy
