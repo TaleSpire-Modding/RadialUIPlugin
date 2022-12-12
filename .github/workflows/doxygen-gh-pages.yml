@@ -3,34 +3,17 @@ name: Doxygen GitHub Pages Deploy Action
 on:
   push:
     branches:
-      - master
+      - main
   workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Read Manifest
-        shell: pwsh
-        id: package
-        run: |
-          $json = Get-Content "manifest.json" | ConvertFrom-Json
-          $version = $json.version_number
-          echo "VERSION_NUMBER=${version}" >> $env:GITHUB_OUTPUT
-
-      - name: Update Doxyfile
-        shell: pwsh
-        run: |
-          $doxyValue = (Get-Content Doxyfile) -Replace "0.0.0.0", "${{steps.package.outputs.VERSION_NUMBER}}.0"
-          Set-Content Doxyfile -Value $doxyValue
-          echo $doxyValue
-
-      - uses: DenverCoder1/doxygen-github-pages-action@v1.2.0
+      - uses: TaleSpire-Modding/doxygen-github-pages-action@v1.2.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           folder: docs/html
           config_file: Doxyfile
+          manifest_file: manifest.json
