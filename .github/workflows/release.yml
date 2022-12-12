@@ -40,8 +40,6 @@ jobs:
       - name: Build
         shell: pwsh
         run: |
-          $doxyValue = (Get-Content Doxyfile) -Replace "0.0.0.0", "${{steps.package.outputs.VERSION_NUMBER}}.0"
-          Set-Content Doxyfile -Value $doxyValue
           cd RadialUIPlugin
           $pluginValue = (Get-Content ${{steps.package.outputs.PLUGIN}}) -Replace "0.0.0.0", "${{steps.package.outputs.VERSION_NUMBER}}.0" 
           $projectValue = (Get-Content ${{steps.package.outputs.PROJECT}}) -Replace "<Version>0.0.0</Version>", "<Version>${{steps.package.outputs.VERSION_NUMBER}}</Version>" 
@@ -76,8 +74,3 @@ jobs:
           community: talespire
           path: thunderstore
           deps: ${{steps.package.outputs.DEPENDENCIES}}
-
-      - uses: DenverCoder1/doxygen-github-pages-action@v1.2.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          config_file: Doxyfile

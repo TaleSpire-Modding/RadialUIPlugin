@@ -5,20 +5,34 @@ using UnityEngine;
 
 namespace RadialUI
 {
-
+	/// <summary>
+	/// Collection of useful checkers
+	/// </summary>
     public static class Checkers
     {
 		/// <summary>
 		/// Wraps a checker to see if a player can control mini
 		/// </summary>
-		/// <param name="s1">Selected Mini</param>
-		/// <param name="s2">Mini being targeted</param>
+		/// <param name="selected">Local Client Selected Mini</param>
+		/// <param name="targeted">Mini being targeted via Radial Menu</param>
 		/// <returns>Determines if player has control</returns>
-        public static bool HasOwnership(NGuid s1, NGuid s2)
+        public static bool HasOwnership(NGuid selected, NGuid targeted)
         {
-            return CreatureManager.PlayerCanControlCreature(LocalPlayer.Id, new CreatureGuid(s2));
+            return CreatureManager.PlayerCanControlCreature(LocalPlayer.Id, new CreatureGuid(targeted));
+        }
+
+        /// <summary>
+        /// Checker used to identify if selected mini can attack targeted mini
+        /// </summary>
+        /// <param name="selected">Local Client Selected Mini</param>
+        /// <param name="targeted">Mini being targeted via Radial Menu</param>
+        /// <returns>Determines if attacking is eligible</returns>
+        public static bool CanAttack(NGuid selected, NGuid targeted)
+        {
+            return selected != targeted;
         }
     }
+
 	public static class Talespire
 	{
 		public static class RadialMenus

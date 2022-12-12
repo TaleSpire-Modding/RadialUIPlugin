@@ -60,13 +60,7 @@ namespace RadialUI
 				case MenuType.character:
 					EnsureMainMenuOnCharacter(mainGuid, title, icon);
 					break;
-				case MenuType.canAttack:
-					EnsureMainMenuOnCanAttack(mainGuid, title, icon);
-					break;
-				case MenuType.cantAttack:
-					EnsureMainMenuOnCantAttack(mainGuid, title, icon);
-					break;
-				case MenuType.HideVolume:
+                case MenuType.HideVolume:
 					EnsureMainMenuOnHideVolume(mainGuid, title, icon);
 					break;
 			}
@@ -81,21 +75,10 @@ namespace RadialUI
 			openMenuType = MenuType.HideVolume;
 		}
 
-		private static void EnsureMainMenuOnCantAttack(string mainGuid, string title, Sprite icon)
-		{
-			RadialUIPlugin.AddOnCantAttack(mainGuid, NewMainMenu(mainGuid, title, icon), Reporter);
-			openMenuType = MenuType.character;
-		}
-
-		private static void EnsureMainMenuOnCanAttack(string mainGuid, string title, Sprite icon)
-		{
-			RadialUIPlugin.AddOnCanAttack(mainGuid, NewMainMenu(mainGuid, title, icon), Reporter);
-			openMenuType = MenuType.character;
-		}
 
 		private static void EnsureMainMenuOnCharacter(string mainGuid, string title, Sprite icon)
 		{
-			RadialUIPlugin.AddOnCharacter(mainGuid, NewMainMenu(mainGuid, title, icon), Reporter);
+			RadialUIPlugin.AddCustomButtonOnCharacter(mainGuid, NewMainMenu(mainGuid, title, icon), Reporter);
 			openMenuType = MenuType.character;
 		}
 

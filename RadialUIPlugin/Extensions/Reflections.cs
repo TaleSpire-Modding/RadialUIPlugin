@@ -8,21 +8,21 @@ namespace RadialUI.Extensions
     /// Reflections specifically to continue original RadialUI Methods to maintain the invocation
     /// of methods and run patches. 
     /// </summary>
-    public static class Reflections
+    internal static class Reflections
     {
         private const BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
         
-        public static Action<MapMenu,object> GetMenuAction<Tclass>(string method,Tclass o)
+        internal static Action<MapMenu,object> GetMenuAction<Tclass>(string method,Tclass o)
         {
             return CreateReusableAction<Tclass,MapMenu,object>(method, o); 
         }
 
-        public static Action<MapMenuItem, object> GetMenuItemAction<Tclass>(string method, Tclass o)
+        internal static Action<MapMenuItem, object> GetMenuItemAction<Tclass>(string method, Tclass o)
         {
             return CreateReusableAction<Tclass, MapMenuItem, object>(method, o);
         }
 
-        public static T CallMethod<T,TClass>(string methodName, TClass instance, object[] param = null)
+        internal static T CallMethod<T,TClass>(string methodName, TClass instance, object[] param = null)
         {
             if (param == null) param = new object[0];
             var method = typeof(TClass).GetMethod(methodName, bindFlags);
@@ -30,14 +30,14 @@ namespace RadialUI.Extensions
             return result;
         }
 
-        public static void CallMethod<TClass>(string methodName, TClass instance, object[] param = null)
+        internal static void CallMethod<TClass>(string methodName, TClass instance, object[] param = null)
         {
             if (param == null) param = new object[0];
             var method = typeof(TClass).GetMethod(methodName, bindFlags);
             method.Invoke(instance, param);
         }
 
-        public static Action<Tp1, Tp2> CreateReusableAction<TClass, Tp1, Tp2>(string methodName, TClass instance)
+        internal static Action<Tp1, Tp2> CreateReusableAction<TClass, Tp1, Tp2>(string methodName, TClass instance)
         {
             var method = typeof(TClass).GetMethod(methodName,bindFlags);
             if (method == null)

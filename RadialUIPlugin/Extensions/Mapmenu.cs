@@ -14,7 +14,7 @@ namespace RadialUI.Extensions
         /// <param name="map">the mapmenu that is getting new items appended too.</param>
         /// <param name="list">the data source which the menus originate from.</param>
         /// <param name="targetId">The target creature the mapmenu is targeting.</param>
-        public static void AddItems(this MapMenu map, Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)> list, NGuid targetId)
+        internal static void AddItems(this MapMenu map, Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)> list, NGuid targetId)
         {
             var miniId = LocalClient.SelectedCreatureId.Value;
             foreach (var key in list.Keys.Where(key => list[key].Item2 == null || list[key].Item2(miniId, targetId)))
@@ -29,7 +29,7 @@ namespace RadialUI.Extensions
         /// <param name="map">the mapmenu that is getting new items appended too.</param>
         /// <param name="list">the data source which the menus originate from.</param>
         /// <param name="selectedVolume">The specific hide volume that's being targeted.</param>
-        public static void AddItems(this MapMenu map, Dictionary<string, (MapMenu.ItemArgs, Func<HideVolumeItem, bool>)> list, HideVolumeItem selectedVolume)
+        internal static void AddItems(this MapMenu map, Dictionary<string, (MapMenu.ItemArgs, Func<HideVolumeItem, bool>)> list, HideVolumeItem selectedVolume)
         {
             foreach (var key in list.Keys.Where(key => list[key].Item2 == null || list[key].Item2(selectedVolume)))
             {
@@ -43,7 +43,7 @@ namespace RadialUI.Extensions
         /// <param name="map">the mapmenu that is getting new items appended too.</param>
         /// <param name="list">the data source which the menus originate from.</param>
         /// <param name="selectedVolume">The specific hide volume that's being targeted.</param>
-        public static void AddItems(this MapMenu map, Dictionary<string, (MapMenu.ItemArgs, Func<AtmosphereBlock, bool>)> list, AtmosphereBlock selectedVolume)
+        internal static void AddItems(this MapMenu map, Dictionary<string, (MapMenu.ItemArgs, Func<AtmosphereBlock, bool>)> list, AtmosphereBlock selectedVolume)
         {
             foreach (var key in list.Keys.Where(key => list[key].Item2 == null || list[key].Item2(selectedVolume)))
             {
