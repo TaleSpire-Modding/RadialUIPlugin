@@ -7,47 +7,48 @@ using UnityEngine;
 namespace RadialUI
 {
     [BepInPlugin(Guid, Name, Version)]
-	public sealed partial class RadialUIPlugin : BaseUnityPlugin
-	{
-		// constants
-		public const string Guid = "org.hollofox.plugins.RadialUIPlugin";
-		public const string Version = "0.0.0.0";
-		public const string Name = "RadialUIPlugin";
+    public sealed partial class RadialUIPlugin : BaseUnityPlugin
+    {
+        // constants
+        public const string Guid = "org.hollofox.plugins.RadialUIPlugin";
+        public const string Version = "0.0.0.0";
+        public const string Name = "RadialUIPlugin";
 
-		/// <summary>
-		/// Awake plugin
-		/// </summary>
-		void Awake()
-		{
-			Logger.LogInfo("In Awake for RadialUI");
-            
+        /// <summary>
+        /// Awake plugin
+        /// </summary>
+        void Awake()
+        {
+            Logger.LogInfo("In Awake for RadialUI");
+
             var harmony = new Harmony(Guid);
             try
             {
                 harmony.PatchAll();
-				Debug.Log("RadialUI Plug-in loaded");
-			}
+                Debug.Log("RadialUI Plug-in loaded");
+            }
             catch (Exception)
             {
-				harmony.UnpatchSelf();
-				Debug.Log("RadialUI Failed to patch");
-			}
+                harmony.UnpatchSelf();
+                Debug.Log("RadialUI Failed to patch");
+            }
         }
 
-		/// <summary>
-		/// Adds a checker to a menu to check if it should render.
-		/// </summary>
-		/// <param name="data">Plugin's Database of checker</param>
+        /// <summary>
+        /// Adds a checker to a menu to check if it should render.
+        /// </summary>
+        /// <param name="data">Plugin's Database of checker</param>
         /// <param name="key">The plugin's GUID or key</param>
         /// <param name="value">The specific value being cleared from dictionary's list.</param>
-		/// <param name="shouldRemoveCallback">the callback to call upon checking</param>
-		public static void AddRemoveOn(Dictionary<string, List<RadialCheckRemove>> data, string key, string value, ShouldShowMenu shouldRemoveCallback)
-		{
-			if (!data.ContainsKey(key))
-				data.Add(key, new List<RadialCheckRemove>());
+        /// <param name="shouldRemoveCallback">the callback to call upon checking</param>
+        public static void AddRemoveOn(Dictionary<string, List<RadialCheckRemove>> data, string key, string value,
+            ShouldShowMenu shouldRemoveCallback)
+        {
+            if (!data.ContainsKey(key))
+                data.Add(key, new List<RadialCheckRemove>());
             if (shouldRemoveCallback == null) shouldRemoveCallback = AlwaysTrue;
-			data[key].Add(new RadialCheckRemove(value, shouldRemoveCallback));
-		}
+            data[key].Add(new RadialCheckRemove(value, shouldRemoveCallback));
+        }
 
         /// <summary>
         /// Default method callback for RadialCheckRemove.
@@ -64,23 +65,23 @@ namespace RadialUI
 
 
         /// <summary>
-		/// Removes a default hider on an existing dictionary.
-		/// </summary>
-		/// <param name="data">the dictionary storing the existing menus to hide.</param>
-		/// <param name="key">The plugin's GUID or key</param>
-		/// <param name="value">The specific value being cleared from dictionary's list.</param>
-		/// <returns></returns>
+        /// Removes a default hider on an existing dictionary.
+        /// </summary>
+        /// <param name="data">the dictionary storing the existing menus to hide.</param>
+        /// <param name="key">The plugin's GUID or key</param>
+        /// <param name="value">The specific value being cleared from dictionary's list.</param>
+        /// <returns></returns>
         public static bool RemoveRemoveOn(Dictionary<string, List<RadialCheckRemove>> data, string key, string value)
-		{
-			if (!data.ContainsKey(key))
-				return false;
-			List<RadialCheckRemove> radialCheckRemoves = data[key];
-			int countBefore = radialCheckRemoves.Count;
-			radialCheckRemoves.RemoveAll(x => x.TitleToRemove == value);
-			bool successfullyRemoved = radialCheckRemoves.Count != countBefore;
-			if (radialCheckRemoves.Count == 0)
-				data.Remove(key);
-			return successfullyRemoved;
-		}
+        {
+            if (!data.ContainsKey(key))
+                return false;
+            List<RadialCheckRemove> radialCheckRemoves = data[key];
+            int countBefore = radialCheckRemoves.Count;
+            radialCheckRemoves.RemoveAll(x => x.TitleToRemove == value);
+            bool successfullyRemoved = radialCheckRemoves.Count != countBefore;
+            if (radialCheckRemoves.Count == 0)
+                data.Remove(key);
+            return successfullyRemoved;
+        }
     }
 }

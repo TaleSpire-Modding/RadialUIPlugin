@@ -26,7 +26,7 @@
     <ProjectReference Include="..\RadialUIPlugin\RadialUIPlugin.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="TaleSpire" Version="0.0.6"></PackageReference>
+    <PackageReference Include="TaleSpire" Version="0.0.7"></PackageReference>
     <PackageReference Include="Talespire.BepInEx" Version="5.4.11"></PackageReference>
   </ItemGroup>
   <ItemGroup>
