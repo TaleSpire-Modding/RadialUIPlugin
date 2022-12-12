@@ -20,10 +20,12 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="icon.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Radial UI
    &#160;<span id="projectnumber">0.0.0.0</span>
    </div>
+   <div id="projectbrief">This is a developer tool based package used to manage and configure Radial UI Menus.</div>
   </td>
  </tr>
  </tbody>
@@ -67,182 +69,11 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classRadialUI_1_1Extensions_1_1Mapmenu-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">RadialUI.Extensions.Mapmenu Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:aba5172af5ff05bf233344a77926c24cb"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRadialUI_1_1Extensions_1_1Mapmenu.html#aba5172af5ff05bf233344a77926c24cb">AddItems</a> (this MapMenu map, Dictionary&lt; string,(MapMenu.ItemArgs, Func&lt; NGuid, NGuid, bool &gt;)&gt; list, NGuid targetId)</td></tr>
-<tr class="memdesc:aba5172af5ff05bf233344a77926c24cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic Method to add many menus to a mapmenu for a creature from an existing data source.  <a href="classRadialUI_1_1Extensions_1_1Mapmenu.html#aba5172af5ff05bf233344a77926c24cb">More...</a><br /></td></tr>
-<tr class="separator:aba5172af5ff05bf233344a77926c24cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89ea1b29f48e3108acdb67d34a22d708"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRadialUI_1_1Extensions_1_1Mapmenu.html#a89ea1b29f48e3108acdb67d34a22d708">AddItems</a> (this MapMenu map, Dictionary&lt; string,(MapMenu.ItemArgs, Func&lt; HideVolumeItem, bool &gt;)&gt; list, HideVolumeItem selectedVolume)</td></tr>
-<tr class="memdesc:a89ea1b29f48e3108acdb67d34a22d708"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic Method to add many menus to a mapmenu for a hide volume from an existing data source.  <a href="classRadialUI_1_1Extensions_1_1Mapmenu.html#a89ea1b29f48e3108acdb67d34a22d708">More...</a><br /></td></tr>
-<tr class="separator:a89ea1b29f48e3108acdb67d34a22d708"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae3eaf872dfa0d4b9ba4f47ed743b080c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRadialUI_1_1Extensions_1_1Mapmenu.html#ae3eaf872dfa0d4b9ba4f47ed743b080c">AddItems</a> (this MapMenu map, Dictionary&lt; string,(MapMenu.ItemArgs, Func&lt; AtmosphereBlock, bool &gt;)&gt; list, AtmosphereBlock selectedVolume)</td></tr>
-<tr class="memdesc:ae3eaf872dfa0d4b9ba4f47ed743b080c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic Method to add many menus to a mapmenu for a hide volume from an existing data source.  <a href="classRadialUI_1_1Extensions_1_1Mapmenu.html#ae3eaf872dfa0d4b9ba4f47ed743b080c">More...</a><br /></td></tr>
-<tr class="separator:ae3eaf872dfa0d4b9ba4f47ed743b080c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="ae3eaf872dfa0d4b9ba4f47ed743b080c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae3eaf872dfa0d4b9ba4f47ed743b080c">&#9670;&nbsp;</a></span>AddItems() <span class="overload">[1/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void RadialUI.Extensions.Mapmenu.AddItems </td>
-          <td>(</td>
-          <td class="paramtype">this MapMenu&#160;</td>
-          <td class="paramname"><em>map</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Dictionary&lt; string,(MapMenu.ItemArgs, Func&lt; AtmosphereBlock, bool &gt;)&gt;&#160;</td>
-          <td class="paramname"><em>list</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">AtmosphereBlock&#160;</td>
-          <td class="paramname"><em>selectedVolume</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Generic Method to add many menus to a mapmenu for a hide volume from an existing data source. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">map</td><td>the mapmenu that is getting new items appended too.</td></tr>
-    <tr><td class="paramname">list</td><td>the data source which the menus originate from.</td></tr>
-    <tr><td class="paramname">selectedVolume</td><td>The specific hide volume that's being targeted.</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a89ea1b29f48e3108acdb67d34a22d708"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a89ea1b29f48e3108acdb67d34a22d708">&#9670;&nbsp;</a></span>AddItems() <span class="overload">[2/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void RadialUI.Extensions.Mapmenu.AddItems </td>
-          <td>(</td>
-          <td class="paramtype">this MapMenu&#160;</td>
-          <td class="paramname"><em>map</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Dictionary&lt; string,(MapMenu.ItemArgs, Func&lt; HideVolumeItem, bool &gt;)&gt;&#160;</td>
-          <td class="paramname"><em>list</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">HideVolumeItem&#160;</td>
-          <td class="paramname"><em>selectedVolume</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Generic Method to add many menus to a mapmenu for a hide volume from an existing data source. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">map</td><td>the mapmenu that is getting new items appended too.</td></tr>
-    <tr><td class="paramname">list</td><td>the data source which the menus originate from.</td></tr>
-    <tr><td class="paramname">selectedVolume</td><td>The specific hide volume that's being targeted.</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="aba5172af5ff05bf233344a77926c24cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aba5172af5ff05bf233344a77926c24cb">&#9670;&nbsp;</a></span>AddItems() <span class="overload">[3/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void RadialUI.Extensions.Mapmenu.AddItems </td>
-          <td>(</td>
-          <td class="paramtype">this MapMenu&#160;</td>
-          <td class="paramname"><em>map</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Dictionary&lt; string,(MapMenu.ItemArgs, Func&lt; NGuid, NGuid, bool &gt;)&gt;&#160;</td>
-          <td class="paramname"><em>list</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">NGuid&#160;</td>
-          <td class="paramname"><em>targetId</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Generic Method to add many menus to a mapmenu for a creature from an existing data source. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">map</td><td>the mapmenu that is getting new items appended too.</td></tr>
-    <tr><td class="paramname">list</td><td>the data source which the menus originate from.</td></tr>
-    <tr><td class="paramname">targetId</td><td>The target creature the mapmenu is targeting.</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>RadialUIPlugin/Extensions/Mapmenu.cs</li>
 </ul>

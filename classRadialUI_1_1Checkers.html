@@ -20,10 +20,12 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="icon.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Radial UI
    &#160;<span id="projectnumber">0.0.0.0</span>
    </div>
+   <div id="projectbrief">This is a developer tool based package used to manage and configure Radial UI Menus.</div>
   </td>
  </tr>
  </tbody>
@@ -73,16 +75,70 @@ $(function() {
 <div class="title">RadialUI.Checkers Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Collection of useful checkers  
+ <a href="classRadialUI_1_1Checkers.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a27fc5ce636f89df9d0f8725e4ae99961"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRadialUI_1_1Checkers.html#a27fc5ce636f89df9d0f8725e4ae99961">HasOwnership</a> (NGuid s1, NGuid s2)</td></tr>
-<tr class="memdesc:a27fc5ce636f89df9d0f8725e4ae99961"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wraps a checker to see if a player can control mini  <a href="classRadialUI_1_1Checkers.html#a27fc5ce636f89df9d0f8725e4ae99961">More...</a><br /></td></tr>
-<tr class="separator:a27fc5ce636f89df9d0f8725e4ae99961"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a323dc49c60202d242d99f7fe05250eff"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRadialUI_1_1Checkers.html#a323dc49c60202d242d99f7fe05250eff">HasOwnership</a> (NGuid selected, NGuid targeted)</td></tr>
+<tr class="memdesc:a323dc49c60202d242d99f7fe05250eff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wraps a checker to see if a player can control mini  <a href="classRadialUI_1_1Checkers.html#a323dc49c60202d242d99f7fe05250eff">More...</a><br /></td></tr>
+<tr class="separator:a323dc49c60202d242d99f7fe05250eff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c4a60dbc6491d2f3b32f6450c2a9704"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRadialUI_1_1Checkers.html#a9c4a60dbc6491d2f3b32f6450c2a9704">CanAttack</a> (NGuid selected, NGuid targeted)</td></tr>
+<tr class="memdesc:a9c4a60dbc6491d2f3b32f6450c2a9704"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checker used to identify if selected mini can attack targeted mini  <a href="classRadialUI_1_1Checkers.html#a9c4a60dbc6491d2f3b32f6450c2a9704">More...</a><br /></td></tr>
+<tr class="separator:a9c4a60dbc6491d2f3b32f6450c2a9704"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a27fc5ce636f89df9d0f8725e4ae99961"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a27fc5ce636f89df9d0f8725e4ae99961">&#9670;&nbsp;</a></span>HasOwnership()</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Collection of useful checkers </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a9c4a60dbc6491d2f3b32f6450c2a9704"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c4a60dbc6491d2f3b32f6450c2a9704">&#9670;&nbsp;</a></span>CanAttack()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool RadialUI.Checkers.CanAttack </td>
+          <td>(</td>
+          <td class="paramtype">NGuid&#160;</td>
+          <td class="paramname"><em>selected</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">NGuid&#160;</td>
+          <td class="paramname"><em>targeted</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checker used to identify if selected mini can attack targeted mini </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">selected</td><td>Local Client Selected Mini</td></tr>
+    <tr><td class="paramname">targeted</td><td>Mini being targeted via Radial Menu</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Determines if attacking is eligible</dd></dl>
+
+</div>
+</div>
+<a id="a323dc49c60202d242d99f7fe05250eff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a323dc49c60202d242d99f7fe05250eff">&#9670;&nbsp;</a></span>HasOwnership()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -94,13 +150,13 @@ Static Public Member Functions</h2></td></tr>
           <td class="memname">static bool RadialUI.Checkers.HasOwnership </td>
           <td>(</td>
           <td class="paramtype">NGuid&#160;</td>
-          <td class="paramname"><em>s1</em>, </td>
+          <td class="paramname"><em>selected</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">NGuid&#160;</td>
-          <td class="paramname"><em>s2</em>&#160;</td>
+          <td class="paramname"><em>targeted</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -118,8 +174,8 @@ Static Public Member Functions</h2></td></tr>
 <p>Wraps a checker to see if a player can control mini </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">s1</td><td>Selected Mini</td></tr>
-    <tr><td class="paramname">s2</td><td>Mini being targeted</td></tr>
+    <tr><td class="paramname">selected</td><td>Local Client Selected Mini</td></tr>
+    <tr><td class="paramname">targeted</td><td>Mini being targeted via Radial Menu</td></tr>
   </table>
   </dd>
 </dl>
