@@ -1,5 +1,5 @@
 # Radial UI Plugin
-[![Push to nuget feed on release](https://github.com/TaleSpire-Modding/RadialUIPlugin/actions/workflows/release.yml/badge.svg)](https://github.com/TaleSpire-Modding/RadialUIPlugin/actions/workflows/release.yml)
+[![Push to nuget feed on release](https://github.com/TaleSpire-Modding/RadialUIPlugin/actions/workflows/release.yml/badge.svg)](https://github.com/TaleSpire-Modding/RadialUIPlugin/actions/workflows/release.yml) [![Doxygen GitHub Pages Deploy Action](https://github.com/TaleSpire-Modding/RadialUIPlugin/actions/workflows/doxygen-gh-pages.yml/badge.svg)](https://github.com/TaleSpire-Modding/RadialUIPlugin/actions/workflows/doxygen-gh-pages.yml)
 
 This is a plugin for TaleSpire using BepInEx.
 
