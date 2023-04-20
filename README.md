@@ -21,6 +21,7 @@ Browse to the newly created ```bin/Debug``` or ```bin/Release``` folders and cop
 
 ## Changelog
 ```
+- 2.3.2: Fixed LOS with Moe
 - 2.3.1: Fix melee attack
 - 2.3.0: Documentation moved to https://talespire-modding.github.io/RadialUIPlugin/
 - 2.2.0: Added in sys reflec checkers

@@ -57,9 +57,20 @@ namespace RadialUI.Creature_Menu_Patches
         internal static MapMenu map;
 
         // ReSharper disable InconsistentNaming
-        internal static bool Prefix(CreatureBoardAsset ____selectedCreature, CreatureMenuBoardTool __instance,
-            float ____hitHeightDif)
+        internal static void Postfix(CreatureBoardAsset ____selectedCreature, CreatureMenuBoardTool __instance,
+            float ____hitHeightDif) //, List<UIWorldIconItem> ____creatureVisabilityIcons)
         {
+            //____creatureVisabilityIcons.Clear();
+
+            //var OnLineOfSightUpdated = Reflections.CreateReusableAction<CreatureMenuBoardTool,CreatureGuid, LineOfSightManager.LineOfSightResult>("OnLineOfSightUpdated", __instance);
+
+            //CreaturePerceptionManager.OnLineOfSightUpdated -= OnLineOfSightUpdated;
+            //CreaturePerceptionManager.OnLineOfSightUpdated += OnLineOfSightUpdated;
+            //if (!CreaturePerceptionManager.UpdatePerception(____selectedCreature.CreatureId, out var alreadyValidLosResult))
+            //{
+            //    OnLineOfSightUpdated(____selectedCreature.CreatureId, alreadyValidLosResult);
+            //}
+
             var miniId = ____selectedCreature.CreatureId.Value;
             RadialUIPlugin.lastCreature = miniId;
 
@@ -79,7 +90,7 @@ namespace RadialUI.Creature_Menu_Patches
                     attackMenu, "Attacks", icon: Icons.GetIconSprite("Attacks"));
 
             if (!CreatureManager.PlayerCanControlCreature(LocalPlayer.Id, ____selectedCreature.CreatureId))
-                return false;
+                return ;
 
             var emoteMenu = Reflections.GetMenuAction("Emote_Menu", __instance);
             var statusEmoteMenu = Reflections.GetMenuAction("StatusEmote_Menu", __instance);
@@ -142,13 +153,13 @@ namespace RadialUI.Creature_Menu_Patches
 
             Reflections.CallMethod("AddStats", __instance, new object[] { map });
 
-            return false;
+            map.AddItems(RadialUIPlugin._onCharacterCallback, ____selectedCreature.CreatureId.Value);
         }
 
-        internal static void Postfix(CreatureBoardAsset ____selectedCreature)
+        /*internal static void Postfix(CreatureBoardAsset ____selectedCreature)
         {
-            var targetId = ____selectedCreature.CreatureId.Value;
-            map.AddItems(RadialUIPlugin._onCharacterCallback, targetId);
-        }
+            //var targetId = ____selectedCreature.CreatureId.Value;
+            //map.AddItems(RadialUIPlugin._onCharacterCallback, targetId);
+        }*/
     }
 }
