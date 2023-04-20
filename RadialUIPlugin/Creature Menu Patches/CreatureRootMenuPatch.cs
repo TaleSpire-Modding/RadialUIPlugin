@@ -60,17 +60,6 @@ namespace RadialUI.Creature_Menu_Patches
         internal static void Postfix(CreatureBoardAsset ____selectedCreature, CreatureMenuBoardTool __instance,
             float ____hitHeightDif) //, List<UIWorldIconItem> ____creatureVisabilityIcons)
         {
-            //____creatureVisabilityIcons.Clear();
-
-            //var OnLineOfSightUpdated = Reflections.CreateReusableAction<CreatureMenuBoardTool,CreatureGuid, LineOfSightManager.LineOfSightResult>("OnLineOfSightUpdated", __instance);
-
-            //CreaturePerceptionManager.OnLineOfSightUpdated -= OnLineOfSightUpdated;
-            //CreaturePerceptionManager.OnLineOfSightUpdated += OnLineOfSightUpdated;
-            //if (!CreaturePerceptionManager.UpdatePerception(____selectedCreature.CreatureId, out var alreadyValidLosResult))
-            //{
-            //    OnLineOfSightUpdated(____selectedCreature.CreatureId, alreadyValidLosResult);
-            //}
-
             var miniId = ____selectedCreature.CreatureId.Value;
             RadialUIPlugin.lastCreature = miniId;
 
