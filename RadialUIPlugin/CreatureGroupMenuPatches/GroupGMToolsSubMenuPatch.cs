@@ -49,8 +49,7 @@ namespace RadialUI.CreatureGroupMenuPatches
 
         internal static void Postfix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature)
         {
-            var targetId = ____selectedCreature.CreatureId.Value;
-            map.AddItems(RadialUIPlugin._onGroupSubmenuGm, targetId);
+            map.AddItems(RadialUIPlugin._onGroupSubmenuGm, LocalClient.SelectedCreatureId.Value);
         }
     }
 }

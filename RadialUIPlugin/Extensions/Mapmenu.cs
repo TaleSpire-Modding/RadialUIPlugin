@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Bounce.Unmanaged;
 using DataModel;
+using NetMiniZ;
 
 namespace RadialUI.Extensions
 {
@@ -19,6 +20,7 @@ namespace RadialUI.Extensions
             var miniId = LocalClient.SelectedCreatureId.Value;
             foreach (var key in list.Keys.Where(key => list[key].Item2 == null || list[key].Item2(miniId, targetId)))
             {
+                list[key].Item1.Obj = miniId;
                 map.AddItem(list[key].Item1);
             }
         }
