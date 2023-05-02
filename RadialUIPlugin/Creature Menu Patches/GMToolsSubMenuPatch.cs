@@ -4,6 +4,7 @@ using BepInEx;
 using Bounce.Unmanaged;
 using HarmonyLib;
 using RadialUI.Extensions;
+using UnityEngine;
 
 namespace RadialUI
 {
@@ -17,15 +18,47 @@ namespace RadialUI
 
         // Same Methods, different Signatures
         public static void AddCustomButtonGMSubmenu(string key, MapMenu.ItemArgs value,
-            Func<NGuid, NGuid, bool> externalCheck = null) => _onSubmenuGm.Add(key, (value, externalCheck));
+            Func<NGuid, NGuid, bool> externalCheck = null)
+        {
+            _onSubmenuGm.Add(key, (value, externalCheck));
 
-        public static bool RemoveCustomButtonGMSubmenu(string key) => _onSubmenuGm.Remove(key);
+            MapMenu.ItemArgs items = new MapMenu.ItemArgs
+            {
+                Action = (MapMenuItem, Object) =>
+                {
+                    if (LocalClient.TryGetLassoedCreatureIds(out var ids))
+                    {
+                        int num = ids.Length;
+                        for (int i = 0; i < num; i++)
+                        {
+                            value.Action(MapMenuItem, ids[i].Value);
+                        }
+                    }
+                },
+                Title = value.Title,
+                Icon = value.Icon,
+                SubValueText = value.SubValueText,
+                Scale = value.Scale,
+                CloseMenuOnActivate = value.CloseMenuOnActivate,
+                FadeName = value.FadeName,
+                ValueText = value.ValueText,
+                Obj = value.Obj,
+            };
 
-        public static void HideDefaultEmotesGMItem(string key, string value, ShouldShowMenu callback = null) =>
+            _onGroupSubmenuGm.Add(key, (items, externalCheck));
+        }
+        public static bool RemoveCustomButtonGMSubmenu(string key)
+        {
+            return _onSubmenuGm.Remove(key) && _onGroupSubmenuGm.Remove(key);
+        }
+        public static void HideDefaultEmotesGMItem(string key, string value, ShouldShowMenu callback = null)
+        {
             AddRemoveOn(_removeOnSubmenuGm, key, value, callback);
-
-        public static void UnHideDefaultGMSubmenuItem(string key, string value) =>
+        }
+        public static void UnHideDefaultGMSubmenuItem(string key, string value)
+        {
             RemoveRemoveOn(_removeOnSubmenuGm, key, value);
+        }
     }
 }
 
