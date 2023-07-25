@@ -78,8 +78,8 @@ namespace RadialUI.Creature_Menu_Patches
                     Reflections.CallMethod<MapMenu.MenuType, CreatureMenuBoardTool>("AttackMenuStyle", __instance),
                     attackMenu, "Attacks", icon: Icons.GetIconSprite("Attacks"));
 
-            if (!CreatureManager.PlayerCanControlCreature(LocalPlayer.Id, ____selectedCreature.CreatureId))
-                return ;
+            if (CreatureManager.PlayerCanControlCreature(LocalPlayer.Id, ____selectedCreature.CreatureId))
+            {
 
             var emoteMenu = Reflections.GetMenuAction("Emote_Menu", __instance);
             var statusEmoteMenu = Reflections.GetMenuAction("StatusEmote_Menu", __instance);
@@ -141,7 +141,7 @@ namespace RadialUI.Creature_Menu_Patches
                 map.AddMenuItem(MapMenu.MenuType.BRANCH, morphsMenu, "Morphs", icon: Icons.GetIconSprite("character"));
 
             Reflections.CallMethod("AddStats", __instance, new object[] { map });
-
+            }
             map.AddItems(RadialUIPlugin._onCharacterCallback, ____selectedCreature.CreatureId.Value);
         }
 

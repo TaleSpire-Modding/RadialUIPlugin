@@ -21,6 +21,7 @@ Browse to the newly created ```bin/Debug``` or ```bin/Release``` folders and cop
 
 ## Changelog
 ```
+- 2.4.1: Fix suggested by Nekomancer
 - 2.4.0: Started populating code to allow for grouping with creatures.
 - 2.3.2: Fixed LOS with Moe
 - 2.3.1: Fix melee attack
