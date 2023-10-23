@@ -8,10 +8,7 @@ permissions:
 
 jobs:
   Build:
-    strategy:
-      matrix:
-        os: windows-latest
-    runs-on: ${{ matrix.os }}
+    runs-on: windows-latest
     steps:
       - name: Setup Nuget
         uses: nuget/setup-nuget@v1
