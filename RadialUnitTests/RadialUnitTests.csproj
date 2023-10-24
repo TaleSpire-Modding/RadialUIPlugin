@@ -27,7 +27,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="TaleSpire" Version="0.0.10"></PackageReference>
-    <PackageReference Include="Talespire.BepInEx" Version="5.4.11"></PackageReference>
+    <PackageReference Include="Talespire.BepInEx" Version="5.4.21"></PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Creature Menu Tests\" />
