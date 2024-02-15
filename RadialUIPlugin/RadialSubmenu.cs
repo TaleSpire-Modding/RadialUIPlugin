@@ -8,7 +8,7 @@ namespace RadialUI
 	public class RadialSubmenu
 	{
 		// Radial menu selected asset
-		private static CreatureGuid radialAsset = CreatureGuid.Empty;
+		private static CreatureGuid radialAsset = default;
 		private static HideVolumeItem radialHideVolume;
 
 		// Hold sub-entries for main menus
