@@ -1,19 +1,19 @@
-name: Doxygen GitHub Pages Deploy Action
+# name: Doxygen GitHub Pages Deploy Action
 
-on:
-  push:
-    branches:
-      - master
-  workflow_dispatch:
+# on:
+#   push:
+#     branches:
+#       - master
+#   workflow_dispatch:
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: TaleSpire-Modding/doxygen-github-pages-action@v1.2.1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: gh-pages
-          folder: docs/html
-          config_file: Doxyfile
-          manifest_file: manifest.json
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: TaleSpire-Modding/doxygen-github-pages-action@v1.2.1
+#         with:
+#           github_token: ${{ secrets.GITHUB_TOKEN }}
+#           branch: gh-pages
+#           folder: docs/html
+#           config_file: Doxyfile
+#           manifest_file: manifest.json
