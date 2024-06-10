@@ -21,6 +21,7 @@ Browse to the newly created ```bin/Debug``` or ```bin/Release``` folders and cop
 
 ## Changelog
 ```
+- 2.6.1: Seats patch,
 - 2.6.0: TaleWeaver Patch, Implemented changes given by Nekomancer
 - 2.5.0: TaleWeaver Patch
 - 2.4.1: Fix suggested by Nekomancer

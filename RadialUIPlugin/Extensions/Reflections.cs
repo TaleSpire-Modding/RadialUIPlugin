@@ -42,7 +42,7 @@ namespace RadialUI.Extensions
             var method = typeof(TClass).GetMethod(methodName,bindFlags);
             if (method == null)
             {
-                Debug.Log($"Method {methodName} for {instance.GetType()} was not found.");
+                RadialUIPlugin.logger.LogDebug($"Method {methodName} for {instance.GetType()} was not found.");
                 return null;
             }
             void Caller(Tp1 param1, Tp2 param2) => method.Invoke(instance, new object[] { param1, param2 });

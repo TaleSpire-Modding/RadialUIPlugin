@@ -2,6 +2,7 @@
 using Bounce.Unmanaged;
 using System.Collections.Generic;
 using System;
+using TaleSpire.ContentManagement;
 
 namespace RadialUI
 {
@@ -137,7 +138,7 @@ namespace RadialUI
             // Check if the main menu Guid exists
             if (!subMenuEntries.ContainsKey(mainGuid))
             {
-                Debug.LogWarning($"Main radial menu '{mainGuid}' does not exits. Use EnsureMainMenuItem() before adding sub-menu items.");
+                RadialUIPlugin.logger.LogWarning($"Main radial menu '{mainGuid}' does not exits. Use EnsureMainMenuItem() before adding sub-menu items.");
                 return;
             }
             // Add the item to the sub-menu item dictionary for the main menu entry (indicated by the Guid)
@@ -151,6 +152,9 @@ namespace RadialUI
             };
             subMenuEntries[mainGuid].Add(item);
             if (checker != null) subMenuChecker.Add(item, checker);
+
+            // ContentManager
+            // UnityAssetLoadManager
         }
 
         /// <summary>
@@ -167,7 +171,7 @@ namespace RadialUI
             // Check if the main menu Guid exists
             if (!subMenuEntries.ContainsKey(mainGuid))
             {
-                Debug.LogWarning("Main radial menu '" + mainGuid + "' does not exits. Use EnsureMainMenuItem() before adding sub-menu items.");
+                RadialUIPlugin.logger.LogWarning("Main radial menu '" + mainGuid + "' does not exits. Use EnsureMainMenuItem() before adding sub-menu items.");
                 return;
             }
             // Add the item to the sub-menu item dictionary for the main menu entry (indicated by the Guid)
@@ -195,7 +199,7 @@ namespace RadialUI
             // Check if the main menu Guid exists
             if (!subMenuEntries.ContainsKey(mainGuid))
             {
-                Debug.LogWarning("Main radial menu '" + mainGuid + "' does not exits. Use EnsureMainMenuItem() before adding sub-menu items.");
+                RadialUIPlugin.logger.LogWarning("Main radial menu '" + mainGuid + "' does not exits. Use EnsureMainMenuItem() before adding sub-menu items.");
                 return;
             }
 
