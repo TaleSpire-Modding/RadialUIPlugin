@@ -49,24 +49,12 @@ namespace RadialUI.Creature_Menu_Patches
     internal sealed class StatSubMenuPatch
     {
         // ReSharper disable InconsistentNaming
-        internal static bool Prefix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature)
+        
+        public static void Postfix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature)
         {
             var miniId = LocalClient.SelectedCreatureId.Value;
             var targetId = ____selectedCreature.CreatureId.Value;
 
-            var statNames = CampaignSessionManager.StatNames;
-            for (var i = 0; i < statNames.Length; i++)
-            {
-                if (RadialUIPlugin._hideStat.CanAdd(i.ToString(), miniId.ToString(), targetId.ToString()))
-                    map.AddStat(statNames[i], ____selectedCreature.CreatureId, i);
-            }
-
-            return false;
-        }
-
-        internal static void Postfix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature)
-        {
-            var targetId = ____selectedCreature.CreatureId.Value;
             map.AddItems(RadialUIPlugin._onStatCallback, targetId);
         }
     }

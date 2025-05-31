@@ -34,37 +34,21 @@ namespace RadialUI.Creature_Menu_Patches
     internal sealed class SizeSubMenuPatch
     {
         // ReSharper disable InconsistentNaming
-        internal static bool Prefix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature,
-            CreatureMenuBoardTool __instance)
+        public static void Postfix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature)
         {
             var miniId = LocalClient.SelectedCreatureId.Value;
             var targetId = ____selectedCreature.CreatureId.Value;
 
-            var menuScale = Reflections.GetMenuItemAction("Menu_Scale", __instance);
+            map.TryHideItem(RadialUIPlugin._removeOnSubmenuSize, "0.5x0.5", miniId.ToString(), targetId.ToString());
+            map.TryHideItem(RadialUIPlugin._removeOnSubmenuSize, "1x1", miniId.ToString(), targetId.ToString());
+            map.TryHideItem(RadialUIPlugin._removeOnSubmenuSize, "2x2", miniId.ToString(), targetId.ToString());
+            map.TryHideItem(RadialUIPlugin._removeOnSubmenuSize, "3x3", miniId.ToString(), targetId.ToString());
+            map.TryHideItem(RadialUIPlugin._removeOnSubmenuSize, "4x4", miniId.ToString(), targetId.ToString());
+            map.TryHideItem(RadialUIPlugin._removeOnSubmenuSize, "6x6", miniId.ToString(), targetId.ToString());
+            map.TryHideItem(RadialUIPlugin._removeOnSubmenuSize, "8x8", miniId.ToString(), targetId.ToString());
+            map.TryHideItem(RadialUIPlugin._removeOnSubmenuSize, "10x10", miniId.ToString(), targetId.ToString());
+            map.TryHideItem(RadialUIPlugin._removeOnSubmenuSize, "12x12", miniId.ToString(), targetId.ToString());
 
-            if (menuScale == null) return false;
-
-            if (RadialUIPlugin._removeOnSubmenuSize.CanAdd("0.5x0.5", miniId.ToString(), targetId.ToString()))
-                map.AddItem(menuScale, "0.5x0.5", icon: Icons.GetIconSprite("05x05"), obj: ((object)0.5f),
-                    closeMenuOnActivate: true);
-            if (RadialUIPlugin._removeOnSubmenuSize.CanAdd("1x1", miniId.ToString(), targetId.ToString()))
-                map.AddItem(menuScale, "1x1", icon: Icons.GetIconSprite("1x1"), obj: ((object)1f),
-                    closeMenuOnActivate: true);
-            if (RadialUIPlugin._removeOnSubmenuSize.CanAdd("2x2", miniId.ToString(), targetId.ToString()))
-                map.AddItem(menuScale, "2x2", icon: Icons.GetIconSprite("2x2"), obj: ((object)2f),
-                    closeMenuOnActivate: true);
-            if (RadialUIPlugin._removeOnSubmenuSize.CanAdd("3x3", miniId.ToString(), targetId.ToString()))
-                map.AddItem(menuScale, "3x3", icon: Icons.GetIconSprite("3x3"), obj: ((object)3f),
-                    closeMenuOnActivate: true);
-            if (RadialUIPlugin._removeOnSubmenuSize.CanAdd("4x4", miniId.ToString(), targetId.ToString()))
-                map.AddItem(menuScale, "4x4", icon: Icons.GetIconSprite("4x4"), obj: ((object)4f),
-                    closeMenuOnActivate: true);
-            return false;
-        }
-
-        internal static void Postfix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature)
-        {
-            var targetId = ____selectedCreature.CreatureId.Value;
             map.AddItems(RadialUIPlugin._onSubmenuSize, targetId);
         }
     }

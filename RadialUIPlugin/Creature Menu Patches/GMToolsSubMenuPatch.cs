@@ -4,7 +4,6 @@ using BepInEx;
 using Bounce.Unmanaged;
 using HarmonyLib;
 using RadialUI.Extensions;
-using UnityEngine;
 
 namespace RadialUI
 {
@@ -68,53 +67,18 @@ namespace RadialUI.Creature_Menu_Patches
     internal sealed class GMToolsSubMenuPatch
     {
         // ReSharper disable InconsistentNaming
-        internal static bool Prefix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature,
-            CreatureMenuBoardTool __instance)
+        public static void Postfix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature)
         {
             var miniId = LocalClient.SelectedCreatureId.Value;
             var targetId = ____selectedCreature.CreatureId.Value;
 
-            var menuSetCreaturePlayerPermission =
-                Reflections.GetMenuAction("Menu_SetCreaturePlayerPermission", __instance);
-            var menuRenameCreature = Reflections.GetMenuItemAction("Menu_RenameCreature", __instance);
-            var menuMakeNotUnique = Reflections.GetMenuItemAction("Menu_MakeNotUnique", __instance);
-            var menuMakeUnique = Reflections.GetMenuItemAction("Menu_MakeUnique", __instance);
-            var menuSetSize = Reflections.GetMenuAction("Menu_SetSize", __instance);
-            var baseColorMenu = Reflections.GetMenuAction("BaseColor_Menu", __instance);
-            var permissionMenuStyle = CampaignSessionManager.PlayersInfo.Count >= 20
-                ? MapMenu.MenuType.SUBROOT
-                : MapMenu.MenuType.BRANCH;
+            map.TryHideItem(RadialUIPlugin._removeOnSubmenuGm, "", miniId.ToString(), targetId.ToString());
+            map.TryHideItem(RadialUIPlugin._removeOnSubmenuGm, "Rename", miniId.ToString(), targetId.ToString());
+            map.TryHideItem(RadialUIPlugin._removeOnSubmenuGm, "Make Not Unique", miniId.ToString(), targetId.ToString());
+            map.TryHideItem(RadialUIPlugin._removeOnSubmenuGm, "Make Unique", miniId.ToString(), targetId.ToString());
+            map.TryHideItem(RadialUIPlugin._removeOnSubmenuGm, "Set Size", miniId.ToString(), targetId.ToString());
+            map.TryHideItem(RadialUIPlugin._removeOnSubmenuGm, "BaseCikir", miniId.ToString(), targetId.ToString());
 
-            if (menuSetCreaturePlayerPermission != null &&
-                RadialUIPlugin._removeOnSubmenuGm.CanAdd("", miniId.ToString(), targetId.ToString()))
-                map.AddMenuItem(permissionMenuStyle, menuSetCreaturePlayerPermission, "Player Permission",
-                    icon: Icons.GetIconSprite("permission"));
-            if (menuRenameCreature != null &&
-                RadialUIPlugin._removeOnSubmenuGm.CanAdd("Rename", miniId.ToString(), targetId.ToString()))
-                map.AddItem(menuRenameCreature, "Rename", icon: Icons.GetIconSprite("rename"));
-            if (menuMakeNotUnique != null && ____selectedCreature.IsUnique &&
-                RadialUIPlugin._removeOnSubmenuGm.CanAdd("Make Not Unique", miniId.ToString(), targetId.ToString()))
-                map.AddItem(menuMakeNotUnique, "Make Not Unique", icon: Icons.GetIconSprite("dungeonmaster"),
-                    closeMenuOnActivate: true);
-            else if (menuMakeUnique != null &&
-                     RadialUIPlugin._removeOnSubmenuGm.CanAdd("Make Unique", miniId.ToString(), targetId.ToString()))
-                map.AddItem(menuMakeUnique, "Make Unique", icon: Icons.GetIconSprite("dungeonmaster"),
-                    closeMenuOnActivate: true);
-            if (menuSetSize != null &&
-                RadialUIPlugin._removeOnSubmenuGm.CanAdd("Set Size", miniId.ToString(), targetId.ToString()))
-                map.AddMenuItem(MapMenu.MenuType.BRANCH, menuSetSize, "Set Size",
-                    icon: Icons.GetIconSprite("creaturesize"));
-            if (baseColorMenu != null &&
-                RadialUIPlugin._removeOnSubmenuGm.CanAdd("BaseColor", miniId.ToString(), targetId.ToString()))
-                map.AddMenuItem(MapMenu.MenuType.BRANCH, baseColorMenu, "BaseColor",
-                    icon: Icons.GetIconSprite("basecolor"));
-
-            return false;
-        }
-
-        internal static void Postfix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature)
-        {
-            var targetId = ____selectedCreature.CreatureId.Value;
             map.AddItems(RadialUIPlugin._onSubmenuGm, targetId);
         }
     }

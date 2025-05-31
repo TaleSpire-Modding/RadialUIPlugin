@@ -27,36 +27,22 @@ namespace RadialUI.Creature_Menu_Patches
     internal sealed class GMBlockMenuPatch
     {
         // ReSharper disable InconsistentNaming
-        internal static void Postfix(ref GMBlockInteractMenuBoardTool __instance)
+        public static void Postfix(ref GMBlockInteractMenuBoardTool __instance)
         {
-            var deleteBlock = Reflections.GetMenuItemAction("DeleteBlock", __instance);
-
-            var map = MapMenuManager.OpenMenu(GMBlockInteractMenuBoardTool.block.WorldPosition, true);
-            GMBlockInteractMenuBoardTool.block.OnOpenMenu(map);
-
-            if (deleteBlock != null && RadialUIPlugin._removeOnGMBlock.CanAdd("Delete", null, null))
-                map.AddItem((deleteBlock), "Delete", icon: Icons.GetIconSprite("delete"), closeMenuOnActivate: true);
+            var map = Mapmenu.GetMapMenu();
+            map.TryHideItem(RadialUIPlugin._removeOnGMBlock, "Delete", null, null);
         }
     }
 
     [HarmonyPatch(typeof(GMBlockButtonAtmosphere), "OnOpenMenu")]
     internal sealed class GMBlockButtonPatch
     {
-        internal static bool Prefix(ref MapMenu map, ref GMBlockButtonAtmosphere __instance)
+        public static void Postfix(MapMenu map, GMDataBlockBase ____base)
         {
-            var onApply = Reflections.GetMenuItemAction("OnApply", __instance);
-            var onEdit = Reflections.GetMenuItemAction("OnEdit", __instance);
+            // Hide following items if conditions met and able
+            map.TryHideItem(RadialUIPlugin._removeOnGMBlock, "Apply", null, null);
+            map.TryHideItem(RadialUIPlugin._removeOnGMBlock, "Edit", null, null);
 
-            if (onApply != null && RadialUIPlugin._removeOnGMBlock.CanAdd("Apply", null, null))
-                map.AddItem(onApply, "Apply", icon: Icons.GetIconSprite("apply"), closeMenuOnActivate: true);
-            if (onEdit != null && RadialUIPlugin._removeOnGMBlock.CanAdd("Edit", null, null))
-                map.AddItem(onEdit, "Edit", icon: Icons.GetIconSprite("edit"), closeMenuOnActivate: true);
-
-            return false;
-        }
-
-        internal static void Postfix(MapMenu map, GMDataBlockBase ____base)
-        {
             map.AddItems(RadialUIPlugin._onGMBlock, ____base.AtmosphereBlock);
         }
     }

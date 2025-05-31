@@ -3,10 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using Bounce.Unmanaged;
 using DataModel;
-using NetMiniZ;
+using HarmonyLib;
 
 namespace RadialUI.Extensions
 {
+    [HarmonyPatch(typeof(MapMenuManager), nameof(MapMenuManager.OpenMenu))]
+    public static class MapMenuManagerPatch
+    {
+        public static MapMenu mapMenu;
+
+        public static void Postfix(ref MapMenu __result)
+        {
+            mapMenu = __result;
+            //MapMenuAddItemPatch.mapMenuItems.Clear();
+        }
+    }
+
     public static class Mapmenu
     {
         /// <summary>
@@ -23,6 +35,35 @@ namespace RadialUI.Extensions
                 list[key].Item1.Obj = miniId;
                 map.AddItem(list[key].Item1);
             }
+        }
+
+        /// <summary>
+        /// Returns opened map menu
+        /// </summary>
+        /// <returns></returns>
+        internal static MapMenu GetMapMenu() {
+            RadialUIPlugin.logger.LogInfo($"Fetching MapMenu: {MapMenuManagerPatch.mapMenu != null}");
+            return MapMenuManagerPatch.mapMenu; 
+        }
+        
+        internal static bool TryHideItem(this MapMenu map, Dictionary<string, List<RadialCheckRemove>> checker , string itemName, string miniId, string targetId)
+        {
+            // Early return as not implemented
+            return TryHideItem(map,itemName);
+            /*
+            var mapMepItems = map.transform.Find("_MAP");
+            mapMepItems.Children().Where(c => c.Find("TXT_Title"));
+            */
+        }
+
+        internal static bool TryHideItem(this MapMenu map, string itemName)
+        {
+            // Early return as not implemented
+            return false;
+            /*
+            var mapMepItems = map.transform.Find("_MAP");
+            mapMepItems.Children().Where(c => c.Find("TXT_Title"));
+            */
         }
 
         /// <summary>

@@ -34,24 +34,13 @@ namespace RadialUI.Creature_Menu_Patches
     internal sealed class KillSubMenuPatch
     {
         // ReSharper disable InconsistentNaming
-        internal static bool Prefix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature,
-            CreatureMenuBoardTool __instance)
+        public static void Postfix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature)
         {
             var miniId = LocalClient.SelectedCreatureId.Value;
             var targetId = ____selectedCreature.CreatureId.Value;
 
-            var actionKill = Reflections.GetMenuItemAction("Action_Kill", __instance);
+            map.TryHideItem(RadialUIPlugin._removeOnSubmenuKill, "Kill Creature", miniId.ToString(), targetId.ToString());
 
-            if (actionKill != null &&
-                RadialUIPlugin._removeOnSubmenuKill.CanShow("Kill Creature", miniId.ToString(), targetId.ToString()))
-                map.AddItem(actionKill, "Kill Creature", icon: Icons.GetIconSprite("remove"), closeMenuOnActivate: true,
-                    obj: ____selectedCreature);
-            return false;
-        }
-
-        internal static void Postfix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature)
-        {
-            var targetId = ____selectedCreature.CreatureId.Value;
             map.AddItems(RadialUIPlugin._onSubmenuKill, targetId);
         }
     }

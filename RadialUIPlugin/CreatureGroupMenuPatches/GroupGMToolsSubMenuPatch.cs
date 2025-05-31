@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using BepInEx;
 using Bounce.Unmanaged;
 using HarmonyLib;
@@ -47,7 +46,7 @@ namespace RadialUI.CreatureGroupMenuPatches
             return false;
         }
 
-        internal static void Postfix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature)
+        public static void Postfix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature)
         {
             map.AddItems(RadialUIPlugin._onGroupSubmenuGm, LocalClient.SelectedCreatureId.Value);
         }

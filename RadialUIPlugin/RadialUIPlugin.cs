@@ -11,7 +11,7 @@ namespace RadialUI
     {
         // constants
         public const string Guid = "org.hollofox.plugins.RadialUIPlugin";
-        public const string Version = "0.0.0.0";
+        public const string Version = "3.0.0.0";
         public const string Name = "RadialUIPlugin";
         internal static ManualLogSource logger;
 
@@ -29,10 +29,12 @@ namespace RadialUI
                 harmony.PatchAll();
                 Logger.LogDebug("RadialUI Plug-in loaded");
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                harmony.UnpatchSelf();
                 Logger.LogDebug("RadialUI Failed to patch");
+                Logger.LogError(e);
+                harmony.UnpatchSelf();
+                Logger.LogDebug("unpatching RadialUI");
             }
         }
 

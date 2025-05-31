@@ -37,36 +37,17 @@ namespace RadialUI.Creature_Menu_Patches
     internal sealed class StatusSubMenuPatch
     {
         // ReSharper disable InconsistentNaming
-        internal static bool Prefix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature,
-            List<ActionTimeline> ____statusEmotes, CreatureMenuBoardTool __instance)
+        public static void Postfix(MapMenu map, object obj, List<ActionTimeline> ____statusEmotes, CreatureBoardAsset ____selectedCreature)
         {
             var miniId = LocalClient.SelectedCreatureId.Value;
             var targetId = ____selectedCreature.CreatureId.Value;
 
-            var CallStatusEmote = Reflections.GetMenuItemAction("CallStatusEmote", __instance);
-
-            if (CallStatusEmote == null) return false;
-
             for (int index = 0; index < ____statusEmotes.Count; ++index)
             {
                 ActionTimeline statusEmote = ____statusEmotes[index];
-                if (RadialUIPlugin._removeOnSubmenuStatusEmotes.CanAdd(statusEmote.name, miniId.ToString(),
-                        targetId.ToString()))
-                {
-                    bool toggleValue =
-                        ____selectedCreature.IsPersistantEmoteEnabled(____statusEmotes[index].ActionTimelineId);
-                    map.AddToggleItem(toggleValue, CallStatusEmote, statusEmote.DisplayName,
-                        icon: Icons.GetIconSprite(statusEmote.IconName), obj: ((object)____statusEmotes[index]),
-                        fadeName: false);
-                }
+                map.TryHideItem(RadialUIPlugin._removeOnSubmenuStatusEmotes, statusEmote.name, miniId.ToString(), targetId.ToString());
             }
 
-            return false;
-        }
-
-        internal static void Postfix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature)
-        {
-            var targetId = ____selectedCreature.CreatureId.Value;
             map.AddItems(RadialUIPlugin._onSubmenuStatusEmotes, targetId);
         }
     }

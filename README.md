@@ -21,6 +21,8 @@ Browse to the newly created ```bin/Debug``` or ```bin/Release``` folders and cop
 
 ## Changelog
 ```
+- 3.0.1: Nuget Release
+- 3.0.0: Titans Sizes Patch + Optimizations + compatability update
 - 2.6.1: Seats patch,
 - 2.6.0: TaleWeaver Patch, Implemented changes given by Nekomancer
 - 2.5.0: TaleWeaver Patch

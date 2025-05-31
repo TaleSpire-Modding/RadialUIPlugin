@@ -41,22 +41,14 @@ namespace RadialUI.HideVolume_Menu_Patches
             return true;
         }
 
-        internal static void Postfix(HideVolumeItem ____selectedVolume, Vector3 ____selectedPos, ref GMHideVolumeMenuBoardTool __instance)
+        public static void Postfix(HideVolumeItem ____selectedVolume, Vector3 ____selectedPos, ref GMHideVolumeMenuBoardTool __instance)
         {
-            var mapMenu = MapMenuManager.OpenMenu(____selectedPos, true);
-            
-            var toggleTiles = Reflections.GetMenuItemAction("ToggleTiles", __instance);
-            var filterMenu = Reflections.GetMenuAction("FilterMenu", __instance);
-            var deleteBlock = Reflections.GetMenuItemAction("DeleteBlock", __instance);
+            var mapMenu = Mapmenu.GetMapMenu();
 
-            // Add checker to see if below are removed
-            if (toggleTiles != null && RadialUIPlugin._removeOnHideVolume.CanAdd("Toggle Visibility"))
-                mapMenu.AddItem(toggleTiles, "Toggle Visibility", icon: Icons.GetIconSprite("toggle_hide"));
-            if (filterMenu != null && RadialUIPlugin._removeOnHideVolume.CanAdd("Filters"))
-                mapMenu.AddMenuItem(MapMenu.MenuType.BRANCH, filterMenu, "Filters", icon: Icons.GetIconSprite("filter"));
-            if (deleteBlock != null && RadialUIPlugin._removeOnHideVolume.CanAdd("Delete"))
-                mapMenu.AddItem(deleteBlock, "Delete", closeMenuOnActivate: true, icon: Icons.GetIconSprite("trashbin"));
-            
+            mapMenu.TryHideItem(RadialUIPlugin._removeOnHideVolume, "Toggle Visibility", null, null);
+            mapMenu.TryHideItem(RadialUIPlugin._removeOnHideVolume, "Filters", null, null);
+            mapMenu.TryHideItem(RadialUIPlugin._removeOnHideVolume, "Delete", null, null);
+
             mapMenu.AddItems(RadialUIPlugin._onHideVolumeCallback, ____selectedVolume);
         }
     }

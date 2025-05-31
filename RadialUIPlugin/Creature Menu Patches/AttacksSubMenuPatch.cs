@@ -56,40 +56,17 @@ namespace RadialUI.Creature_Menu_Patches
     internal sealed class AttacksSubMenuPatch
     {
         // ReSharper disable InconsistentNaming
-        internal static bool Prefix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature,
-            CreatureMenuBoardTool __instance)
+        public static void Postfix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature)
         {
             var miniId = LocalClient.SelectedCreatureId.Value;
             var targetId = ____selectedCreature.CreatureId.Value;
 
-            var attackPlayer = Reflections.GetMenuItemAction("HitPlayer", __instance);
-            var magicMissile = Reflections.GetMenuItemAction("MagicMissile", __instance);
-            var redLaser = Reflections.GetMenuItemAction("RedLaser", __instance);
-            var greenLaser = Reflections.GetMenuItemAction("GreenLaser", __instance);
+            // Hide following items if conditions met and able
+            map.TryHideItem(RadialUIPlugin._removeOnSubmenuAttacks, "Hit", miniId.ToString(), targetId.ToString());
+            map.TryHideItem(RadialUIPlugin._removeOnSubmenuAttacks, "Magic Missile", miniId.ToString(), targetId.ToString());
+            map.TryHideItem(RadialUIPlugin._removeOnSubmenuAttacks, "RedLaser", miniId.ToString(), targetId.ToString());
+            map.TryHideItem(RadialUIPlugin._removeOnSubmenuAttacks, "GreenLaser", miniId.ToString(), targetId.ToString());
 
-            if (attackPlayer != null &&
-                RadialUIPlugin._removeOnSubmenuAttacks.CanAdd("Hit", miniId.ToString(), targetId.ToString()))
-                map.AddItem(attackPlayer, "Attack", icon: Icons.GetIconSprite("Attacks"), obj: ____selectedCreature,
-                    closeMenuOnActivate: true);
-            if (magicMissile != null &&
-                RadialUIPlugin._removeOnSubmenuAttacks.CanAdd("Magic Missile", miniId.ToString(), targetId.ToString()))
-                map.AddItem(magicMissile, "Magic Missile", icon: Icons.GetIconSprite("MagicMissile"),
-                    obj: ____selectedCreature, closeMenuOnActivate: true);
-            if (redLaser != null &&
-                RadialUIPlugin._removeOnSubmenuAttacks.CanAdd("RedLaser", miniId.ToString(), targetId.ToString()))
-                map.AddItem(redLaser, "Red Laser", icon: Icons.GetIconSprite("RedLaser"), obj: ____selectedCreature,
-                    closeMenuOnActivate: true);
-            if (greenLaser != null &&
-                RadialUIPlugin._removeOnSubmenuAttacks.CanAdd("GreenLaser", miniId.ToString(), targetId.ToString()))
-                map.AddItem(greenLaser, "Green Laser", icon: Icons.GetIconSprite("GreenLaser"),
-                    obj: ____selectedCreature, closeMenuOnActivate: true);
-
-            return false;
-        }
-
-        internal static void Postfix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature)
-        {
-            var targetId = ____selectedCreature.CreatureId.Value;
             map.AddItems(RadialUIPlugin._onSubmenuAttacks, targetId);
         }
     }
