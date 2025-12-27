@@ -1,0 +1,47 @@
+name: Update contributors section
+
+on:
+  repository_dispatch:
+    types: [ update-contributors ]
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the target repo
+      - uses: actions/checkout@v4
+
+      # Checkout the private shared repo
+      - name: Checkout shared README repo
+        uses: actions/checkout@v4
+        with:
+          repository: TaleSpire-Modding/ShoutOuts
+          ref: main
+          token: ${{ secrets.SHARED_README_TOKEN }}
+          path: _shared
+
+      - name: Inject into README
+        run: |
+          awk '
+          BEGIN {print_flag=1}
+          /<!-- CONTRIBUTORS-START -->/ {
+            print;
+            system("cat _shared/contributors.md");
+            print_flag=0;
+          }
+          /<!-- CONTRIBUTORS-END -->/ {
+            print;
+            print_flag=1;
+            next;
+          }
+          print_flag {print}
+          ' README.md > README.tmp && mv README.tmp README.md
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add README.md
+          git commit -m "Update contributors section" || exit 0
+          git push

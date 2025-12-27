@@ -3,15 +3,18 @@ using BepInEx;
 using System.Collections.Generic;
 using HarmonyLib;
 using BepInEx.Logging;
+using PluginUtilities;
 
 namespace RadialUI
 {
     [BepInPlugin(Guid, Name, Version)]
+    [BepInDependency(SetInjectionFlag.Guid)]
+
     public sealed partial class RadialUIPlugin : BaseUnityPlugin
     {
         // constants
         public const string Guid = "org.hollofox.plugins.RadialUIPlugin";
-        public const string Version = "3.0.0.0";
+        public const string Version = "0.0.0.0";
         public const string Name = "RadialUIPlugin";
         internal static ManualLogSource logger;
 
@@ -28,6 +31,7 @@ namespace RadialUI
             {
                 harmony.PatchAll();
                 Logger.LogDebug("RadialUI Plug-in loaded");
+                ModdingTales.ModdingUtils.AddPluginToMenuList(this, "HolloFoxes'");
             }
             catch (Exception e)
             {

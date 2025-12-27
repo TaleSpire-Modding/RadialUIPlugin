@@ -1,11 +1,11 @@
 name: Nuget Published
 
 on:
-  push:
-    branches:
-      - master
-    paths:
-     - 'manifest.json'
+ push:
+   branches:
+     - master
+   paths:
+    - 'manifest.json'
 
 jobs:
   Build_and_Release:
@@ -62,9 +62,12 @@ jobs:
           Copy-Item -Path icon.png -Destination 'thunderstore'
           Copy-Item -Path LICENSE.txt -Destination 'thunderstore'
           Copy-Item -Path README.md -Destination 'thunderstore'
+          Copy-Item -Path manifest.json -Destination 'thunderstore'
+          Copy-Item -Path CHANGELOG.md -Destination 'thunderstore'
           Copy-Item -Path RadialUIPlugin/bin/Release/net472/RadialUI.dll -Destination 'thunderstore'
+          Compress-Archive -Path ./thunderstore/* -DestinationPath ./thunderstore/thunderstore.zip -Force
       
-      - uses: GreenTF/upload-thunderstore-package@v2.2
+      - uses: GreenTF/upload-thunderstore-package@55327864b734687f553e23309743a66af21dfc40
         with:
           namespace: HolloFox_TS # the thunderstore 'team' to publish under
           description: ${{steps.package.outputs.DESCRIPTION}} # Use the description from manifest
@@ -72,5 +75,5 @@ jobs:
           name: ${{steps.package.outputs.NAME}} # the name of the package
           version: ${{steps.package.outputs.VERSION_NUMBER}} # Use the version from manifest
           community: talespire
-          path: thunderstore
-          deps: ${{steps.package.outputs.DEPENDENCIES}}
+          path: ./thunderstore
+          file: ./thunderstore.zip

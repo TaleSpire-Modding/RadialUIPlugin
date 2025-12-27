@@ -1,0 +1,14 @@
+- 3.0.2: recompile and re-release
+- 3.0.1: Nuget Release
+- 3.0.0: Titans Sizes Patch + Optimizations + compatability update
+- 2.6.1: Seats patch,
+- 2.6.0: TaleWeaver Patch, Implemented changes given by Nekomancer
+- 2.5.0: TaleWeaver Patch
+- 2.4.1: Fix suggested by Nekomancer
+- 2.4.0: Started populating code to allow for grouping with creatures.
+- 2.3.2: Fixed LOS with Moe
+- 2.3.1: Fix melee attack
+- 2.3.0: Documentation moved to https://talespire-modding.github.io/RadialUIPlugin/
+- 2.2.0: Added in sys reflec checkers
+- 2.1.0: GMBlock compatibility added.
+- 2.0.0: Completed Refactor, Code has been optimized whilst keeping same Interface
