@@ -64,7 +64,7 @@ jobs:
           Copy-Item -Path README.md -Destination 'thunderstore'
           Copy-Item -Path manifest.json -Destination 'thunderstore'
           Copy-Item -Path CHANGELOG.md -Destination 'thunderstore'
-          Copy-Item -Path RadialUIPlugin/bin/Release/net472/RadialUI.dll -Destination 'thunderstore'
+          Copy-Item -Path RadialUIPlugin/bin/Release/net48/RadialUI.dll -Destination 'thunderstore'
           Compress-Archive -Path ./thunderstore/* -DestinationPath ./thunderstore/thunderstore.zip -Force
       
       - uses: GreenTF/upload-thunderstore-package@55327864b734687f553e23309743a66af21dfc40
