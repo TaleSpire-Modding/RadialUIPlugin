@@ -59,7 +59,7 @@ namespace RadialUI.Creature_Menu_Patches
         public static void Postfix(CreatureBoardAsset ____selectedCreature, CreatureMenuBoardTool __instance,
             float ____hitHeightDif)
         {
-            var miniId = ____selectedCreature.CreatureId.Value;
+            NGuid miniId = ____selectedCreature.CreatureId.Value;
             RadialUIPlugin.lastCreature = miniId;
 
             map = Mapmenu.GetMapMenu();

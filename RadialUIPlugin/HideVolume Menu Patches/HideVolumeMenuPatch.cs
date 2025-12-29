@@ -37,13 +37,13 @@ namespace RadialUI.HideVolume_Menu_Patches
         // ReSharper disable InconsistentNaming
         internal static bool Prefix(HideVolumeItem ____selectedVolume)
         {
-            RadialUIPlugin.lastHideVolume = ____selectedVolume; 
+            RadialUIPlugin.lastHideVolume = ____selectedVolume;
             return true;
         }
 
         public static void Postfix(HideVolumeItem ____selectedVolume, Vector3 ____selectedPos, ref GMHideVolumeMenuBoardTool __instance)
         {
-            var mapMenu = Mapmenu.GetMapMenu();
+            MapMenu mapMenu = Mapmenu.GetMapMenu();
 
             mapMenu.TryHideItem(RadialUIPlugin._removeOnHideVolume, "Toggle Visibility", null, null);
             mapMenu.TryHideItem(RadialUIPlugin._removeOnHideVolume, "Filters", null, null);

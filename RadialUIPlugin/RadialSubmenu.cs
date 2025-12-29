@@ -141,7 +141,7 @@ namespace RadialUI
                 return;
             }
             // Add the item to the sub-menu item dictionary for the main menu entry (indicated by the Guid)
-            var item = new MapMenu.ItemArgs
+            MapMenu.ItemArgs item = new MapMenu.ItemArgs
             {
                 // Parent plugin specified callback for when the sub-menu item is selected
                 Action = (mmi, obj) => { callback(radialAsset, mainGuid, mmi); },
@@ -174,7 +174,7 @@ namespace RadialUI
                 return;
             }
             // Add the item to the sub-menu item dictionary for the main menu entry (indicated by the Guid)
-            var item = new MapMenu.ItemArgs
+            MapMenu.ItemArgs item = new MapMenu.ItemArgs
             {
                 // Parent plugin specified callback for when the sub-menu item is selected
                 Action = (mmi, obj) => { callback(radialHideVolume, mainGuid, mmi); },

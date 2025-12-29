@@ -37,16 +37,16 @@ namespace RadialUI.Creature_Menu_Patches
     {
         public static void Postfix(MapMenu map, object obj, List<ActionTimeline> ____emotes, CreatureBoardAsset ____selectedCreature)
         {
-            var miniId = LocalClient.SelectedCreatureId.Value;
-            var targetId = ____selectedCreature.CreatureId.Value;
+            NGuid miniId = LocalClient.SelectedCreatureId.Value;
+            NGuid targetId = ____selectedCreature.CreatureId.Value;
 
-            for (var index = 0; index < ____emotes.Count; ++index)
+            for (int index = 0; index < ____emotes.Count; ++index)
             {
                 ActionTimeline emote = ____emotes[index];
 
                 map.TryHideItem(RadialUIPlugin._removeOnSubmenuEmotes, emote.name, miniId.ToString(), targetId.ToString());
             }
-            
+
             map.AddItems(RadialUIPlugin._onSubmenuEmotes, targetId);
         }
     }

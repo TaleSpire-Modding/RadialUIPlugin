@@ -26,7 +26,7 @@ namespace RadialUI
             logger = Logger;
             Logger.LogInfo("In Awake for RadialUI");
 
-            var harmony = new Harmony(Guid);
+            Harmony harmony = new Harmony(Guid);
             try
             {
                 harmony.PatchAll();

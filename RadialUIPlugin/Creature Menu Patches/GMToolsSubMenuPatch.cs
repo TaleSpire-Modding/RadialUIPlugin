@@ -25,7 +25,7 @@ namespace RadialUI
             {
                 Action = (MapMenuItem, Object) =>
                 {
-                    if (LocalClient.TryGetLassoedCreatureIds(out var ids))
+                    if (LocalClient.TryGetLassoedCreatureIds(out CreatureGuid[] ids))
                     {
                         int num = ids.Length;
                         for (int i = 0; i < num; i++)
@@ -69,8 +69,8 @@ namespace RadialUI.Creature_Menu_Patches
         // ReSharper disable InconsistentNaming
         public static void Postfix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature)
         {
-            var miniId = LocalClient.SelectedCreatureId.Value;
-            var targetId = ____selectedCreature.CreatureId.Value;
+            NGuid miniId = LocalClient.SelectedCreatureId.Value;
+            NGuid targetId = ____selectedCreature.CreatureId.Value;
 
             map.TryHideItem(RadialUIPlugin._removeOnSubmenuGm, "", miniId.ToString(), targetId.ToString());
             map.TryHideItem(RadialUIPlugin._removeOnSubmenuGm, "Rename", miniId.ToString(), targetId.ToString());

@@ -10,10 +10,10 @@ namespace RadialUI.Extensions
     internal static class Reflections
     {
         private const BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
-        
-        internal static Action<MapMenu,object> GetMenuAction<Tclass>(string method,Tclass o)
+
+        internal static Action<MapMenu, object> GetMenuAction<Tclass>(string method, Tclass o)
         {
-            return CreateReusableAction<Tclass,MapMenu,object>(method, o); 
+            return CreateReusableAction<Tclass, MapMenu, object>(method, o);
         }
 
         internal static Action<MapMenuItem, object> GetMenuItemAction<Tclass>(string method, Tclass o)
@@ -21,24 +21,24 @@ namespace RadialUI.Extensions
             return CreateReusableAction<Tclass, MapMenuItem, object>(method, o);
         }
 
-        internal static T CallMethod<T,TClass>(string methodName, TClass instance, object[] param = null)
+        internal static T CallMethod<T, TClass>(string methodName, TClass instance, object[] param = null)
         {
             if (param == null) param = new object[0];
-            var method = typeof(TClass).GetMethod(methodName, bindFlags);
-            var result = (T) method.Invoke(instance, param);
+            MethodInfo method = typeof(TClass).GetMethod(methodName, bindFlags);
+            T result = (T)method.Invoke(instance, param);
             return result;
         }
 
         internal static void CallMethod<TClass>(string methodName, TClass instance, object[] param = null)
         {
             if (param == null) param = new object[0];
-            var method = typeof(TClass).GetMethod(methodName, bindFlags);
+            MethodInfo method = typeof(TClass).GetMethod(methodName, bindFlags);
             method.Invoke(instance, param);
         }
 
         internal static Action<Tp1, Tp2> CreateReusableAction<TClass, Tp1, Tp2>(string methodName, TClass instance)
         {
-            var method = typeof(TClass).GetMethod(methodName,bindFlags);
+            MethodInfo method = typeof(TClass).GetMethod(methodName, bindFlags);
             if (method == null)
             {
                 RadialUIPlugin.logger.LogDebug($"Method {methodName} for {instance.GetType()} was not found.");

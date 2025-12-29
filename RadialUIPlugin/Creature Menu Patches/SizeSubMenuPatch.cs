@@ -36,8 +36,8 @@ namespace RadialUI.Creature_Menu_Patches
         // ReSharper disable InconsistentNaming
         public static void Postfix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature)
         {
-            var miniId = LocalClient.SelectedCreatureId.Value;
-            var targetId = ____selectedCreature.CreatureId.Value;
+            NGuid miniId = LocalClient.SelectedCreatureId.Value;
+            NGuid targetId = ____selectedCreature.CreatureId.Value;
 
             map.TryHideItem(RadialUIPlugin._removeOnSubmenuSize, "0.5x0.5", miniId.ToString(), targetId.ToString());
             map.TryHideItem(RadialUIPlugin._removeOnSubmenuSize, "1x1", miniId.ToString(), targetId.ToString());

@@ -29,11 +29,11 @@ namespace RadialUI.Extensions
         /// <param name="targetId">The target creature the mapmenu is targeting.</param>
         internal static void AddItems(this MapMenu map, Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)> list, NGuid targetId)
         {
-            var miniId = LocalClient.SelectedCreatureId.Value;
-            foreach (var key in list.Keys.Where(key => list[key].Item2 == null || list[key].Item2(miniId, targetId)))
+            NGuid miniId = LocalClient.SelectedCreatureId.Value;
+            foreach ((MapMenu.ItemArgs, Func<NGuid, NGuid, bool>) entry in list.Values.Where(entry => entry.Item2 == null || entry.Item2(miniId, targetId)))
             {
-                list[key].Item1.Obj = miniId;
-                map.AddItem(list[key].Item1);
+                entry.Item1.Obj = miniId;
+                map.AddItem(entry.Item1);
             }
         }
 
@@ -41,15 +41,16 @@ namespace RadialUI.Extensions
         /// Returns opened map menu
         /// </summary>
         /// <returns></returns>
-        internal static MapMenu GetMapMenu() {
+        internal static MapMenu GetMapMenu()
+        {
             RadialUIPlugin.logger.LogInfo($"Fetching MapMenu: {MapMenuManagerPatch.mapMenu != null}");
-            return MapMenuManagerPatch.mapMenu; 
+            return MapMenuManagerPatch.mapMenu;
         }
-        
-        internal static bool TryHideItem(this MapMenu map, Dictionary<string, List<RadialCheckRemove>> checker , string itemName, string miniId, string targetId)
+
+        internal static bool TryHideItem(this MapMenu map, Dictionary<string, List<RadialCheckRemove>> checker, string itemName, string miniId, string targetId)
         {
             // Early return as not implemented
-            return TryHideItem(map,itemName);
+            return TryHideItem(map, itemName);
             /*
             var mapMepItems = map.transform.Find("_MAP");
             mapMepItems.Children().Where(c => c.Find("TXT_Title"));
@@ -74,7 +75,7 @@ namespace RadialUI.Extensions
         /// <param name="selectedVolume">The specific hide volume that's being targeted.</param>
         internal static void AddItems(this MapMenu map, Dictionary<string, (MapMenu.ItemArgs, Func<HideVolumeItem, bool>)> list, HideVolumeItem selectedVolume)
         {
-            foreach (var key in list.Keys.Where(key => list[key].Item2 == null || list[key].Item2(selectedVolume)))
+            foreach (string key in list.Keys.Where(key => list[key].Item2 == null || list[key].Item2(selectedVolume)))
             {
                 map.AddItem(list[key].Item1);
             }
@@ -88,7 +89,7 @@ namespace RadialUI.Extensions
         /// <param name="selectedVolume">The specific hide volume that's being targeted.</param>
         internal static void AddItems(this MapMenu map, Dictionary<string, (MapMenu.ItemArgs, Func<AtmosphereBlock, bool>)> list, AtmosphereBlock selectedVolume)
         {
-            foreach (var key in list.Keys.Where(key => list[key].Item2 == null || list[key].Item2(selectedVolume)))
+            foreach (string key in list.Keys.Where(key => list[key].Item2 == null || list[key].Item2(selectedVolume)))
             {
                 list[key].Item1.Obj = list[key].Item1.Obj ?? selectedVolume;
                 map.AddItem(list[key].Item1);

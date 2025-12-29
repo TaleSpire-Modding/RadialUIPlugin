@@ -49,11 +49,11 @@ namespace RadialUI.Creature_Menu_Patches
     internal sealed class StatSubMenuPatch
     {
         // ReSharper disable InconsistentNaming
-        
+
         public static void Postfix(MapMenu map, object obj, CreatureBoardAsset ____selectedCreature)
         {
-            var miniId = LocalClient.SelectedCreatureId.Value;
-            var targetId = ____selectedCreature.CreatureId.Value;
+            NGuid miniId = LocalClient.SelectedCreatureId.Value;
+            NGuid targetId = ____selectedCreature.CreatureId.Value;
 
             map.AddItems(RadialUIPlugin._onStatCallback, targetId);
         }
