@@ -1,3 +1,4 @@
+- 3.1.1: Bump SIF package version
 - 3.1.0: Added dynamic unpatch support via DependencyUnityPlugin
 - 3.0.2: recompile and re-release
 - 3.0.1: Nuget Release
