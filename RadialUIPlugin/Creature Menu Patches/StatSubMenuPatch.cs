@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using BepInEx;
 using Bounce.Unmanaged;
 using HarmonyLib;
+using PluginUtilities;
 using RadialUI.Extensions;
 
 namespace RadialUI
 {
-    public partial class RadialUIPlugin : BaseUnityPlugin
+    public partial class RadialUIPlugin : DependencyUnityPlugin
     {
         // Internal DB
         internal static readonly Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)> _onStatCallback =

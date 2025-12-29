@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using BepInEx;
 using HarmonyLib;
+using PluginUtilities;
 using RadialUI.Extensions;
 using UnityEngine;
 
 namespace RadialUI
 {
-    public partial class RadialUIPlugin : BaseUnityPlugin
+    public partial class RadialUIPlugin : DependencyUnityPlugin
     {
         // Hide Volumes
         internal static readonly Dictionary<string, (MapMenu.ItemArgs, Func<HideVolumeItem, bool>)> _onHideVolumeCallback = new Dictionary<string, (MapMenu.ItemArgs, Func<HideVolumeItem, bool>)>();

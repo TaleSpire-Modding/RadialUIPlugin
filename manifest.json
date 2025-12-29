@@ -1,10 +1,10 @@
 {
     "name": "RadialUIPlugin",
-    "version_number": "3.0.2",
+    "version_number": "3.1.0",
     "website_url": "https://github.com/TaleSpire-Modding/RadialUIPlugin",
     "description": "This is a developer tool based package used to manage and configure Radial UI Menus.",
     "dependencies": [
       "bbepisTaleSpire-BepInExPack-5.4.10",
-      "brcoding-SetInjectionFlagPlugin-3.1.0"
+      "brcoding-SetInjectionFlagPlugin-3.3.2"
     ]
 }

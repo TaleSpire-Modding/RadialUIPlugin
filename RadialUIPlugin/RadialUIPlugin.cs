@@ -10,28 +10,32 @@ namespace RadialUI
     [BepInPlugin(Guid, Name, Version)]
     [BepInDependency(SetInjectionFlag.Guid)]
 
-    public sealed partial class RadialUIPlugin : BaseUnityPlugin
+    public sealed partial class RadialUIPlugin : DependencyUnityPlugin
     {
         // constants
         public const string Guid = "org.hollofox.plugins.RadialUIPlugin";
         public const string Version = "0.0.0.0";
         public const string Name = "RadialUIPlugin";
+        public const string Author = "HolloFox";
+
+        // static fields
         internal static ManualLogSource logger;
+        private static Harmony harmony;
 
         /// <summary>
         /// Awake plugin
         /// </summary>
-        void Awake()
+        protected override void OnAwake()
         {
             logger = Logger;
             Logger.LogInfo("In Awake for RadialUI");
 
-            Harmony harmony = new Harmony(Guid);
+            harmony = new Harmony(Guid);
             try
             {
                 harmony.PatchAll();
                 Logger.LogDebug("RadialUI Plug-in loaded");
-                ModdingTales.ModdingUtils.AddPluginToMenuList(this, "HolloFoxes'");
+                ModdingTales.ModdingUtils.AddPluginToMenuList(this, Author);
             }
             catch (Exception e)
             {
@@ -40,6 +44,16 @@ namespace RadialUI
                 harmony.UnpatchSelf();
                 Logger.LogDebug("unpatching RadialUI");
             }
+        }
+
+        /// <summary>
+        /// Called when the object is destroyed, probably from ScriptEngine unloading the plugin.
+        /// </summary>
+        protected override void OnDestroyed()
+        {
+            Logger.LogInfo("Destroying RadialUI Plugin");
+            harmony.UnpatchSelf();
+            Logger.LogDebug("RadialUI Unpatched");
         }
 
         /// <summary>

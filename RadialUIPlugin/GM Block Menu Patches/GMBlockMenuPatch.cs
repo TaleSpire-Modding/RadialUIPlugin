@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using BepInEx;
 using DataModel;
 using HarmonyLib;
+using PluginUtilities;
 using RadialUI.Extensions;
 using TaleSpire.GameMaster.Blocks;
 
 namespace RadialUI
 {
-    public partial class RadialUIPlugin : BaseUnityPlugin
+    public partial class RadialUIPlugin : DependencyUnityPlugin
     {
         internal static readonly Dictionary<string, List<RadialCheckRemove>> _removeOnGMBlock = new Dictionary<string, List<RadialCheckRemove>>();
         internal static readonly Dictionary<string, (MapMenu.ItemArgs, Func<AtmosphereBlock, bool>)> _onGMBlock = new Dictionary<string, (MapMenu.ItemArgs, Func<AtmosphereBlock, bool>)>();

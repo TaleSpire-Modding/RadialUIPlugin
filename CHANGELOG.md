@@ -1,3 +1,4 @@
+- 3.1.0: Added dynamic unpatch support via DependencyUnityPlugin
 - 3.0.2: recompile and re-release
 - 3.0.1: Nuget Release
 - 3.0.0: Titans Sizes Patch + Optimizations + compatability update
