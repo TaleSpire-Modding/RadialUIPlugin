@@ -38,6 +38,6 @@
   <ItemGroup>
     <PackageReference Include="TaleSpire" Version="1.5.0"></PackageReference>
     <PackageReference Include="Talespire.BepInEx" Version="5.4.22"></PackageReference>
-    <PackageReference Include="TaleSpire.SetInjectionFlagPlugin" Version="3.3.3" />
+    <PackageReference Include="TaleSpire.SetInjectionFlagPlugin" Version="3.3.4" />
   </ItemGroup>
 </Project>

@@ -35,7 +35,6 @@ namespace RadialUI
             {
                 harmony.PatchAll();
                 Logger.LogDebug("RadialUI Plug-in loaded");
-                ModdingTales.ModdingUtils.AddPluginToMenuList(this, Author);
             }
             catch (Exception e)
             {
