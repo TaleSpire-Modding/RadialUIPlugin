@@ -40,8 +40,8 @@ jobs:
 
       - name: Commit changes
         run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
+          git config user.name "HolloFox"
+          git config user.email ${{ secrets.HOLLOFOX_EMAIL }}
           git add README.md
           git commit -m "Update contributors section" || exit 0
           git push
