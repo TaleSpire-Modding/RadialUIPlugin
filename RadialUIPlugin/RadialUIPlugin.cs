@@ -10,14 +10,13 @@ namespace RadialUI
     [BepInPlugin(Guid, Name, Version)]
     [BepInDependency(SetInjectionFlag.Guid)]
 
-    public sealed partial class RadialUIPlugin : DependencyUnityPlugin
+    public sealed partial class RadialUIPlugin : DependencyUnityPlugin<RadialUIPlugin>
     {
         // constants
         public const string Guid = "org.hollofox.plugins.RadialUIPlugin";
         public const string Version = "0.0.0.0";
         public const string Name = "RadialUIPlugin";
-        public const string Author = "HolloFox";
-
+        
         // static fields
         internal static ManualLogSource logger;
         private static Harmony harmony;
@@ -27,7 +26,7 @@ namespace RadialUI
         /// </summary>
         protected override void OnAwake()
         {
-            logger = Logger;
+            logger = this.Logger;
             Logger.LogInfo("In Awake for RadialUI");
 
             harmony = new Harmony(Guid);

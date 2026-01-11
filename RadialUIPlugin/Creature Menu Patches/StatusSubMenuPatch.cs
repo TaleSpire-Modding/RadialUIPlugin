@@ -7,7 +7,7 @@ using RadialUI.Extensions;
 
 namespace RadialUI
 {
-    public partial class RadialUIPlugin : DependencyUnityPlugin
+    public partial class RadialUIPlugin : DependencyUnityPlugin<RadialUIPlugin>
     {
         // Emotes Submenu Extra Components
         internal static readonly Dictionary<string, (MapMenu.ItemArgs, Func<NGuid, NGuid, bool>)>

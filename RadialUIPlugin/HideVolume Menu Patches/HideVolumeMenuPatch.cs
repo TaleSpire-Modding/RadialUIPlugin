@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace RadialUI
 {
-    public partial class RadialUIPlugin : DependencyUnityPlugin
+    public partial class RadialUIPlugin : DependencyUnityPlugin<RadialUIPlugin>
     {
         // Hide Volumes
         internal static readonly Dictionary<string, (MapMenu.ItemArgs, Func<HideVolumeItem, bool>)> _onHideVolumeCallback = new Dictionary<string, (MapMenu.ItemArgs, Func<HideVolumeItem, bool>)>();

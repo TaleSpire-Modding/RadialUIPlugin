@@ -1,3 +1,4 @@
+- 3.1.3: migrate to DependencyUnityPlugins<T> to allow enable/disable the plugin without uninstalling it via chainloader
 - 3.1.2: Bump SIF package version
 - 3.1.1: Bump SIF package version
 - 3.1.0: Added dynamic unpatch support via DependencyUnityPlugin

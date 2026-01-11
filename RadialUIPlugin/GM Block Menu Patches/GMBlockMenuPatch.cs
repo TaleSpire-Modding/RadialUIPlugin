@@ -8,7 +8,7 @@ using TaleSpire.GameMaster.Blocks;
 
 namespace RadialUI
 {
-    public partial class RadialUIPlugin : DependencyUnityPlugin
+    public partial class RadialUIPlugin : DependencyUnityPlugin<RadialUIPlugin>
     {
         internal static readonly Dictionary<string, List<RadialCheckRemove>> _removeOnGMBlock = new Dictionary<string, List<RadialCheckRemove>>();
         internal static readonly Dictionary<string, (MapMenu.ItemArgs, Func<AtmosphereBlock, bool>)> _onGMBlock = new Dictionary<string, (MapMenu.ItemArgs, Func<AtmosphereBlock, bool>)>();
