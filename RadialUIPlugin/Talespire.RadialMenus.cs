@@ -1,4 +1,5 @@
 ﻿using Bounce.Unmanaged;
+using DataModel;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
@@ -70,11 +71,13 @@ namespace RadialUI
                 return mapField.GetValue(creatureMenuBoardTool) as CreatureBoardAsset;
             }
 
-            public static HideVolumeItem GetSelectedHideVolumeItem()
+            public static HideVolume GetSelectedHideVolume()
             {
                 GMHideVolumeMenuBoardTool gmHideVolumeMenuBoardTool = GetGMHideVolumeMenuBoardTool();
-                FieldInfo mapField = gmHideVolumeMenuBoardTool.GetType().GetField("_selectedVolume", bindFlags);
-                return mapField.GetValue(gmHideVolumeMenuBoardTool) as HideVolumeItem;
+                FieldInfo mapField = gmHideVolumeMenuBoardTool.GetType().GetField("_selectedVolumeId", bindFlags);
+                var selectedVolumeId = mapField.GetValue(gmHideVolumeMenuBoardTool) as NGuid?;
+                HideVolumeManager.Instance.TryGetHideVolumeData(selectedVolumeId ?? NGuid.Empty, out HideVolume selectedVolume);
+                return selectedVolume;
             }
 
             // Get Pos for Hide Volume

@@ -2,6 +2,7 @@
 using Bounce.Unmanaged;
 using System.Collections.Generic;
 using System;
+using DataModel;
 
 namespace RadialUI
 {
@@ -9,7 +10,7 @@ namespace RadialUI
     {
         // Radial menu selected asset
         private static CreatureGuid radialAsset = default;
-        private static HideVolumeItem radialHideVolume;
+        private static HideVolume radialHideVolume;
 
         // Hold sub-entries for main menus
         private static Dictionary<string, List<MapMenu.ItemArgs>> subMenuEntries = new Dictionary<string, List<MapMenu.ItemArgs>>();
@@ -165,7 +166,7 @@ namespace RadialUI
         /// <param name="callback">Callback that is called when the sub-menu item is selected</param>
         /// <param name="closeMenu">Determines if the menu is closed after sub-menu item is selected</param>
         /// <param name="checker">Optional checker used to determine whether to add button for submenu</param>
-        public static void CreateSubMenuItem(string mainGuid, string title, Sprite icon, Action<HideVolumeItem, string, MapMenuItem> callback, bool closeMenu = true, Func<bool> checker = null)
+        public static void CreateSubMenuItem(string mainGuid, string title, Sprite icon, Action<HideVolume, string, MapMenuItem> callback, bool closeMenu = true, Func<bool> checker = null)
         {
             // Check if the main menu Guid exists
             if (!subMenuEntries.ContainsKey(mainGuid))
@@ -193,7 +194,7 @@ namespace RadialUI
         /// <param name="item">Uses standard mapmenu item args for greater flexibility</param>
         /// <param name="callback">Callback that is called when the sub-menu item is selected if you want 3 parameter return</param>
         /// <param name="checker">Optional checker used to determine whether to add button for submenu</param>
-        public static void CreateSubMenuItem(string mainGuid, MapMenu.ItemArgs item, Action<HideVolumeItem, string, MapMenuItem> callback = null, Func<bool> checker = null)
+        public static void CreateSubMenuItem(string mainGuid, MapMenu.ItemArgs item, Action<HideVolume, string, MapMenuItem> callback = null, Func<bool> checker = null)
         {
             // Check if the main menu Guid exists
             if (!subMenuEntries.ContainsKey(mainGuid))
@@ -235,7 +236,7 @@ namespace RadialUI
         /// </summary>
         /// <param name="item">Radial menu for Hide Volume</param>
         /// <returns></returns>
-        private static bool Reporter(HideVolumeItem item)
+        private static bool Reporter(HideVolume item)
         {
             radialHideVolume = item;
             return true;
