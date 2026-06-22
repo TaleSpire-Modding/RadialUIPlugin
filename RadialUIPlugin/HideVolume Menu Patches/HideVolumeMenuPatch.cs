@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Bounce.Unmanaged;
 using DataModel;
 using HarmonyLib;
 using PluginUtilities;
@@ -36,14 +37,16 @@ namespace RadialUI.HideVolume_Menu_Patches
     internal sealed class HideVolumeMenuPatch
     {
         // ReSharper disable InconsistentNaming
-        internal static bool Prefix(HideVolume ____selectedVolume)
+        internal static bool Prefix(NGuid ____selectedVolumeId)
         {
-            RadialUIPlugin.lastHideVolume = ____selectedVolume;
+            HideVolumeManager.Instance.TryGetHideVolumeData(____selectedVolumeId, out RadialUIPlugin.lastHideVolume);
             return true;
         }
 
-        public static void Postfix(HideVolume ____selectedVolume, Vector3 ____selectedPos, ref GMHideVolumeMenuBoardTool __instance)
+        public static void Postfix(NGuid ____selectedVolumeId, Vector3 ____selectedPos, ref GMHideVolumeMenuBoardTool __instance)
         {
+            HideVolumeManager.Instance.TryGetHideVolumeData(____selectedVolumeId, out var ____selectedVolume);
+
             MapMenu mapMenu = Mapmenu.GetMapMenu();
 
             mapMenu.TryHideItem(RadialUIPlugin._removeOnHideVolume, "Toggle Visibility", null, null);
